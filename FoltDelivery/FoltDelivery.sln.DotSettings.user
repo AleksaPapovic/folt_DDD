@@ -1,0 +1,9 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=74a946d5_002Df36e_002D4ff1_002D9925_002D75365e622de1/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="GettingState_ForSequenceOfEvents_ShouldSucceed" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;xUnit::E5DF520B-1CE2-4D3B-990C-95ADC5C45640::.NETCoreApp,Version=v3.1::FoltDelivery.EventStoreTest.GettingState_ForSequenceOfEvents_ShouldSucceed&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=8796a82f_002D4f21_002D4b53_002D9644_002D796d2633a904/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="GettingState_ForSequenceOfEvents_ShouldSucceed #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;ProjectFile&gt;E5DF520B-1CE2-4D3B-990C-95ADC5C45640/d:Test/f:EventStoreTest.cs&lt;/ProjectFile&gt;&#xD;
+&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
