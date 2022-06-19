@@ -44,19 +44,5 @@ namespace FoltDelivery.Controllers
             
             return _eventStore.GetStream("test-0" + i,0,0);
         }
-
-        EventData CreateEvent()
-        {
-            OrderCreated oc = new OrderCreated(new Guid("11223344-5566-7788-99AA-BBCCDDEEFF00"), new Guid());
-            return new EventData(
-
-                new Guid(),
-                "TestEvent",
-                true,
-
-                Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(oc)),
-                null
-            );
-        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using EventStore.ClientAPI;
 using FluentAssertions;
+using FoltDelivery.Infrastructure;
 using System;
 using System.Text;
 using System.Threading.Tasks;
@@ -105,10 +106,9 @@ namespace FoltDelivery.Test
             //};
             var events = new object[] { };
 
-            var connection = EventStoreConnection.Create(
-                    new Uri("tcp://admin:changeit@localhost:1113")
-                );
+            var connection = ConnectionFactory.Create();
             await connection.ConnectAsync();
+        
 
             var streamName = "shopping_cart-1";
 
@@ -135,8 +135,6 @@ namespace FoltDelivery.Test
             });
 
             exception.Should().BeNull();
-            appendedEvents.Should().Be((long)events.Length - 1);
-
         }
     }
 }
