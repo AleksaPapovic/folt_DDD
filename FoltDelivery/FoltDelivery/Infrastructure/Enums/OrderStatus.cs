@@ -2,7 +2,8 @@
 {
     public enum OrderStatus
     {
-        PROCESSING,
+        CREATED,
+        PLACED,
         PREPARING,
         AWAITING_DELIVERY,
         DELIVERY_REQUESTED,

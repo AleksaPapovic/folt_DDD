@@ -14,13 +14,22 @@ namespace FoltDelivery.Domain.Aggregates.Order
 
         public Address() { }
 
-        public Address(string street, string city, string state, string country, string zipcode)
+        public Address(string street, string city, string state, string country, string zipCode)
         {
             Street = street;
             City = city;
             State = state;
             Country = country;
-            ZipCode = zipcode;
+            ZipCode = zipCode;
+        }
+
+        public Address(Address address)
+        {
+            Street = address.Street;
+            City = address.City;
+            State = address.State;
+            Country = address.Country;
+            ZipCode = address.ZipCode;
         }
 
         protected override IEnumerable<object> GetAttributesToIncludeInEqualityCheck()

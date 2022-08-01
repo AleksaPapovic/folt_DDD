@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using FoltDelivery.Domain.Aggregates.Product;
 using FoltDelivery.Domain.Events;
 using FoltDelivery.Model.Enums;
@@ -14,9 +15,10 @@ namespace FoltDelivery.Domain.Aggregates.Order
         public string DeliveryId { get; set; }
         public OrderStatus Status { get; set; }
         public DateTime DateAndTime { get; set; }
-        public float Price { get; set; }
+        public Money Price { get; set; }
+        public ShippingCost ShippingCost { get; set;}
         public virtual Address Address { get; set; }
-        public Dictionary<Guid,int> OrderItems { get; set; }
+        public Dictionary<Guid,Money> OrderItems { get; set; }
         public int LogicalDeleted { get; set; }
 
         public Order():base(new Guid()){}
@@ -26,39 +28,39 @@ namespace FoltDelivery.Domain.Aggregates.Order
             Version = snapshot.Version;
             InitialVersion = snapshot.Version;
             RestaurantId = snapshot.RestaurantId;
-            DateAndTime = snapshot.DateAndTime;
-            Price = snapshot.Price;
             CustomerId = snapshot.CustomerId;
             DeliveryId = snapshot.DeliveryId;
+            Price = new Money(snapshot.Price.Amount);
+            Address = new Address(snapshot.Address);
+            OrderItems = snapshot.OrderItems;
+            DateAndTime = snapshot.DateAndTime;
             Status = snapshot.Status;
             LogicalDeleted = snapshot.LogicalDeleted;
-            OrderItems = snapshot.OrderItems;
-            //_credit = new Money(snapshot.Credit);
         }
-        public Order(Guid id, int restaurantId,
-            DateTime dateAndTime, float price, Guid customerId, String deliveryId,
-            OrderStatus status, int logicalDeleted) : base(id)
+
+        public Order(Guid id, int restaurantId, Guid customerId, String deliveryId,
+            DateTime dateAndTime) : base(id)
         {
             RestaurantId = restaurantId;
-            DateAndTime = dateAndTime;
-            Price = price;
             CustomerId = customerId;
             DeliveryId = deliveryId;
-            Status = status;
-            LogicalDeleted = logicalDeleted;
-            OrderItems = new Dictionary<Guid, int>();
+            Price = CalculateOrderPrice();
+            OrderItems = new Dictionary<Guid, Money>();
+            DateAndTime = dateAndTime;
+            Status = OrderStatus.CREATED;
             Causes(new OrderCreated(id, customerId));
+        }
+
+        private void Causes(DomainEvent @event)
+        {
+            Changes.Add(@event);
+            Apply(@event);
         }
 
         public override void Apply(DomainEvent @event)
         {
             When((dynamic)@event);
             Version = Version++;
-        }
-        private void Causes(DomainEvent @event)
-        {
-            Changes.Add(@event);
-            Apply(@event);
         }
 
         private void When(OrderCreated orderCreated)
@@ -71,14 +73,31 @@ namespace FoltDelivery.Domain.Aggregates.Order
             Id = orderCancelled.Id;
             CustomerId = orderCancelled.CustomerId;
         }
-        public void AddItem(Guid orderId, Guid customerId, Guid itemId)
+        private void AddItem(Guid orderId, Guid customerId, Guid itemId)
         {
             Causes(new ItemAdded(orderId, customerId,  itemId));
         }
 
-        public void RemoveItem(Guid orderId, Guid customerId, Guid itemId)
+       private void RemoveItem(Guid orderId, Guid customerId, Guid itemId)
         {
             Causes(new ItemRemoved(orderId, customerId, itemId));
         }
+
+           private Money CalculateOrderPrice()
+        {
+            Money cost = new Money();
+            foreach (var article in OrderItems)
+            {
+                cost = cost.Add(article.Value);
+            }
+            cost = cost.Add(new Money(this.ShippingCost.Price));
+            return cost;
+        }
+
+           private bool ContainsArticle(Guid articleId)
+           {
+               return OrderItems.Any(x => x.Key == articleId);
+           }
+
     }
 }

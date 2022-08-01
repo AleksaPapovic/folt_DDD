@@ -14,11 +14,15 @@ using System.Text;
 using System.Threading.Tasks;
 using EventStore.Client;
 using EventStore.ClientAPI;
+using FoltDelivery.API.Handlers;
 using FoltDelivery.Infrastructure;
 using FoltDelivery.Infrastructure.Authorization;
 using FoltDelivery.Model;
-using FoltDelivery.Repository;
-using FoltDelivery.Service;
+using FoltDelivery.API.Repository;
+using FoltDelivery.API.Service;
+using FoltDelivery.Domain.Aggregates.Order;
+using FoltDelivery.Domain.Events;
+using FoltDelivery.Infrastructure.Persistance;
 using Microsoft.EntityFrameworkCore.SqlServer;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.EntityFrameworkCore;
@@ -91,7 +95,9 @@ namespace FoltDelivery
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IRestaurantRepository, RestaurantRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
-  
+            services.AddTransient<IEventHandler<OrderPlaced>, OrderHandler>();
+            services.AddTransient<IEventHandler<OrderCreated>, OrderHandler>();
+
             services.AddScoped<IEventStore, Infrastructure.EventStore>();
         }
 

@@ -7,15 +7,13 @@ namespace FoltDelivery.Infrastructure
 {
     public abstract class DomainEvent
     {
-
-
-        public DomainEvent(Guid aggregateId)
+        public Guid Id { get; private set; }
+        public string EventType { get; private set; }
+        
+        public DomainEvent(Guid aggregateId,string eventType)
         {
             Id = aggregateId;
+            EventType = eventType;
         }
-
-        public Guid Id { get; private set; }
-
-        public string EventType { get; private set; }
     }
 }

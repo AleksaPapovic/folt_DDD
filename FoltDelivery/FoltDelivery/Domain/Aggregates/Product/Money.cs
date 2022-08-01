@@ -6,7 +6,7 @@ namespace FoltDelivery.Domain.Aggregates.Product
 {
     public class Money : ValueObject<Money>, IComparable<Money>
     {
-        public decimal Amount { get; set; }
+        public decimal Amount { get; private set; }
 
         public Money()
             : this(0m)
