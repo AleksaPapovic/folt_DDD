@@ -1,5 +1,5 @@
-﻿using System;
-using FoltDelivery.Infrastructure;
+﻿using FoltDelivery.Infrastructure;
+using System;
 
 namespace FoltDelivery.Domain.Events
 {
@@ -7,13 +7,12 @@ namespace FoltDelivery.Domain.Events
     {
         public Guid CustomerId { get; private set; }
 
-        public string EventType { get; private set; } = "OrderCancelled";
-
+        public string EventType { get; private set; }
 
         public OrderCancelled(Guid orderId, Guid customerId) : base(orderId)
         {
             CustomerId = customerId;
-
+            EventType = "OrderCancelled";
         }
     }
 }

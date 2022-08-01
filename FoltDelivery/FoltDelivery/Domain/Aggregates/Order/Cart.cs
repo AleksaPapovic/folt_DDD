@@ -1,32 +1,33 @@
 ﻿using System;
+using FoltDelivery.Infrastructure.Enums;
+using FoltDelivery.Infrastructure;
 
-namespace FoltDelivery.Model
+namespace FoltDelivery.Domain.Aggregates.Order
 {
     public class Cart : Entity
     {
-        public int OrderId { get; set; }
-        public String Username { get; set; }
-        public float Price { get; set; }
+        public Guid OrderId { get; set; }
+        public Guid CustomerId { get; set; }
+        public CartStatus Status { get; set; }
         public int LogicalDeleted { get; set; }
 
-        public Cart() { }
+        public Cart(Guid id) : base(id) { }
 
-        public Cart(Guid id, int orderId, String username, float price,
-            int logicalDeleted) 
+        public Cart(Guid id, Guid orderId, Guid customerId, float price, CartStatus cartStatus,
+            int logicalDeleted): base(id)
         {
-            Id = id;
+            Status = cartStatus;
             OrderId = orderId;
-            Username = username;
-            Price = price;
+            CustomerId = customerId;
             LogicalDeleted = logicalDeleted;
         }
 
-        public Cart(Cart cart)
+        public Cart(Cart cart):base(cart.Id)
         {
             Id = cart.Id;
             OrderId = cart.OrderId;
-            Username = cart.Username;
-            Price = cart.Price;
+            CustomerId = cart.CustomerId;
+            Status = cart.Status;
             LogicalDeleted = cart.LogicalDeleted;
         }
 

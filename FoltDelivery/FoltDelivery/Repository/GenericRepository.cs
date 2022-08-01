@@ -1,16 +1,56 @@
-﻿using FoltDelivery.Model;
+﻿using System;
+using FoltDelivery.Model;
 using System.Collections.Generic;
+using System.Linq;
+using FoltDelivery.Infrastructure;
+using Microsoft.EntityFrameworkCore;
 
 namespace FoltDelivery.Repository
 {
-    public interface GenericRepository<T> where T : Entity
+    public class GenericRepository<T> : IGenericRepository<T> where T : Entity
     {
-        public List<T> GetAll();
-        public T Get(string id);
-        public void SaveAll();
-        public void Save(T entity);
-        public void Update(T entity);
-        public void Delete(string id);
-        public string GenerateId();
+        private readonly FoltDeliveryDbContext _dbContext;
+        private readonly DbSet<T> _table;
+
+        public GenericRepository(FoltDeliveryDbContext dbContext)
+        {
+            _dbContext = dbContext;
+            _table = _dbContext.Set<T>();
+        }
+
+        public List<T> GetAll()
+        {
+            return _table.ToList();
+        }
+
+        public T Get(Guid id)
+        {
+            return _table.Find(id);
+        }
+
+        public T Insert(T entity)
+        {
+            var addedEntity = _table.Add(entity);
+            Save();
+            return addedEntity.Entity;
+        }
+
+        public T Update(T entity)
+        {
+            var updatedEntity = _table.Update(entity);
+            Save();
+            return updatedEntity.Entity;
+        }
+
+        public void Delete(long id)
+        {
+            T existing = _table.Find(id);
+            _table.Remove(existing);
+        }
+
+        public void Save()
+        {
+            _dbContext.SaveChanges();
+        }
     }
 }

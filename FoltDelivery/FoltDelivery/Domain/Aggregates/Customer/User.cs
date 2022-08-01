@@ -1,8 +1,9 @@
-﻿using FoltDelivery.Model.Enums;
+﻿using FoltDelivery.Infrastructure;
+using FoltDelivery.Model.Enums;
 using System;
 using System.Collections.Generic;
 
-namespace FoltDelivery.Model
+namespace FoltDelivery.Domain.Aggregates.Customer
 {
     public class User : Entity
     {
@@ -12,28 +13,25 @@ namespace FoltDelivery.Model
         public String Surname { get; set; }
         public Gender Gender { get; set; }
         public String DateOfBirth { get; set; }
-        public virtual UserRole Role { get; set; }
-
-        public List<int> CustomerOrdersIds;
+        public virtual Role Role { get; set; }
+        public List<Guid> CustomerOrdersIds { get; set; }
         public int CartId { get; set; }
         public int RestaurantId { get; set; }
-        public List<int> DeliveryOrdersIds;
+        public List<Guid> DeliveryOrdersIds { get; set; }
         public double Points { get; set; }
-        public virtual CustomerType Type { get; set; }
-        public int LogicalDeleted { get; set; }
-        public int Commented { get; set; }
-
+        public virtual Loyalty Type { get; set; }
+        public bool LogicalDeleted { get; set; }
         public bool Blocked { get; set; }
+        public bool Confirmed { get; set; }
 
-        public User() : base() { }
+        public User(Guid id) : base(id) { }
 
         public User(Guid id, String username, String password, String name, String surname, Gender gender,
             String dateOfBirth,
-            UserRole role, List<int> customerOrdersIds, int cartId, int restaurantId,
-            List<int> deliveryOrdersIds, double points, CustomerType type, int logicalDeleted,
-            int commented, bool blocked)
+            Role role, List<Guid> customerOrdersIds, int cartId, int restaurantId,
+            List<Guid> deliveryOrdersIds, double points, Loyalty type, bool logicalDeleted,
+            bool blocked) : base(id)
         {
-            Id = id;
             Username = username;
             Password = password;
             Name = name;
@@ -48,13 +46,11 @@ namespace FoltDelivery.Model
             Points = points;
             Type = type;
             LogicalDeleted = logicalDeleted;
-            Commented = commented;
             Blocked = blocked;
         }
 
-        public User(User user)
+        public User(User user) : base(user.Id)
         {
-            Id = user.Id;
             Username = user.Username;
             Password = user.Password;
             Name = user.Name;

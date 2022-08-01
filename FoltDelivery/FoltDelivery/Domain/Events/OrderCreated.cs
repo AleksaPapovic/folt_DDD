@@ -7,7 +7,7 @@ namespace FoltDelivery.Domain.Events
     {
         public Guid CustomerId { get; private set; }
 
-        public string EventType { get; private set; } = "OrderCreated";
+        public string EventType { get; private set; } 
 
 
         public OrderCreated(Guid orderId, Guid customerId):base(orderId)

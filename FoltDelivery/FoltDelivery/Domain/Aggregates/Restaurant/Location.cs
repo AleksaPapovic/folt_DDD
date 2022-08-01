@@ -1,18 +1,18 @@
 ﻿using System;
+using FoltDelivery.Infrastructure;
 
-namespace FoltDelivery.Model
+namespace FoltDelivery.Domain.Aggregates.Restaurant
 {
     public class Location : Entity
     {
-        public float Longitude { get; set; }
-        public float Latitude { get; set; }
-        public Address Address { get; set; }
+        public Double Longitude { get; set; }
+        public Double Latitude { get; set; }
+        public virtual Address Address { get; set; }
 
-        public Location() { }
+        public Location(Guid id):base(id) { }
 
-        public Location(Guid id, float longitude, float latitude, Address address)
+        public Location(Guid id, Double longitude, Double latitude, Address address) : base(id)
         {
-            Id = id;
             Longitude = longitude;
             Latitude = latitude;
             Address = address;

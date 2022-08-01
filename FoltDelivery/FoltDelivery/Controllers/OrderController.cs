@@ -9,23 +9,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FoltDelivery.Domain.Aggregates.Order;
+using FoltDelivery.Model;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace FoltDelivery.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class OrderController : ControllerBase
     {
+        private IOrderService _orderService;
+
         private IUserService _userService;
 
         private IEventStore _eventStore;
 
-        public OrderController(IUserService userService, IEventStore eventStore)
+        public OrderController(IOrderService orderService,IUserService userService, IEventStore eventStore)
         {
             _userService = userService;
             _eventStore = eventStore;
+            _orderService = orderService;
         }
 
         public static int i = 0;
@@ -44,5 +49,14 @@ namespace FoltDelivery.Controllers
             
             return _eventStore.GetStream("test-0" + i,0,0);
         }
+
+        [HttpPost]
+        public async Task<Order> CreateOrder(Order newOrder)
+        {
+            return _orderService.CreateOrder(newOrder);
+        }
+
+
+
     }
 }

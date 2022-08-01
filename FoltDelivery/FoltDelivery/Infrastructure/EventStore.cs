@@ -1,11 +1,11 @@
-﻿using EventStore.ClientAPI;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using EventStore.ClientAPI;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using EventData = EventStore.ClientAPI.EventData;
 using ResolvedEvent = EventStore.ClientAPI.ResolvedEvent;
 using StreamPosition = EventStore.ClientAPI.StreamPosition;
@@ -22,19 +22,13 @@ namespace FoltDelivery.Infrastructure
 
         public EventStore(IEventStoreConnection esConn)
         {
-            //IEventStoreConnection _esConn = esConn;
-            this._esConn = ConnectionFactory.Create();
-            this.getConnection();
+            _esConn = ConnectionFactory.Create();
+            GetConnection();
 
         }
 
-        public async Task getConnection()
-        {
-            await this._esConn.ConnectAsync();
-        }
         public void CreateNewStream(string streamName, IEnumerable<DomainEvent> domainEvents)
         {
-            // ES will automatically create a stream when events are added to it
             AppendEventsToStream(streamName, domainEvents, null);
         }
 
@@ -49,10 +43,8 @@ namespace FoltDelivery.Infrastructure
         {
             var headers = new Dictionary<string, object>
             {
-                // each event will be associated with the same commit
-                {"CommitId", commitId}, 
-                
-                // store type of class so event can be rebuilt when the event is loaded
+                {"CommitId", commitId},
+
                 {EventClrTypeHeader, evnt.GetType().AssemblyQualifiedName}
             };
 
@@ -65,16 +57,13 @@ namespace FoltDelivery.Infrastructure
 
         public IEnumerable<DomainEvent> GetStream(string streamName, int fromVersion, int toVersion)
         {
-            // ES wants the number of events to retrieve not highest version
             var amount = (toVersion - fromVersion) + 1;
-            Console.WriteLine("Amount: " + amount);
             var eventsTask =
                 _esConn.ReadStreamEventsForwardAsync(StreamName(streamName), fromVersion, amount, false);
-            eventsTask.ContinueWith((encryptTask) =>
+            eventsTask.ContinueWith((_) =>
             {
-                this.CloseConnection();
+                CloseConnection();
             });
-            // map events back from JSON string to DomainEvent. Header indicates the type
             return eventsTask.Result.Events.Select(e => (DomainEvent)RebuildEvent(e));
         }
 
@@ -87,7 +76,6 @@ namespace FoltDelivery.Infrastructure
             return rebuiltEvent;
         }
 
-        // snapshots in Event Store are just events in dedicated snapshot streams
         // explained: http://stackoverflow.com/questions/16359330/is-snapshot-supported-from-greg-young-eventstore
         public void AddSnapshot<T>(string streamName, T snapshot)
         {
@@ -99,31 +87,31 @@ namespace FoltDelivery.Infrastructure
         public T GetLatestSnapshot<T>(string streamName) where T : class
         {
             var stream = SnapshotStreamNameFor(streamName);
-            var amountToFetch = 1; // just the latest one
+            var amountToFetch = 1; 
             var ev = _esConn.ReadStreamEventsBackwardAsync(stream, StreamPosition.End, amountToFetch, false);
-            if (ev.Result.Events.Any())
-                return (T)RebuildEvent(ev.Result.Events.Single());
-            else
-                return null;
+            return ev.Result.Events.Any() ? (T)RebuildEvent(ev.Result.Events.Single()) : null;
         }
 
         private string SnapshotStreamNameFor(string streamName)
         {
-            // snapshots are just events in separate streams
             return StreamName(streamName) + "-snapshots";
         }
 
         private string StreamName(string streamName)
         {
-            // Get Event Store projections require only a single hypen ("-")
             // see: https://groups.google.com/forum/#!msg/event-store/D477bKLcdI8/62iFGhHdMMIJ
             var sp = streamName.Split(new[] { '-' }, 2);
             return sp[0] + "-" + sp[1].Replace("-", "");
         }
 
-        public void CloseConnection()
+        private async Task GetConnection()
         {
-            this._esConn.Close();
+            await _esConn.ConnectAsync();
+        }
+
+        private void CloseConnection()
+        {
+            _esConn.Close();
         }
     }
 }

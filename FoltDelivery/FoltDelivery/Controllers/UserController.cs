@@ -1,14 +1,18 @@
 ﻿using FoltDelivery.Model;
 using FoltDelivery.Service;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
+using System.Linq;
+using AutoMapper;
+using FoltDelivery.Domain.Aggregates.Customer;
+using FoltDelivery.DTO;
+using FoltDelivery.Infrastructure.Authorization;
 
 
 namespace FoltDelivery.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class UserController : ControllerBase
     {
@@ -16,10 +20,16 @@ namespace FoltDelivery.Controllers
 
         private readonly IConfiguration _configuration;
 
-        public UserController(IUserService userService, IConfiguration configuration)
+        private readonly IJwtUtils _iJwtUtils;
+
+        private readonly IMapper _mapper;
+
+        public UserController(IUserService userService, IConfiguration configuration, IMapper mapper, IJwtUtils iJwtUtils)
         {
             _userService = userService;
             _configuration = configuration;
+            _mapper = mapper;
+            _iJwtUtils = iJwtUtils;
         }
 
         [HttpGet]
@@ -29,6 +39,18 @@ namespace FoltDelivery.Controllers
             return _userService.GetAllUsers();
         }
 
+
+        [Microsoft.AspNetCore.Authorization.AllowAnonymous]
+        [HttpGet]
+        [Route("principal")]
+        public User GetPrincipal()
+        {
+            var token = HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
+            var userId = _iJwtUtils.ValidateJwtToken(token);
+            if (userId != null) return _userService.GetById(userId.Value);
+            return null;
+        }
+
         [HttpGet("{id}")]
         public string Get(int id)
         {
@@ -36,27 +58,22 @@ namespace FoltDelivery.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost("login")]
-        public IActionResult Authenticate([FromBody] User userDTO)
+        [HttpPost]
+        [Route("register")]
+        public UserDTO Register(UserDTO userDTO)
         {
-            var user = _userService.GetUsingCredentials(userDTO.Username, userDTO.Password);
-
-            if (user == null) return Unauthorized();
-
-
-            //return Ok(new JwtDto()
-            //{
-            //    User = user,
-            //    Token = new
-            //    {
-            //        token = new JwtSecurityTokenHandler().WriteToken(token),
-            //        expires = token.ValidTo
-            //    }
-            //});
-            return Ok(user);
+            return _mapper.Map<UserDTO>(_userService.Register(userDTO));
         }
 
         [AllowAnonymous]
+        [HttpPost]
+        [Route("login")]
+        public AuthenticateResponseDTO Login(AuthenticateRequestDTO authDTO)
+        {
+            return _userService.Authenticate(authDTO);
+        }
+
+        [Microsoft.AspNetCore.Authorization.AllowAnonymous]
         [HttpPost("logout")]
         public IActionResult Logout()
         {

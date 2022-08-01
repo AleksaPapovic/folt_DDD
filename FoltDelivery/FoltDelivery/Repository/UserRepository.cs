@@ -1,16 +1,17 @@
-﻿using FoltDelivery.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using FoltDelivery.Domain.Aggregates.Customer;
+using FoltDelivery.Infrastructure;
 
 namespace FoltDelivery.Repository
 {
-    public class UserRepository : IUserRepository, IGenericRepository<User>
+    public class UserRepository : GenericRepository<User>, IUserRepository
     {
         private readonly FoltDeliveryDbContext _dbContext;
 
-        public UserRepository(FoltDeliveryDbContext dbContext)
+        public UserRepository(FoltDeliveryDbContext dbContext) : base(dbContext)
         {
             _dbContext = dbContext;
         }
@@ -21,39 +22,9 @@ namespace FoltDelivery.Repository
             //return _dbContext.Users.Where(p => p.Username == username && p.Password == password && !p.Blocked).FirstOrDefault();
         }
 
-        public IList<User> GetAll()
+        public User GetByUsername(string username)
         {
-            return _dbContext.Users.ToList();
-        }
-
-        public IEnumerable<User> Search(Expression<Func<User, bool>> predicate)
-        {
-            throw new NotImplementedException();
-        }
-
-        public User Get(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Insert(User entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public User Update(User entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Delete(User entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Save(User entity)
-        {
-            throw new NotImplementedException();
+            return _dbContext.Users.SingleOrDefault(x => x.Username.Equals(username));
         }
     }
 }

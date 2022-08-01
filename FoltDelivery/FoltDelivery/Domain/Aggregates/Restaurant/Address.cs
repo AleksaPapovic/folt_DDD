@@ -1,6 +1,7 @@
 ﻿using System;
+using FoltDelivery.Infrastructure;
 
-namespace FoltDelivery.Model
+namespace FoltDelivery.Domain.Aggregates.Restaurant
 {
     public class Address : Entity
     {
@@ -14,9 +15,9 @@ namespace FoltDelivery.Model
 
         public String State { get; set; }
 
-        public Address() { }
+        public Address(Guid id):base(id) { }
 
-        public Address(String streetName, int houseNumber, String city, int postalCode, String state)
+        public Address(String streetName, int houseNumber, String city, int postalCode, String state) : base(Guid.NewGuid())
         {
             StreetName = streetName;
             HouseNumber = houseNumber;

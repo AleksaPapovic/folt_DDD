@@ -18,7 +18,6 @@ services:
       EVENTSTORE_RUN_PROJECTIONS: all
       EVENTSTORE_START_STANDARD_PROJECTIONS: "true"
       EVENTSTORE_DISABLE_INTERNAL_TCP_TLS: 'true'
-      
 
 networks:
   default:

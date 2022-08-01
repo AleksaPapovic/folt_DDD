@@ -1,21 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using System.Collections.Generic;
+using FoltDelivery.Infrastructure;
+using FoltDelivery.Domain.Aggregates.Product;
 
-namespace FoltDelivery.Model
+namespace FoltDelivery.Domain.Aggregates.Restaurant
 {
     public class RestaurantMenu : Entity
     {
 
-        public virtual List<Product> _menuArticle { get; }
+        public virtual List<Article> _menuArticle { get; }
 
-        public RestaurantMenu()
+        public RestaurantMenu(Guid id):base(id)
         {
-            _menuArticle = new List<Product>();
+            _menuArticle = new List<Article>();
         }
 
-        public RestaurantMenu(IEnumerable<Product> menuArticle)
+        public RestaurantMenu(IEnumerable<Article> menuArticle) : base(Guid.NewGuid())
         {
             _menuArticle = menuArticle.ToList();
         }

@@ -1,16 +1,16 @@
 ﻿using System;
+using FoltDelivery.Infrastructure;
 
-namespace FoltDelivery.Model
+namespace FoltDelivery.Domain.Aggregates.Restaurant
 {
     public class Logo : Entity
     {
         public String Image { get; set; }
 
-        public Logo() { }
+        public Logo(Guid id):base(id) { }
 
-        public Logo(Guid id, String image)
+        public Logo(Guid id, String image) : base(id)
         {
-            Id = id;
             Image = image;
         }
     }

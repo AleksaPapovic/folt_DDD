@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using EventStore.Client;
 using EventStore.ClientAPI;
 using FoltDelivery.Infrastructure;
+using FoltDelivery.Infrastructure.Authorization;
 using FoltDelivery.Model;
 using FoltDelivery.Repository;
 using FoltDelivery.Service;
@@ -38,7 +39,7 @@ namespace FoltDelivery
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddControllers();
 
             var eventStoreConnection = EventStoreConnection.Create(
@@ -50,29 +51,6 @@ namespace FoltDelivery
 
             services.AddSingleton(eventStoreConnection);
 
-
-
-
-            //services.AddAuthentication(auth =>
-            //    {
-            //        auth.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            //        auth.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            //        auth.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-
-            //    })
-            //    .AddJwtBearer(options =>
-            //    {
-            //        options.SaveToken = true;
-            //        options.RequireHttpsMetadata = false;
-            //        options.TokenValidationParameters = new TokenValidationParameters()
-            //        {
-            //            ValidateIssuer = true,
-            //            ValidateAudience = true,
-            //            ValidAudience = Configuration["JwtToken:Audience"],
-            //            ValidIssuer = Configuration["JwtToken:Issuer"],
-            //            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JwtToken:SigningKey"]))
-            //        };
-            //    });
             services.AddAuthorization(options =>
             {
                 //options.AddPolicy("Patient", policy => policy.Requirements.Add(new RoleRequirement("patient")));
@@ -105,9 +83,15 @@ namespace FoltDelivery
                 //assembly => assembly.MigrationsAssembly(typeof(HospitalDbContext).Assembly.FullName));
             });
 
-
+            services.AddScoped<IJwtUtils, JwtUtils>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IRestaurantService, RestaurantService>();
+            services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IRestaurantRepository, RestaurantRepository>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
+  
             services.AddScoped<IEventStore, Infrastructure.EventStore>();
         }
 
@@ -135,12 +119,12 @@ namespace FoltDelivery
             });
         }
 
-        static EventStoreClient ConfigureEventStore(string connectionString, ILoggerFactory loggerFactory)
-        {
-            var settings = EventStoreClientSettings.Create(connectionString);
-            settings.ConnectionName = "bookingApp";
-            settings.LoggerFactory = loggerFactory;
-            return new EventStoreClient(settings);
-        }
+        //static EventStoreClient ConfigureEventStore(string connectionString, ILoggerFactory loggerFactory)
+        //{
+        //    var settings = EventStoreClientSettings.Create(connectionString);
+        //    settings.ConnectionName = "bookingApp";
+        //    settings.LoggerFactory = loggerFactory;
+        //    return new EventStoreClient(settings);
+        //}
     }
 }

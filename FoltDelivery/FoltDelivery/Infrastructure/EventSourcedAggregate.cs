@@ -9,9 +9,9 @@ namespace FoltDelivery.Infrastructure
         public List<DomainEvent> Changes { get; private set; }
         public int Version { get; protected set; }
 
-        public EventSourcedAggregate(Guid id)
+        public int InitialVersion { get; protected set; }
+        public EventSourcedAggregate(Guid id):base(id)
         {
-            Id = id;
             Changes = new List<DomainEvent>();
         }
 

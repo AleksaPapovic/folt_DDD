@@ -330,3 +330,4 @@ C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\obj\Debug\netcoreapp3.
 C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\bin\Debug\netcoreapp3.1\Microsoft.VisualStudio.CodeCoverage.Shim.dll
 C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\bin\Debug\netcoreapp3.1\xunit.assert.dll
 C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\bin\Debug\netcoreapp3.1\xunit.execution.dotnet.dll
+C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\bin\Debug\netcoreapp3.1\BCrypt.Net.dll

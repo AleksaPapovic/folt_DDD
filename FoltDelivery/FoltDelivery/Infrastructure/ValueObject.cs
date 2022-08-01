@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FoltDelivery.Model
+namespace FoltDelivery.Infrastructure
 {
     public abstract class ValueObject<T> where T : ValueObject<T>
     {

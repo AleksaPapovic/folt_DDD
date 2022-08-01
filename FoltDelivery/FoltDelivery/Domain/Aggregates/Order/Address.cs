@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using FoltDelivery.Model;
+using FoltDelivery.Infrastructure;
 
 namespace FoltDelivery.Domain.Aggregates.Order
 {

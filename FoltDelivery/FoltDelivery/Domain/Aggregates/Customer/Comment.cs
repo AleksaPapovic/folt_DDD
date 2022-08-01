@@ -1,7 +1,8 @@
-﻿using FoltDelivery.Model.Enums;
-using System;
+﻿using System;
+using FoltDelivery.Model.Enums;
+using FoltDelivery.Infrastructure;
 
-namespace FoltDelivery.Model
+namespace FoltDelivery.Domain.Aggregates.Customer
 {
     public class Comment : Entity
     {
@@ -9,16 +10,14 @@ namespace FoltDelivery.Model
         public int RestaurantId { get; set; }
         public String Text { get; set; }
         public int Rating { get; set; }
-        public int Commented { get; set; }
         public CommentStatus Status { get; set; }
         public int LogicalDeleted { get; set; }
 
-        public Comment() { }
+        public Comment(Guid id):base(id) { }
 
         public Comment(Guid id, int userId, int restaurantId, String text, int rating, CommentStatus status,
-            int logicalDeleted)
+            int logicalDeleted) : base(id)
         {
-            Id = id;
             UserId = userId;
             RestaurantId = restaurantId;
             Text = text;
