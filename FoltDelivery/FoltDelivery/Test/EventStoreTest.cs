@@ -1,140 +1,60 @@
-﻿using EventStore.ClientAPI;
-using FluentAssertions;
-using FoltDelivery.Infrastructure;
+﻿using FoltDelivery.API.Service;
 using System;
-using System.Text;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Xunit;
-using EventData = EventStore.ClientAPI.EventData;
 
 
 namespace FoltDelivery.Test
 {
+
+
     public class EventStoreTest
     {
-        // EVENTS
 
+        private OrderService _unitTesting = null;
 
-        public record ShoppingCartOpened(
-            Guid ShoppingCartId,
-            Guid ClientId
-        )
+        public EventStoreTest()
         {
-            public Guid ShoppingCartId { get; } = ShoppingCartId;
-            public Guid ClientId { get; } = ClientId;
+            if (_unitTesting == null)
+            {
+                _unitTesting = new OrderService();
+            }
         }
 
-        public record ProductItemAddedToShoppingCart(
-            Guid ShoppingCartId,
-            PricedProductItem ProductItem
-        )
-        {
-            public Guid ShoppingCartId { get; } = ShoppingCartId;
-            public PricedProductItem ProductItem { get; } = ProductItem;
-        }
+        [Fact]
+    public void Add()
+    {
+        //arrange
+        double a = 5;
+        double b = 3;
+        double expected = 8;
 
-        public record ProductItemRemovedFromShoppingCart(
-            Guid ShoppingCartId,
-            PricedProductItem ProductItem
-        )
-        {
-            public Guid ShoppingCartId { get; } = ShoppingCartId;
-            public PricedProductItem ProductItem { get; } = ProductItem;
-        }
+            //act
+            var actual = 3;
 
-        public record ShoppingCartConfirmed(
-            Guid ShoppingCartId,
-            DateTime ConfirmedAt
-        )
-        {
-            public Guid ShoppingCartId { get; } = ShoppingCartId;
-            public DateTime ConfirmedAt { get; } = ConfirmedAt;
-        }
-
-        public record ShoppingCartCanceled(
-            Guid ShoppingCartId,
-            DateTime CanceledAt
-        )
-        {
-            public Guid ShoppingCartId { get; } = ShoppingCartId;
-            public DateTime CanceledAt { get; } = CanceledAt;
-        }
-
-        // VALUE OBJECTS
-        public record PricedProductItem(
-            ProductItem ProductItem,
-            decimal UnitPrice
-        )
-        {
-            public Guid ProductId => ProductItem.ProductId;
-            public int Quantity => ProductItem.Quantity;
-
-            public decimal TotalPrice => Quantity * UnitPrice;
-            public ProductItem ProductItem { get; } = ProductItem;
-            public decimal UnitPrice { get; } = UnitPrice;
-        }
-
-        public record ProductItem(
-            Guid ProductId,
-            int Quantity
-        )
-        {
-            public Guid ProductId { get; } = ProductId;
-            public int Quantity { get; } = Quantity;
-        }
-
+        //Assert
+        Assert.Equal(expected, actual, 0);
+    }
 
         [Fact]
         public async Task GettingState_ForSequenceOfEvents_ShouldSucceed()
         {
-            //var shoppingCartId = Guid.NewGuid();
-            //var clientId = Guid.NewGuid();
-            //var shoesId = Guid.NewGuid();
-            //var tShirtId = Guid.NewGuid();
-            //var twoPairsOfShoes = new PricedProductItem(new ProductItem(shoesId, 2), 100);
-            //var pairOfShoes = new PricedProductItem(new ProductItem(shoesId, 1), 100);
-            //var tShirt = new PricedProductItem(new ProductItem(tShirtId, 1), 50);
 
-            //var events = new object[]
-            //{
-            //    new ShoppingCartOpened(shoppingCartId, clientId),
-            //    new ProductItemAddedToShoppingCart(shoppingCartId, twoPairsOfShoes),
-            //    new ProductItemAddedToShoppingCart(shoppingCartId, tShirt),
-            //    new ProductItemRemovedFromShoppingCart(shoppingCartId, pairOfShoes),
-            //    new ShoppingCartConfirmed(shoppingCartId, DateTime.UtcNow),
-            //    new ShoppingCartCanceled(shoppingCartId, DateTime.UtcNow)
-            //};
-            var events = new object[] { };
+        //    var client = new HttpClient(); // no HttpServer
 
-            var connection = ConnectionFactory.Create();
-            await connection.ConnectAsync();
-        
+        //    var request = new HttpRequestMessage
+        //    {
+        //        RequestUri = new Uri("http://localhost:50892/api/product/hello"),
+        //        Method = HttpMethod.Get
+        //    };
 
-            var streamName = "shopping_cart-1";
+        //    request.Headers.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 
-            var appendedEvents = 0l;
-
-            //const string streamName = "newstream";
-            const string eventType = "event-type";
-            const string data = "{ \"a\":\"2\"}";
-            const string metadata = "{}";
-
-            var eventPayload = new EventData(
-                eventId: Guid.NewGuid(),
-                type: eventType,
-                isJson: true,
-                data: Encoding.UTF8.GetBytes(data),
-                metadata: Encoding.UTF8.GetBytes(metadata)
-            );
-            var result = await connection.AppendToStreamAsync(streamName, ExpectedVersion.Any, eventPayload);
-
-            var exception = await Record.ExceptionAsync(async () =>
-            {
-                var result = await connection.AppendToStreamAsync(streamName, ExpectedVersion.Any, eventPayload);
-                appendedEvents = result.NextExpectedVersion;
-            });
-
-            exception.Should().BeNull();
+        //    using (var response = client.SendAsync(request).Result)
+        //    {
+        //        Assert.Equal(System.Net.HttpStatusCode.OK, response.StatusCode);
+        //    }
         }
     }
 }

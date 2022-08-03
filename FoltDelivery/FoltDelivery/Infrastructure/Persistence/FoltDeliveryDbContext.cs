@@ -1,7 +1,6 @@
-﻿using FoltDelivery.Model;
+﻿using System;
 using FoltDelivery.Model.Enums;
 using Microsoft.EntityFrameworkCore;
-using System;
 using FoltDelivery.Domain.Aggregates.Restaurant;
 using FoltDelivery.Domain.Aggregates.Customer;
 using FoltDelivery.Domain.Aggregates.Product;

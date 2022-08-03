@@ -1,10 +1,11 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
+using FoltDelivery.Infrastructure.Events;
 
 namespace FoltDelivery.Infrastructure
 {
-    public interface IEventHandler<TEvent>
-        where TEvent : DomainEvent
+    public interface IEventHandler<in TEvent> where TEvent : IEventEnvelope
     {
-        Task HandleAsync(TEvent @event);
+        Task HandleAsync(IEventEnvelope @event, CancellationToken cancel);
     }
 }

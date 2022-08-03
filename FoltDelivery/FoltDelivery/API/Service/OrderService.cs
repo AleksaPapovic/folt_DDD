@@ -13,7 +13,7 @@ namespace FoltDelivery.API.Service
         private IEventStore _eventStore;
         private IJwtUtils _jwtUtils;
         private IMapper _mapper;
-
+        public OrderService() { }
         public OrderService(IOrderRepository orderRepository, IEventStore eventStore, IJwtUtils jwtUtils, IMapper mapper)
         {
             _orderRepository = orderRepository;

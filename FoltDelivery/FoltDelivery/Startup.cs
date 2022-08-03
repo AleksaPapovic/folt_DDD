@@ -1,33 +1,26 @@
+using EventStore.ClientAPI;
+using FoltDelivery.API.Repository;
+using FoltDelivery.API.Service;
+using FoltDelivery.Infrastructure;
+using FoltDelivery.Infrastructure.Authorization;
+using FoltDelivery.Infrastructure.Commands;
+using FoltDelivery.Infrastructure.Events;
+using FoltDelivery.Infrastructure.Persistance;
+using FoltDelivery.Infrastructure.Queries;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using EventStore.Client;
-using EventStore.ClientAPI;
-using FoltDelivery.API.Handlers;
-using FoltDelivery.Infrastructure;
-using FoltDelivery.Infrastructure.Authorization;
-using FoltDelivery.Model;
-using FoltDelivery.API.Repository;
-using FoltDelivery.API.Service;
-using FoltDelivery.Domain.Aggregates.Order;
-using FoltDelivery.Domain.Events;
-using FoltDelivery.Infrastructure.Persistance;
-using Microsoft.EntityFrameworkCore.SqlServer;
-using Microsoft.EntityFrameworkCore.Design;
-using Microsoft.EntityFrameworkCore;
-using Npgsql.EntityFrameworkCore.PostgreSQL;
-using Microsoft.EntityFrameworkCore.Proxies;
+using FoltDelivery.Infrastructure.Tracing;
+using FoltDelivery.Infrastructure.Tracing.Causation;
+using FoltDelivery.Infrastructure.Tracing.Correlation;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Polly;
 
 namespace FoltDelivery
 {
@@ -39,7 +32,7 @@ namespace FoltDelivery
         }
 
         public IConfiguration Configuration { get; }
-
+        AsyncPolicy? asyncPolicy = null;
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
@@ -52,17 +45,29 @@ namespace FoltDelivery
                 connectionName: Configuration.GetValue<string>("EventStore:ConnectionName"));
 
             eventStoreConnection.ConnectAsync().GetAwaiter().GetResult();
+      
+            services.AddSingleton<ITracingScopeFactory, TracingScopeFactory>();
 
             services.AddSingleton(eventStoreConnection);
+        
+            services.AddScoped<IDataAccess, DataAccess>();
+            AddTracing(services);
+            services.AddSingleton(sp => new EventBus(
+           sp,
+           sp.GetRequiredService<ITracingScopeFactory>().CreateTraceScope,
+           asyncPolicy ?? Policy.NoOpAsync()
+       ));
+            services
+                .TryAddSingleton<IEventBus>(sp => sp.GetRequiredService<EventBus>());
+            services.AddMediatR(typeof(DataAccess).Assembly)
+                .AddScoped<ICommandBus, CommandBus>()
+                .AddScoped<IQueryBus, QueryBus>();
+                //.AddEventBus();
+            services
+                .AddScoped<IMediator, Mediator>()
+                .AddTransient<ServiceFactory>(sp => sp.GetRequiredService!);
 
-            services.AddAuthorization(options =>
-            {
-                //options.AddPolicy("Patient", policy => policy.Requirements.Add(new RoleRequirement("patient")));
-                //options.AddPolicy("Manager", policy => policy.Requirements.Add(new RoleRequirement("manager")));
-            });
-
-
-
+            services.AddAuthorization();
 
             services.AddCors(o => o.AddPolicy("CorsPolicy", builder =>
             {
@@ -95,8 +100,8 @@ namespace FoltDelivery
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IRestaurantRepository, RestaurantRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
-            services.AddTransient<IEventHandler<OrderPlaced>, OrderHandler>();
-            services.AddTransient<IEventHandler<OrderCreated>, OrderHandler>();
+            //services.AddTransient<IEventHandler<OrderPlaced>, OrderHandler>();
+            //services.AddTransient<IEventHandler<OrderCreated>, OrderHandler>();
 
             services.AddScoped<IEventStore, Infrastructure.EventStore>();
         }
@@ -116,7 +121,7 @@ namespace FoltDelivery
             app.UseRouting();
 
             app.UseCors("CorsPolicy");
-            
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -125,12 +130,26 @@ namespace FoltDelivery
             });
         }
 
-        //static EventStoreClient ConfigureEventStore(string connectionString, ILoggerFactory loggerFactory)
-        //{
-        //    var settings = EventStoreClientSettings.Create(connectionString);
-        //    settings.ConnectionName = "bookingApp";
-        //    settings.LoggerFactory = loggerFactory;
-        //    return new EventStoreClient(settings);
-        //}
+        public static IServiceCollection AddTracing( IServiceCollection services)
+        {
+            services.TryAddSingleton<ICorrelationIdFactory, GuidCorrelationIdFactory>();
+            services.TryAddSingleton<ICausationIdFactory, GuidCausationIdFactory>();
+            services.TryAddScoped<ICorrelationIdProvider, CorrelationIdProvider>();
+            services.TryAddScoped<ICausationIdProvider, CausationIdProvider>();
+            services.TryAddScoped<ITraceMetadataProvider, TraceMetadataProvider>();
+            services.TryAddSingleton<ITracingScopeFactory, TracingScopeFactory>();
+
+            services.TryAddScoped<Func<IServiceProvider, TraceMetadata?, TracingScope>>(sp =>
+                (scopedServiceProvider, traceMetadata) =>
+                    sp.GetRequiredService<ITracingScopeFactory>().CreateTraceScope(scopedServiceProvider, traceMetadata)
+            );
+
+            services.TryAddScoped<Func<IServiceProvider, IEventEnvelope?, TracingScope>>(sp =>
+                (scopedServiceProvider, eventEnvelope) => sp.GetRequiredService<ITracingScopeFactory>()
+                    .CreateTraceScope(scopedServiceProvider, eventEnvelope)
+            );
+
+            return services;
+        }
     }
 }

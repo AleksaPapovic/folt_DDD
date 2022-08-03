@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using FoltDelivery.Service;
+using FoltDelivery.API.Service;
 using Microsoft.AspNetCore.Http;
 
 namespace FoltDelivery.Infrastructure.Authorization
