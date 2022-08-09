@@ -1,11 +1,17 @@
-﻿using System;
-using FoltDelivery.Domain.Aggregates.OrderAggregate;
+﻿using FoltDelivery.Domain.Aggregates.OrderAggregate;
 using FoltDelivery.Infrastructure.Queries;
+using System;
 
 namespace FoltDelivery.API.Queries
 {
-    public class GetOrderQuery:IQuery<OrderAggregate>
+    public record GetOrderQuery(Guid OrderId) : IQuery<OrderAggregate>
     {
-        public Guid OrderId { get; set; }
+        public static GetOrderQuery Create(Guid orderId)
+        {
+            if (orderId == null)
+                throw new ArgumentOutOfRangeException(nameof(orderId));
+
+            return new GetOrderQuery(orderId);
+        }
     }
 }

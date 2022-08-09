@@ -20,6 +20,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Polly;
 using System;
+using System.Reflection;
 
 namespace FoltDelivery
 {
@@ -47,6 +48,7 @@ namespace FoltDelivery
                 connectionString: Configuration.GetValue<string>("EventStore:ConnectionString"),
                 builder: ConnectionSettings.Create().KeepReconnecting(),
                 connectionName: Configuration.GetValue<string>("EventStore:ConnectionName"));
+            
             services.AddSingleton(
                new EventStoreClient(EventStoreClientSettings.Create("esdb://localhost:2113?tls=false")));
             eventStoreConnection.ConnectAsync().GetAwaiter().GetResult();
@@ -96,7 +98,7 @@ namespace FoltDelivery
             services.AddScoped<IOrderRepository, OrderRepository>();
             //services.AddTransient<IEventHandler<OrderPlaced>, OrderHandler>();
             //services.AddTransient<IEventHandler<OrderCreated>, OrderHandler>();
-
+            //services = Infrastructure.Queries.Config.AddAllQueryHandlers(services);
             services.AddScoped<IEventStore, Infrastructure.EventStore>();
 
 
@@ -105,10 +107,7 @@ namespace FoltDelivery
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
-            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
-            // specifying the Swagger JSON endpoint.
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");

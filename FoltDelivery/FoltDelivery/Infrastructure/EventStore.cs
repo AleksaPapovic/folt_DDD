@@ -1,5 +1,4 @@
-﻿using EventStore.Client;
-using EventStore.ClientAPI;
+﻿using EventStore.ClientAPI;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -14,22 +13,16 @@ using StreamPosition = EventStore.ClientAPI.StreamPosition;
 
 namespace FoltDelivery.Infrastructure
 {
-
-
     public class EventStore : IEventStore
     {
         private IEventStoreConnection _esConn;
-        private readonly EventStoreClient _eventStore;
-
 
         private const string EventClrTypeHeader = "EventClrTypeName";
 
-        public EventStore(IEventStoreConnection esConn, EventStoreClient eventStore)
+        public EventStore(IEventStoreConnection esConn)
         {
-            _eventStore = eventStore ?? throw new ArgumentNullException(nameof(eventStore));
             _esConn = ConnectionFactory.Create();
             GetConnection();
-
         }
 
         public void CreateNewStream(string streamName, IEnumerable<DomainEvent> domainEvents)
@@ -41,7 +34,7 @@ namespace FoltDelivery.Infrastructure
         {
             var commitId = Guid.NewGuid();
             var eventsInStorageFormat = domainEvents.Select(e => MapToEventStoreStorageFormat(e, commitId, e.Id));
-            _esConn.AppendToStreamAsync(StreamName(streamName), expectedVersion ?? ExpectedVersion.Any, eventsInStorageFormat);
+            _esConn.AppendToStreamAsync(StreamName(streamName), expectedVersion ?? ExpectedVersion.Any, eventsInStorageFormat).ContinueWith((_) => { CloseConnection(); });
         }
 
         private EventData MapToEventStoreStorageFormat(object evnt, Guid commitId, Guid eventId)
@@ -63,16 +56,16 @@ namespace FoltDelivery.Infrastructure
         public async Task<List<DomainEvent>> GetStream(string streamName, long fromVersion, int toVersion)
         {
             List<DomainEvent> domainEvents = new List<DomainEvent>();
-            var readEvents = await _esConn.ReadStreamEventsForwardAsync(StreamName(streamName), 0, 10, true);
-
-            foreach (var evt in readEvents.Events)
+            Task<StreamEventsSlice> readEventsTask = _esConn.ReadStreamEventsForwardAsync(StreamName(streamName), 0, 10, true);
+            readEventsTask.ContinueWith((_) => { CloseConnection(); });
+            foreach (var evt in readEventsTask.Result.Events)
             {
-               domainEvents.Add(RebuildEvent1(evt));
+                domainEvents.Add(RebuildEvent(evt));
             }
             return domainEvents;
-        }   
+        }
 
-        private DomainEvent RebuildEvent1(ResolvedEvent eventStoreEvent)
+        private DomainEvent RebuildEvent(ResolvedEvent eventStoreEvent)
         {
             var metadata = eventStoreEvent.OriginalEvent.Metadata;
             var data = eventStoreEvent.OriginalEvent.Data;

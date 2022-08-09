@@ -1,14 +1,13 @@
-﻿using EventStore.ClientAPI;
+﻿using AutoMapper;
+using FoltDelivery.API.Commands;
 using FoltDelivery.API.DTO;
+using FoltDelivery.API.Queries;
 using FoltDelivery.API.Service;
 using FoltDelivery.Domain.Aggregates.OrderAggregate;
-using FoltDelivery.Domain.Aggregates.RestaurantAggregate;
-using FoltDelivery.Domain.Events;
 using FoltDelivery.Infrastructure;
+using FoltDelivery.Infrastructure.Commands;
+using FoltDelivery.Infrastructure.Queries;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -19,33 +18,36 @@ namespace FoltDelivery.API.Controllers
     [ApiController]
     public class OrderController : ControllerBase
     {
+        private readonly ICommandBus _commandBus;
+
+        private readonly IQueryBus _queryBus;
+
         private IOrderService _orderService;
 
         private IUserService _userService;
 
-        private IEventStore _eventStore;
+        private IMapper _mapper;
 
-        public OrderController(IOrderService orderService, IUserService userService, IEventStore eventStore)
+        public OrderController(ICommandBus commandBus,
+        IQueryBus queryBus, IOrderService orderService, IUserService userService,IMapper mapper)
         {
+            _commandBus = commandBus;
+            _queryBus = queryBus;
             _userService = userService;
-            _eventStore = eventStore;
+            _mapper = mapper;
             _orderService = orderService;
         }
 
-        public static int i = 0;
-
         [HttpGet]
-        public OrderAggregate GetOrder(GetOrderDTO order)
+        public async Task<OrderAggregate> GetOrder(GetOrderDTO order)
         {
-            return _orderService.GetOrder(order.Id);
+            return await _queryBus.Send<GetOrderQuery, OrderAggregate>(GetOrderQuery.Create(order.Id));
         }
 
         [HttpPost]
-        [Route("test")]
-        public OrderDTO CreateOrder( [FromBody] OrderDTO  newOrder)
+        public  void CreateOrder([FromBody] OrderDTO newOrder)
         {
-            return _orderService.CreateOrder(newOrder);
- 
+             _commandBus.Send(CreateOrderCommand.Create(newOrder));
         }
 
     }
