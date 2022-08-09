@@ -1,18 +1,21 @@
 ﻿using EventStore.ClientAPI;
+using FoltDelivery.API.DTO;
 using FoltDelivery.API.Service;
-using FoltDelivery.Domain.Aggregates.Order;
+using FoltDelivery.Domain.Aggregates.OrderAggregate;
+using FoltDelivery.Domain.Aggregates.RestaurantAggregate;
 using FoltDelivery.Domain.Events;
 using FoltDelivery.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace FoltDelivery.API.Controllers
 {
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class OrderController : ControllerBase
     {
@@ -32,27 +35,18 @@ namespace FoltDelivery.API.Controllers
         public static int i = 0;
 
         [HttpGet]
-        public async Task<IEnumerable<DomainEvent>> Get()
+        public OrderAggregate GetOrder(GetOrderDTO order)
         {
-
-            //return new string[] { "value1", "value2" };
-            List<OrderCreated> events = new List<OrderCreated>();
-            i = i + 1;
-            OrderCreated evt = new OrderCreated(new Guid("11223344-5566-7788-99AA-BBCCDDEEFF00"), new Guid("11223344-5566-7788-99AA-BBCCDDEEFF01"));
-            events.Add(evt);
-            //var data = Enumerable.Range(0, 100).Select(_ => CreateEvent());
-            _eventStore.AppendEventsToStream("test-0" + i, events, ExpectedVersion.Any);
-
-            return _eventStore.GetStream("test-0" + i, 0, 0);
+            return _orderService.GetOrder(order.Id);
         }
 
         [HttpPost]
-        public async Task<Order> CreateOrder(Order newOrder)
+        [Route("test")]
+        public OrderDTO CreateOrder( [FromBody] OrderDTO  newOrder)
         {
             return _orderService.CreateOrder(newOrder);
+ 
         }
-
-
 
     }
 }

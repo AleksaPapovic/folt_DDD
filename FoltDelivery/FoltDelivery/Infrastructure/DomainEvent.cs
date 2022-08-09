@@ -15,5 +15,7 @@ namespace FoltDelivery.Infrastructure
             Id = aggregateId;
             EventType = eventType;
         }
+
+      
     }
 }

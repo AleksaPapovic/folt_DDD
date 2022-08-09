@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using FoltDelivery.Domain.Aggregates.Customer;
+using FoltDelivery.Domain.Aggregates.CustomerAggregate;
 using FoltDelivery.Infrastructure.Persistance;
 
 namespace FoltDelivery.API.Repository

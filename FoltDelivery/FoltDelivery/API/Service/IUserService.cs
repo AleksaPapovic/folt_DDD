@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using FoltDelivery.Domain.Aggregates.Customer;
+using FoltDelivery.Domain.Aggregates.CustomerAggregate;
 using FoltDelivery.API.DTO;
 
 

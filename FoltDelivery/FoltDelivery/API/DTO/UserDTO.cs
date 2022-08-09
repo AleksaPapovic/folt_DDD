@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using FoltDelivery.Infrastructure;
 using FoltDelivery.Model.Enums;
-using FoltDelivery.Domain.Aggregates.Customer;
+using FoltDelivery.Domain.Aggregates.CustomerAggregate;
 
 namespace FoltDelivery.API.DTO
 {

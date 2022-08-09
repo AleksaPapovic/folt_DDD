@@ -1,8 +1,8 @@
-C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\bin\Debug\net5.0\testhost.dll
 C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\bin\Debug\net5.0\testhost.exe
-C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\bin\Debug\net5.0\Microsoft.TestPlatform.PlatformAbstractions.dll
+C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\bin\Debug\net5.0\testhost.dll
 C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\bin\Debug\net5.0\appsettings.Development.json
 C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\bin\Debug\net5.0\appsettings.json
+C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\bin\Debug\net5.0\Microsoft.TestPlatform.PlatformAbstractions.dll
 C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\bin\Debug\net5.0\FoltDelivery.exe
 C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\bin\Debug\net5.0\FoltDelivery.deps.json
 C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\bin\Debug\net5.0\FoltDelivery.runtimeconfig.json

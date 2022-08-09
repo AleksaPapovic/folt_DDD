@@ -8,10 +8,13 @@ namespace FoltDelivery.Domain.Events
         public Guid OrderId { get; private set; }
         public Guid CustomerId { get; private set; }
 
-        public OrderCreated(Guid orderId, Guid customerId):base(orderId, "OrderCreated")
+        public Guid RestaurantId { get; private set; }
+
+        public OrderCreated(Guid orderId, Guid customerId, Guid restaurantId) :base(orderId, "OrderCreated")
         {
             OrderId = orderId;
             CustomerId = customerId;
+            RestaurantId = restaurantId;
         }
     }
 }

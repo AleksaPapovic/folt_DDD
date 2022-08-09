@@ -1,13 +1,13 @@
 ﻿using System;
-using FoltDelivery.Domain.Aggregates.Order;
+using FoltDelivery.Domain.Aggregates.OrderAggregate;
 
 namespace FoltDelivery.API.Repository
 {
-    public interface IOrderRepository : IGenericEventRepository<Order, OrderSnapshot>
+    public interface IOrderRepository : IGenericEventRepository<OrderAggregate, OrderSnapshot>
     {
-        public Order FindBy(Guid id);
-        public void Add(Order order);
-        public void Save(Order order);
-        public void SaveSnapshot(OrderSnapshot snapshot, Order order);
+        public OrderAggregate FindBy(Guid id);
+        public void Add(OrderAggregate order);
+        public void Save(OrderAggregate order);
+        public void SaveSnapshot(OrderSnapshot snapshot, OrderAggregate order);
     }
 }

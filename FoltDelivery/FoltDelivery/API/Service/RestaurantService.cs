@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using AutoMapper;
-using FoltDelivery.Domain.Aggregates.Restaurant;
+using FoltDelivery.Domain.Aggregates.RestaurantAggregate;
 using FoltDelivery.Infrastructure.Authorization;
 using FoltDelivery.API.Repository;
 

@@ -3,7 +3,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using FoltDelivery.Domain.Aggregates.Customer;
+using FoltDelivery.Domain.Aggregates.CustomerAggregate;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 

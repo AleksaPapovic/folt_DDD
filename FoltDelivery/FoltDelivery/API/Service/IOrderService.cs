@@ -1,9 +1,13 @@
-﻿using FoltDelivery.Domain.Aggregates.Order;
+﻿using System;
+using System.Threading.Tasks;
+using FoltDelivery.API.DTO;
+using FoltDelivery.Domain.Aggregates.OrderAggregate;
 
 namespace FoltDelivery.API.Service
 {
     public interface IOrderService
     {
-        public Order CreateOrder(Order newOrder);
+        public OrderAggregate GetOrder(Guid orderId);
+        public OrderDTO CreateOrder(OrderDTO newOrder);
     }
 }

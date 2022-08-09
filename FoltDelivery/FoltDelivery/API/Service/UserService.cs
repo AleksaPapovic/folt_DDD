@@ -6,7 +6,7 @@ using FoltDelivery.API.DTO;
 using FoltDelivery.API.Repository;
 using FoltDelivery.API.Exception;
 using FoltDelivery.Model.Enums;
-using FoltDelivery.Domain.Aggregates.Customer;
+using FoltDelivery.Domain.Aggregates.CustomerAggregate;
 
 namespace FoltDelivery.API.Service
 {

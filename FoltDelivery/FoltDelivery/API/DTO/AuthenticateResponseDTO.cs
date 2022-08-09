@@ -1,5 +1,5 @@
 ﻿using System;
-using FoltDelivery.Domain.Aggregates.Customer;
+using FoltDelivery.Domain.Aggregates.CustomerAggregate;
 using FoltDelivery.Model.Enums;
 
 namespace FoltDelivery.API.DTO

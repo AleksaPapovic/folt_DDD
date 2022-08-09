@@ -1,4 +1,5 @@
 ﻿using FoltDelivery.Infrastructure;
+using FoltDelivery.Infrastructure.Aggregate;
 using System;
 
 namespace FoltDelivery.API.Repository
@@ -24,7 +25,7 @@ namespace FoltDelivery.API.Repository
                 fromEventNumber = snapshot.Version + 1; // load only events after snapshot
             }
 
-            var stream = _eventStore.GetStream(streamName, fromEventNumber, toEventNumber);
+            var stream = _eventStore.GetStream(streamName, fromEventNumber, toEventNumber).Result;
 
             T aggregate = null;
             if (snapshot != null)
@@ -77,7 +78,7 @@ namespace FoltDelivery.API.Repository
             _eventStore.AddSnapshot<S>(streamName, snapshot);
         }
 
-        private string StreamNameFor(Guid id)
+        public string StreamNameFor(Guid id)
         {
             // Stream per-aggregate: {AggregateType}-{AggregateId}
             return string.Format("{0}-{1}", typeof(T).Name, id);

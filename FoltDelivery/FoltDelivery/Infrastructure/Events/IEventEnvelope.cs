@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics;
-using FoltDelivery.Infrastructure.Tracing;
 
 namespace FoltDelivery.Infrastructure.Events
 {
@@ -7,8 +6,7 @@ namespace FoltDelivery.Infrastructure.Events
     public record EventMetadata(
         string EventId,
         ulong StreamPosition,
-        ulong LogPosition,
-        TraceMetadata? Trace
+        ulong LogPosition
     );
 
 

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using AutoMapper;
 using FoltDelivery.Infrastructure.Authorization;
-using FoltDelivery.Domain.Aggregates.Restaurant;
+using FoltDelivery.Domain.Aggregates.RestaurantAggregate;
 using FoltDelivery.API.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;

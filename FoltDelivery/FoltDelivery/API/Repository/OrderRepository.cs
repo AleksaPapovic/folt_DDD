@@ -1,10 +1,13 @@
-﻿using FoltDelivery.Domain.Aggregates.Order;
+﻿using EventStore.ClientAPI;
+using FoltDelivery.Domain.Aggregates.OrderAggregate;
+using FoltDelivery.Domain.Events;
 using FoltDelivery.Infrastructure;
 using System;
+using System.Collections.Generic;
 
 namespace FoltDelivery.API.Repository
 {
-    public class OrderRepository : GenericEventRepository<Order,OrderSnapshot>, IOrderRepository
+    public class OrderRepository : GenericEventRepository<OrderAggregate,OrderSnapshot>, IOrderRepository
     {
         private readonly IEventStore _eventStore;
 
@@ -13,12 +16,12 @@ namespace FoltDelivery.API.Repository
             _eventStore = eventStore;
         }
 
-        public Order FindBy(Guid id)
+        public OrderAggregate FindBy(Guid id)
         {
             var streamName = StreamNameFor(id);
 
-            var fromEventNumber = 0;
-            var toEventNumber = int.MaxValue;
+            long fromEventNumber = 0;
+            int toEventNumber = int.MaxValue;
 
             var snapshot = _eventStore.GetLatestSnapshot<OrderSnapshot>(streamName);
             if (snapshot != null)
@@ -26,16 +29,16 @@ namespace FoltDelivery.API.Repository
                 fromEventNumber = snapshot.Version + 1; // load only events after snapshot
             }
 
-            var stream = _eventStore.GetStream(streamName, fromEventNumber, toEventNumber);
+            var stream = _eventStore.GetStream(streamName, fromEventNumber, toEventNumber).Result;
 
-            Order order = null;
+            OrderAggregate order = null;
             if (snapshot != null)
             {
-                order = new Order(snapshot);
+                order = new OrderAggregate(snapshot);
             }
             else
             {
-                order = new Order();
+                order = new OrderAggregate();
             }
 
 
@@ -44,18 +47,20 @@ namespace FoltDelivery.API.Repository
                 order.Apply(@event);
             }
 
-            return order;
+             return order;
         }
 
-
-        public void Add(Order order)
+        public static int i = 0;
+        public void Add(OrderAggregate order)
         {
-            var streamName = StreamNameFor(order.Id);
+            string streamName = StreamNameFor(order.Id);
 
             _eventStore.CreateNewStream(streamName, order.Changes);
+
+            _eventStore.AppendEventsToStream(streamName, order.Changes, ExpectedVersion.Any);
         }
 
-        public void Save(Order order)
+        public void Save(OrderAggregate order)
         {
             var streamName = StreamNameFor(order.Id);
             var expectedVersion = GetExpectedVersion(order.InitialVersion);
@@ -75,17 +80,17 @@ namespace FoltDelivery.API.Repository
             }
         }
 
-        public void SaveSnapshot(OrderSnapshot snapshot, Order order)
+        public void SaveSnapshot(OrderSnapshot snapshot, OrderAggregate order)
         {
             var streamName = StreamNameFor(order.Id);
             _eventStore.AddSnapshot<OrderSnapshot>(streamName, snapshot);
         }
 
-        private string StreamNameFor(Guid id)
-        {
-            // Stream per-aggregate: {AggregateType}-{AggregateId}
-            return string.Format("{0}-{1}", typeof(Order).Name, id);
-        }
+        //private string StreamNameFor(Guid id)
+        //{
+        //    // Stream per-aggregate: {AggregateType}-{AggregateId}
+        //    return string.Format("{0}-{1}", typeof(OrderAggregate).Name, id);
+        //}
 
 
 

@@ -1,4 +1,4 @@
-﻿using FoltDelivery.Domain.Aggregates.Customer;
+﻿using FoltDelivery.Domain.Aggregates.CustomerAggregate;
 
 namespace FoltDelivery.API.Repository
 {

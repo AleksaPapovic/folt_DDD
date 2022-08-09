@@ -1,9 +1,11 @@
+using EventStore.Client;
 using EventStore.ClientAPI;
 using FoltDelivery.API.Repository;
 using FoltDelivery.API.Service;
 using FoltDelivery.Infrastructure;
 using FoltDelivery.Infrastructure.Authorization;
 using FoltDelivery.Infrastructure.Commands;
+using FoltDelivery.Infrastructure.DataAccess;
 using FoltDelivery.Infrastructure.Events;
 using FoltDelivery.Infrastructure.Persistance;
 using FoltDelivery.Infrastructure.Queries;
@@ -13,14 +15,11 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using System;
-using FoltDelivery.Infrastructure.Tracing;
-using FoltDelivery.Infrastructure.Tracing.Causation;
-using FoltDelivery.Infrastructure.Tracing.Correlation;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using Polly;
+using System;
 
 namespace FoltDelivery
 {
@@ -32,37 +31,39 @@ namespace FoltDelivery
         }
 
         public IConfiguration Configuration { get; }
-        AsyncPolicy? asyncPolicy = null;
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+            });
+
             services.AddControllers();
 
             var eventStoreConnection = EventStoreConnection.Create(
                 connectionString: Configuration.GetValue<string>("EventStore:ConnectionString"),
                 builder: ConnectionSettings.Create().KeepReconnecting(),
                 connectionName: Configuration.GetValue<string>("EventStore:ConnectionName"));
-
+            services.AddSingleton(
+               new EventStoreClient(EventStoreClientSettings.Create("esdb://localhost:2113?tls=false")));
             eventStoreConnection.ConnectAsync().GetAwaiter().GetResult();
-      
-            services.AddSingleton<ITracingScopeFactory, TracingScopeFactory>();
 
             services.AddSingleton(eventStoreConnection);
-        
+
             services.AddScoped<IDataAccess, DataAccess>();
-            AddTracing(services);
+
             services.AddSingleton(sp => new EventBus(
-           sp,
-           sp.GetRequiredService<ITracingScopeFactory>().CreateTraceScope,
-           asyncPolicy ?? Policy.NoOpAsync()
-       ));
+           sp
+           ));
             services
                 .TryAddSingleton<IEventBus>(sp => sp.GetRequiredService<EventBus>());
             services.AddMediatR(typeof(DataAccess).Assembly)
                 .AddScoped<ICommandBus, CommandBus>()
                 .AddScoped<IQueryBus, QueryBus>();
-                //.AddEventBus();
+            //.AddEventBus();
             services
                 .AddScoped<IMediator, Mediator>()
                 .AddTransient<ServiceFactory>(sp => sp.GetRequiredService!);
@@ -75,21 +76,14 @@ namespace FoltDelivery
                     .AllowAnyOrigin()
                     .AllowAnyMethod()
                     .AllowAnyHeader();
-                //.AllowCredentials();
             }));
 
             services.AddAutoMapper(typeof(Startup));
-
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "FoltDelivery", Version = "v1" });
-            });
 
             services.AddDbContext<FoltDeliveryDbContext>(options =>
             {
                 options.UseNpgsql(Configuration.GetConnectionString("FoltAppCon"),
                     assembly => assembly.MigrationsAssembly(typeof(FoltDeliveryDbContext).Assembly.FullName)).UseLazyLoadingProxies();
-                //assembly => assembly.MigrationsAssembly(typeof(HospitalDbContext).Assembly.FullName));
             });
 
             services.AddScoped<IJwtUtils, JwtUtils>();
@@ -104,17 +98,21 @@ namespace FoltDelivery
             //services.AddTransient<IEventHandler<OrderCreated>, OrderHandler>();
 
             services.AddScoped<IEventStore, Infrastructure.EventStore>();
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
+            // Enable middleware to serve generated Swagger as a JSON endpoint.
+            app.UseSwagger();
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
+            // specifying the Swagger JSON endpoint.
+            app.UseSwaggerUI(c =>
             {
-                app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "FoltDelivery v1"));
-            }
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+            });
 
             app.UseHttpsRedirection();
 
@@ -130,26 +128,5 @@ namespace FoltDelivery
             });
         }
 
-        public static IServiceCollection AddTracing( IServiceCollection services)
-        {
-            services.TryAddSingleton<ICorrelationIdFactory, GuidCorrelationIdFactory>();
-            services.TryAddSingleton<ICausationIdFactory, GuidCausationIdFactory>();
-            services.TryAddScoped<ICorrelationIdProvider, CorrelationIdProvider>();
-            services.TryAddScoped<ICausationIdProvider, CausationIdProvider>();
-            services.TryAddScoped<ITraceMetadataProvider, TraceMetadataProvider>();
-            services.TryAddSingleton<ITracingScopeFactory, TracingScopeFactory>();
-
-            services.TryAddScoped<Func<IServiceProvider, TraceMetadata?, TracingScope>>(sp =>
-                (scopedServiceProvider, traceMetadata) =>
-                    sp.GetRequiredService<ITracingScopeFactory>().CreateTraceScope(scopedServiceProvider, traceMetadata)
-            );
-
-            services.TryAddScoped<Func<IServiceProvider, IEventEnvelope?, TracingScope>>(sp =>
-                (scopedServiceProvider, eventEnvelope) => sp.GetRequiredService<ITracingScopeFactory>()
-                    .CreateTraceScope(scopedServiceProvider, eventEnvelope)
-            );
-
-            return services;
-        }
     }
 }

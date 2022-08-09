@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using FoltDelivery.Domain.Aggregates.Customer;
-using FoltDelivery.Domain.Aggregates.Order;
-using FoltDelivery.Domain.Aggregates.Product;
-using FoltDelivery.Domain.Aggregates.Restaurant;
+using FoltDelivery.Domain.Aggregates.CustomerAggregate;
+using FoltDelivery.Domain.Aggregates.OrderAggregate;
+using FoltDelivery.Domain.Aggregates.ProductAggregate;
+using FoltDelivery.Domain.Aggregates.RestaurantAggregate;
 using FoltDelivery.API.DTO;
 
 namespace Agents.API.Mapper
@@ -12,8 +12,8 @@ namespace Agents.API.Mapper
         public MapperProfile()
         {
             CreateMap<UserDTO, User>().ReverseMap();
-            CreateMap<OrderDTO, Order>().ReverseMap();
-            CreateMap<ArticleDTO, Article>().ReverseMap();
+            CreateMap<OrderDTO, OrderAggregate>().ReverseMap();
+            CreateMap<ProductDTO, Product>().ReverseMap();
             CreateMap<RestaurantDTO, Restaurant>().ReverseMap();
         }
     }

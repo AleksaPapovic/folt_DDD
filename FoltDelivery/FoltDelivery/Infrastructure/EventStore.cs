@@ -1,14 +1,16 @@
-﻿using System;
+﻿using EventStore.Client;
+using EventStore.ClientAPI;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using EventStore.ClientAPI;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using EventData = EventStore.ClientAPI.EventData;
 using ResolvedEvent = EventStore.ClientAPI.ResolvedEvent;
 using StreamPosition = EventStore.ClientAPI.StreamPosition;
+
 
 namespace FoltDelivery.Infrastructure
 {
@@ -17,11 +19,14 @@ namespace FoltDelivery.Infrastructure
     public class EventStore : IEventStore
     {
         private IEventStoreConnection _esConn;
+        private readonly EventStoreClient _eventStore;
+
 
         private const string EventClrTypeHeader = "EventClrTypeName";
 
-        public EventStore(IEventStoreConnection esConn)
+        public EventStore(IEventStoreConnection esConn, EventStoreClient eventStore)
         {
+            _eventStore = eventStore ?? throw new ArgumentNullException(nameof(eventStore));
             _esConn = ConnectionFactory.Create();
             GetConnection();
 
@@ -55,19 +60,29 @@ namespace FoltDelivery.Infrastructure
             return new EventData(eventId, evnt.GetType().Name, isJson, data, metadata);
         }
 
-        public IEnumerable<DomainEvent> GetStream(string streamName, int fromVersion, int toVersion)
+        public async Task<List<DomainEvent>> GetStream(string streamName, long fromVersion, int toVersion)
         {
-            var amount = (toVersion - fromVersion) + 1;
-            var eventsTask =
-                _esConn.ReadStreamEventsForwardAsync(StreamName(streamName), fromVersion, amount, false);
-            eventsTask.ContinueWith((_) =>
+            List<DomainEvent> domainEvents = new List<DomainEvent>();
+            var readEvents = await _esConn.ReadStreamEventsForwardAsync(StreamName(streamName), 0, 10, true);
+
+            foreach (var evt in readEvents.Events)
             {
-                CloseConnection();
-            });
-            return eventsTask.Result.Events.Select(e => (DomainEvent)RebuildEvent(e));
+               domainEvents.Add(RebuildEvent1(evt));
+            }
+            return domainEvents;
+        }   
+
+        private DomainEvent RebuildEvent1(ResolvedEvent eventStoreEvent)
+        {
+            var metadata = eventStoreEvent.OriginalEvent.Metadata;
+            var data = eventStoreEvent.OriginalEvent.Data;
+            var typeOfDomainEvent = JObject.Parse(Encoding.UTF8.GetString(metadata)).Property(EventClrTypeHeader).Value;
+            DomainEvent rebuiltEvent = (DomainEvent)JsonConvert.DeserializeObject(Encoding.UTF8.GetString(data), Type.GetType((string)typeOfDomainEvent));
+            return rebuiltEvent;
         }
 
-        private object RebuildEvent(ResolvedEvent eventStoreEvent)
+
+        private object RebuildSnapshot(ResolvedEvent eventStoreEvent)
         {
             var metadata = eventStoreEvent.OriginalEvent.Metadata;
             var data = eventStoreEvent.OriginalEvent.Data;
@@ -87,9 +102,9 @@ namespace FoltDelivery.Infrastructure
         public T GetLatestSnapshot<T>(string streamName) where T : class
         {
             var stream = SnapshotStreamNameFor(streamName);
-            var amountToFetch = 1; 
+            var amountToFetch = 1;
             var ev = _esConn.ReadStreamEventsBackwardAsync(stream, StreamPosition.End, amountToFetch, false);
-            return ev.Result.Events.Any() ? (T)RebuildEvent(ev.Result.Events.Single()) : null;
+            return ev.Result.Events.Any() ? (T)RebuildSnapshot(ev.Result.Events.Single()) : null;
         }
 
         private string SnapshotStreamNameFor(string streamName)

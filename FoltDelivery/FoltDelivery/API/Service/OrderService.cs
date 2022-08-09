@@ -1,8 +1,11 @@
-﻿using AutoMapper;
+﻿using System;
+using AutoMapper;
+using FoltDelivery.API.DTO;
 using FoltDelivery.API.Repository;
-using FoltDelivery.Domain.Aggregates.Order;
+using FoltDelivery.Domain.Aggregates.OrderAggregate;
 using FoltDelivery.Infrastructure;
 using FoltDelivery.Infrastructure.Authorization;
+
 
 namespace FoltDelivery.API.Service
 {
@@ -22,10 +25,15 @@ namespace FoltDelivery.API.Service
             _mapper = mapper;
         }
 
-        public Order CreateOrder(Order newOrder)
+        public OrderAggregate GetOrder(Guid orderId)
         {
-            //Order order = new Order(newOrder);
-            //_orderRepository.Add(order);
+            return _orderRepository.FindBy(orderId);
+        }
+
+        public OrderDTO CreateOrder(OrderDTO newOrder)
+        {
+            OrderAggregate order = new OrderAggregate(newOrder);
+           _orderRepository.Add(order);
             return newOrder;
         }
     }

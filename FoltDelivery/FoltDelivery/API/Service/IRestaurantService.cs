@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using FoltDelivery.Domain.Aggregates.Restaurant;
+using FoltDelivery.Domain.Aggregates.RestaurantAggregate;
 
 namespace FoltDelivery.API.Service
 {

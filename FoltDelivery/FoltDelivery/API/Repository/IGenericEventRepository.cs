@@ -1,5 +1,5 @@
 ﻿using System;
-using FoltDelivery.Domain.Aggregates.Order;
+using FoltDelivery.Domain.Aggregates.OrderAggregate;
 
 namespace FoltDelivery.API.Repository
 {

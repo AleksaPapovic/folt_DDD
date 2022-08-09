@@ -4,7 +4,6 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
-using FoltDelivery.Infrastructure.Tracing;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Polly;
@@ -14,19 +13,13 @@ namespace FoltDelivery.Infrastructure.Events
     public class EventBus : IEventBus 
     {
         private readonly IServiceProvider serviceProvider;
-        private readonly Func<IServiceProvider, IEventEnvelope?, TracingScope> createTracingScope;
-        private readonly AsyncPolicy retryPolicy;
         private static readonly ConcurrentDictionary<Type, MethodInfo> PublishMethods = new();
 
         public EventBus(
-            IServiceProvider serviceProvider,
-            Func<IServiceProvider, IEventEnvelope?, TracingScope> createTracingScope,
-            AsyncPolicy retryPolicy
+            IServiceProvider serviceProvider
         )
         {
             this.serviceProvider = serviceProvider;
-            this.createTracingScope = createTracingScope;
-            this.retryPolicy = retryPolicy;
         }
 
         private async Task Publish<TEvent>(IEventEnvelope @event, CancellationToken ct)
@@ -37,14 +30,6 @@ namespace FoltDelivery.Infrastructure.Events
 
             var eventHandlers =
                 scope.ServiceProvider.GetServices<IEventHandler<IEventEnvelope>>();
-
-            foreach (var eventHandler in eventHandlers)
-            {
-                await retryPolicy.ExecuteAsync(async token =>
-                {
-                    await eventHandler.HandleAsync(@event, token);
-                }, ct);
-            }
         }
 
         public async Task Publish(IEventEnvelope eventEnvelope, CancellationToken ct)
@@ -72,9 +57,7 @@ namespace FoltDelivery.Infrastructure.Events
         public static IServiceCollection AddEventBus(this IServiceCollection services, AsyncPolicy? asyncPolicy = null)
         {
             services.AddSingleton(sp => new EventBus(
-                sp,
-                sp.GetRequiredService<ITracingScopeFactory>().CreateTraceScope,
-                asyncPolicy ?? Policy.NoOpAsync()
+                sp
             ));
             services
                 .TryAddSingleton<IEventBus>(sp => sp.GetRequiredService<EventBus>());

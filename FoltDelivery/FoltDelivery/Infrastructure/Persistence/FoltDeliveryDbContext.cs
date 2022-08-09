@@ -1,9 +1,9 @@
 ﻿using System;
 using FoltDelivery.Model.Enums;
 using Microsoft.EntityFrameworkCore;
-using FoltDelivery.Domain.Aggregates.Restaurant;
-using FoltDelivery.Domain.Aggregates.Customer;
-using FoltDelivery.Domain.Aggregates.Product;
+using FoltDelivery.Domain.Aggregates.RestaurantAggregate;
+using FoltDelivery.Domain.Aggregates.CustomerAggregate;
+using FoltDelivery.Domain.Aggregates.ProductAggregate;
 
 namespace FoltDelivery.Infrastructure.Persistance
 {
@@ -76,7 +76,7 @@ namespace FoltDelivery.Infrastructure.Persistance
 
             #region Products
 
-            modelBuilder.Entity<Article>(products =>
+            modelBuilder.Entity<Product>(products =>
             {
                 products.HasData(
                     new
@@ -85,7 +85,7 @@ namespace FoltDelivery.Infrastructure.Persistance
                         Name = "Vojvodjanska",
                         RestaurantMenuId = new Guid("11223344-5566-7788-99AA-BBCCDDEEFF15"),
                         Price = 1300.0,
-                        Type = ArticleType.DRINK,
+                        Type = ProductType.DRINK,
                         RestaurantId = new Guid("11223344-5566-7788-99AA-BBCCDDEEFF00"),
                         Quantity = 1,
                         Description = "Pica sa tradicijom",
@@ -100,7 +100,7 @@ namespace FoltDelivery.Infrastructure.Persistance
                         Id = new Guid("11223344-5566-7788-99AA-BBCCDDEEFF16"),
                         Name = "Vojvodjanska",
                         Price = 1300.0,
-                        Type = ArticleType.DRINK,
+                        Type = ProductType.DRINK,
                         RestaurantMenuId = new Guid("11223344-5566-7788-99AA-BBCCDDEEFF15"),
                         RestaurantId = new Guid("11223344-5566-7788-99AA-BBCCDDEEFF00"),
                         Quantity = 1,

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using FoltDelivery.Model.Enums;
-using FoltDelivery.Domain.Aggregates.Customer;
+using FoltDelivery.Domain.Aggregates.CustomerAggregate;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
