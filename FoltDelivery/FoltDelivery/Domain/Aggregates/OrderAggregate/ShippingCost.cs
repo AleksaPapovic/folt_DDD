@@ -7,21 +7,21 @@ namespace FoltDelivery.Domain.Aggregates.OrderAggregate
 {
     public class ShippingCost : ValueObject<ShippingCost>, IComparable<ShippingCost>
     {
-        public decimal Price { get; private set; }
+        public Double Price { get; private set; }
 
         public ShippingCost()
-            : this(0m)
+            : this(0)
         {
         }
 
-        public ShippingCost(decimal price)
+        public ShippingCost(Double price)
         {
             ThrowExceptionIfNotValid(price);
 
             Price = price;
         }
 
-        private void ThrowExceptionIfNotValid(decimal price)
+        private void ThrowExceptionIfNotValid(Double price)
         {
             if (price < 0)
                 throw new ArgumentException("Shipping cost cannot be a negative price");

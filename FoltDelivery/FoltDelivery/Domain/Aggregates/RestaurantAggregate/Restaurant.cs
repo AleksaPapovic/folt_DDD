@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using FoltDelivery.Model.Enums;
 using FoltDelivery.Infrastructure;
+using FoltDelivery.Infrastructure.Aggregate;
 
 namespace FoltDelivery.Domain.Aggregates.RestaurantAggregate
 {
-    public class Restaurant : Entity
+    public class Restaurant : EventSourcedAggregate
     {
         public String Name { get; set; }
         public String Type { get; set; }
@@ -15,6 +16,7 @@ namespace FoltDelivery.Domain.Aggregates.RestaurantAggregate
         public int LogoId { get; set; }
         public Boolean Deleted { get; set; }
 
+        public Restaurant() : base(Guid.NewGuid()) { }
         public Restaurant(Guid id) : base(id)
         {
         }
@@ -41,5 +43,9 @@ namespace FoltDelivery.Domain.Aggregates.RestaurantAggregate
             Deleted = restaurant.Deleted;
         }
 
+        public override void Apply(DomainEvent changes)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

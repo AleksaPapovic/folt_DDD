@@ -1,11 +1,12 @@
 ﻿using FoltDelivery.Infrastructure;
+using FoltDelivery.Infrastructure.Aggregate;
 using FoltDelivery.Model.Enums;
 using System;
 using System.Collections.Generic;
 
 namespace FoltDelivery.Domain.Aggregates.CustomerAggregate
 {
-    public class User : Entity
+    public class User : EventSourcedAggregate
     {
         public String Username { get; set; }
         public String Password { get; set; }
@@ -66,6 +67,11 @@ namespace FoltDelivery.Domain.Aggregates.CustomerAggregate
             Type = user.Type;
             LogicalDeleted = user.LogicalDeleted;
             Blocked = user.Blocked;
+        }
+
+        public override void Apply(DomainEvent changes)
+        {
+            throw new NotImplementedException();
         }
     }
 }

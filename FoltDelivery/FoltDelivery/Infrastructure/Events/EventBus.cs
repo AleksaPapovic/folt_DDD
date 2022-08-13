@@ -22,7 +22,7 @@ namespace FoltDelivery.Infrastructure.Events
             this.serviceProvider = serviceProvider;
         }
 
-        private async Task Publish<TEvent>(IEventEnvelope @event, CancellationToken ct)
+        private void Publish<TEvent>(IEventEnvelope @event, CancellationToken ct)
         {
             //var eventEnvelope = @event as IEventEnvelope; //IEventEnvelope
             using var scope = serviceProvider.CreateScope();
@@ -54,7 +54,7 @@ namespace FoltDelivery.Infrastructure.Events
 
     public static class EventBusExtensions
     {
-        public static IServiceCollection AddEventBus(this IServiceCollection services, AsyncPolicy? asyncPolicy = null)
+        public static IServiceCollection AddEventBus(this IServiceCollection services, AsyncPolicy asyncPolicy = null)
         {
             services.AddSingleton(sp => new EventBus(
                 sp

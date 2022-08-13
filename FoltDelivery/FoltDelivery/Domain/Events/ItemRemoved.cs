@@ -1,4 +1,5 @@
-﻿using FoltDelivery.Infrastructure;
+﻿using FoltDelivery.API.DTO;
+using FoltDelivery.Infrastructure;
 using System;
 
 namespace FoltDelivery.Domain.Events
@@ -8,10 +9,10 @@ namespace FoltDelivery.Domain.Events
         public Guid CustomerId { get; private set; }
         public Guid ItemId { get; private set; }
 
-        public ItemRemoved(Guid orderId, Guid customerId, Guid itemId) : base(orderId, "ItemRemoved")
+        public ItemRemoved(OrderItemsUpdateDTO removedItem) : base(removedItem.OrderId, "ItemRemoved")
         {
-            ItemId = itemId;
-            CustomerId = customerId;
+            ItemId = removedItem.Id;
+            CustomerId = removedItem.CustomerId;
         }
     }
 }

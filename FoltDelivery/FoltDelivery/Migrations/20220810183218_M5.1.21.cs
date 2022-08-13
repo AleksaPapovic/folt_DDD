@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FoltDelivery.Migrations
 {
-    public partial class FirstM : Migration
+    public partial class M5121 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -74,6 +74,8 @@ namespace FoltDelivery.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
+                    Version = table.Column<int>(nullable: false),
+                    InitialVersion = table.Column<int>(nullable: false),
                     Username = table.Column<string>(nullable: true),
                     Password = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: true),
@@ -103,10 +105,12 @@ namespace FoltDelivery.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Product",
+                name: "Products",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
+                    Version = table.Column<int>(nullable: false),
+                    InitialVersion = table.Column<int>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     Price = table.Column<double>(nullable: false),
                     Type = table.Column<int>(nullable: false),
@@ -119,9 +123,9 @@ namespace FoltDelivery.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Product", x => x.Id);
+                    table.PrimaryKey("PK_Products", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Product_RestaurantMenu_RestaurantMenuId",
+                        name: "FK_Products_RestaurantMenu_RestaurantMenuId",
                         column: x => x.RestaurantMenuId,
                         principalTable: "RestaurantMenu",
                         principalColumn: "Id",
@@ -133,6 +137,8 @@ namespace FoltDelivery.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
+                    Version = table.Column<int>(nullable: false),
+                    InitialVersion = table.Column<int>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     Type = table.Column<string>(nullable: true),
                     MenuId = table.Column<Guid>(nullable: true),
@@ -154,6 +160,61 @@ namespace FoltDelivery.Migrations
                         name: "FK_Restaurants_RestaurantMenu_MenuId",
                         column: x => x.MenuId,
                         principalTable: "RestaurantMenu",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DomainEvent",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    EventType = table.Column<string>(nullable: true),
+                    Version = table.Column<int>(nullable: false),
+                    ProductId = table.Column<Guid>(nullable: true),
+                    ProductId1 = table.Column<Guid>(nullable: true),
+                    RestaurantId = table.Column<Guid>(nullable: true),
+                    RestaurantId1 = table.Column<Guid>(nullable: true),
+                    UserId = table.Column<Guid>(nullable: true),
+                    UserId1 = table.Column<Guid>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DomainEvent", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_DomainEvent_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_DomainEvent_Products_ProductId1",
+                        column: x => x.ProductId1,
+                        principalTable: "Products",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_DomainEvent_Restaurants_RestaurantId",
+                        column: x => x.RestaurantId,
+                        principalTable: "Restaurants",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_DomainEvent_Restaurants_RestaurantId1",
+                        column: x => x.RestaurantId1,
+                        principalTable: "Restaurants",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_DomainEvent_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_DomainEvent_Users_UserId1",
+                        column: x => x.UserId1,
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -186,22 +247,52 @@ namespace FoltDelivery.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Product",
-                columns: new[] { "Id", "Description", "Image", "LogicalDeleted", "Name", "Price", "Quantity", "RestaurantId", "RestaurantMenuId", "Type" },
+                table: "Products",
+                columns: new[] { "Id", "Description", "Image", "InitialVersion", "LogicalDeleted", "Name", "Price", "Quantity", "RestaurantId", "RestaurantMenuId", "Type", "Version" },
                 values: new object[,]
                 {
-                    { new Guid("11223344-5566-7788-99aa-bbccddeeff15"), "Pica sa tradicijom", "", false, "Vojvodjanska", 1300.0, 1, new Guid("11223344-5566-7788-99aa-bbccddeeff00"), new Guid("11223344-5566-7788-99aa-bbccddeeff15"), 1 },
-                    { new Guid("11223344-5566-7788-99aa-bbccddeeff16"), "Pica sa tradicijom", "", false, "Vojvodjanska", 1300.0, 1, new Guid("11223344-5566-7788-99aa-bbccddeeff00"), new Guid("11223344-5566-7788-99aa-bbccddeeff15"), 1 }
+                    { new Guid("11223344-5566-7788-99aa-bbccddeeff15"), "Pica sa tradicijom", "", 0, false, "Vojvodjanska", 1300.0, 1, new Guid("11223344-5566-7788-99aa-bbccddeeff00"), new Guid("11223344-5566-7788-99aa-bbccddeeff15"), 1, 0 },
+                    { new Guid("11223344-5566-7788-99aa-bbccddeeff16"), "Pica sa tradicijom", "", 0, false, "Vojvodjanska", 1300.0, 1, new Guid("11223344-5566-7788-99aa-bbccddeeff00"), new Guid("11223344-5566-7788-99aa-bbccddeeff15"), 1, 0 }
                 });
 
             migrationBuilder.InsertData(
                 table: "Restaurants",
-                columns: new[] { "Id", "Deleted", "LocationId", "LogoId", "MenuId", "Name", "Status", "Type" },
+                columns: new[] { "Id", "Deleted", "InitialVersion", "LocationId", "LogoId", "MenuId", "Name", "Status", "Type", "Version" },
                 values: new object[,]
                 {
-                    { new Guid("11223344-5566-7788-99aa-bbccddeeff00"), false, new Guid("11223344-5566-7788-99aa-bbccddeeff05"), 1, new Guid("11223344-5566-7788-99aa-bbccddeeff15"), "Pizzeria Ciao", 1, "Restaurant" },
-                    { new Guid("11223344-5566-7788-99aa-bbccddeeff01"), false, new Guid("11223344-5566-7788-99aa-bbccddeeff09"), 2, new Guid("11223344-5566-7788-99aa-bbccddeeff16"), "Boom boom pancakes", 1, "FastFood" }
+                    { new Guid("11223344-5566-7788-99aa-bbccddeeff00"), false, 0, new Guid("11223344-5566-7788-99aa-bbccddeeff05"), 1, new Guid("11223344-5566-7788-99aa-bbccddeeff15"), "Pizzeria Ciao", 1, "Restaurant", 0 },
+                    { new Guid("11223344-5566-7788-99aa-bbccddeeff01"), false, 0, new Guid("11223344-5566-7788-99aa-bbccddeeff09"), 2, new Guid("11223344-5566-7788-99aa-bbccddeeff16"), "Boom boom pancakes", 1, "FastFood", 0 }
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DomainEvent_ProductId",
+                table: "DomainEvent",
+                column: "ProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DomainEvent_ProductId1",
+                table: "DomainEvent",
+                column: "ProductId1");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DomainEvent_RestaurantId",
+                table: "DomainEvent",
+                column: "RestaurantId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DomainEvent_RestaurantId1",
+                table: "DomainEvent",
+                column: "RestaurantId1");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DomainEvent_UserId",
+                table: "DomainEvent",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DomainEvent_UserId1",
+                table: "DomainEvent",
+                column: "UserId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Location_AddressId",
@@ -209,8 +300,8 @@ namespace FoltDelivery.Migrations
                 column: "AddressId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Product_RestaurantMenuId",
-                table: "Product",
+                name: "IX_Products_RestaurantMenuId",
+                table: "Products",
                 column: "RestaurantMenuId");
 
             migrationBuilder.CreateIndex(
@@ -232,7 +323,10 @@ namespace FoltDelivery.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Product");
+                name: "DomainEvent");
+
+            migrationBuilder.DropTable(
+                name: "Products");
 
             migrationBuilder.DropTable(
                 name: "Restaurants");

@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using FoltDelivery.Infrastructure;
+using FoltDelivery.Infrastructure.Aggregate;
 using FoltDelivery.Infrastructure.Persistance;
 using Microsoft.EntityFrameworkCore;
 
 namespace FoltDelivery.API.Repository
 {
-    public class GenericRepository<T> : IGenericRepository<T> where T : Entity
+    public class GenericRepository<T> : IGenericRepository<T> where  T : EventSourcedAggregate
     {
         private readonly FoltDeliveryDbContext _dbContext;
         private readonly DbSet<T> _table;

@@ -13,8 +13,8 @@ namespace FoltDelivery.API.Service
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
-        private IJwtUtils _jwtUtils;
-        private IMapper _mapper;
+        private readonly IJwtUtils _jwtUtils;
+        private readonly IMapper _mapper;
         public UserService(IUserRepository userRepository, IJwtUtils jwtUtils, IMapper mapper)
         {
             _userRepository = userRepository;

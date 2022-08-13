@@ -48,9 +48,9 @@
               "target": "Package",
               "version": "[8.1.1, )"
             },
-            "BCrypt.Net": {
+            "BCrypt.Net-Next": {
               "target": "Package",
-              "version": "[0.1.0, )"
+              "version": "[4.0.3, )"
             },
             "EventStore.Client": {
               "target": "Package",

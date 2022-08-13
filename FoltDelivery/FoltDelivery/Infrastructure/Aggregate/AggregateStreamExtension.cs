@@ -9,7 +9,7 @@ namespace FoltDelivery.Infrastructure.Aggregate
 {
     public static class AggregateStreamExtensions
     {
-        public static async Task<T?> AggregateStream<T>(
+        public static async Task<T> AggregateStream<T>(
             this EventStoreClient eventStore,
             Guid id,
             System.Threading.CancellationToken cancellationToken,

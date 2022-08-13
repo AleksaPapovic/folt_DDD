@@ -15,7 +15,7 @@ namespace FoltDelivery.Domain.Aggregates.OrderAggregate
         public DateTime DateAndTime { get; set; }
         public Money Price { get; set; }
         public virtual Address Address { get; set; }
-        public Dictionary<Guid,Money> OrderItems { get; set; }
+        public Dictionary<Guid, OrderItem> OrderItems { get; set; }
         public int LogicalDeleted { get; set; }
 
         public OrderSnapshot(Guid id) : base(id)

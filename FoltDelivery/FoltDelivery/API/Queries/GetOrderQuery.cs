@@ -8,7 +8,7 @@ namespace FoltDelivery.API.Queries
     {
         public static GetOrderQuery Create(Guid orderId)
         {
-            if (orderId == null)
+            if (orderId == new Guid())
                 throw new ArgumentOutOfRangeException(nameof(orderId));
 
             return new GetOrderQuery(orderId);

@@ -26,11 +26,11 @@ namespace FoltDelivery.Infrastructure.Events
             return $"{modulePrefix}_{streamType.Name}";
         });
 
-        public static string ToStreamId<TStream>(object aggregateId, object? tenantId = null) =>
+        public static string ToStreamId<TStream>(object aggregateId, object tenantId = null) =>
             ToStreamId(typeof(TStream), aggregateId);
 
         // Generates a stream id in the canonical `{category}-{aggregateId}` format
-        public static string ToStreamId(Type streamType, object aggregateId, object? tenantId = null)
+        public static string ToStreamId(Type streamType, object aggregateId, object tenantId = null)
         {
             var tenantPrefix = tenantId == null ? $"{tenantId}_" : "";
             var category = ToStreamPrefix(streamType);

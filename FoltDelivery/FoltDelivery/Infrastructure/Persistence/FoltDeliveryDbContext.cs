@@ -10,8 +10,9 @@ namespace FoltDelivery.Infrastructure.Persistance
     public class FoltDeliveryDbContext : DbContext
     {
         public DbSet<User> Users { get; set; }
-
         public DbSet<Restaurant> Restaurants { get; set; }
+        public DbSet<Product> Products { get; set; }
+
         public FoltDeliveryDbContext(DbContextOptions<FoltDeliveryDbContext> options) : base(options)
         {
         }
@@ -84,13 +85,15 @@ namespace FoltDelivery.Infrastructure.Persistance
                         Id = new Guid("11223344-5566-7788-99AA-BBCCDDEEFF15"),
                         Name = "Vojvodjanska",
                         RestaurantMenuId = new Guid("11223344-5566-7788-99AA-BBCCDDEEFF15"),
-                        Price = 1300.0,
+                        Price = 1300.00,
                         Type = ProductType.DRINK,
                         RestaurantId = new Guid("11223344-5566-7788-99AA-BBCCDDEEFF00"),
                         Quantity = 1,
                         Description = "Pica sa tradicijom",
                         Image = "",
-                        LogicalDeleted = false
+                        LogicalDeleted = false,
+                        InitialVersion = 0,
+                        Version = 0,
                     }
                 );
 
@@ -106,7 +109,9 @@ namespace FoltDelivery.Infrastructure.Persistance
                         Quantity = 1,
                         Description = "Pica sa tradicijom",
                         Image = "",
-                        LogicalDeleted = false
+                        LogicalDeleted = false,
+                        InitialVersion = 0,
+                        Version = 0,
                     }
                 );
             });
@@ -150,6 +155,8 @@ namespace FoltDelivery.Infrastructure.Persistance
                         Status = RestaurantStatus.OPEN,
                         LogoId = 1,
                         Deleted = false,
+                        InitialVersion = 0,
+                        Version = 0,
                     },
                     new
                     {
@@ -161,12 +168,13 @@ namespace FoltDelivery.Infrastructure.Persistance
                         Status = RestaurantStatus.OPEN,
                         LogoId = 2,
                         Deleted = false,
-
+                        InitialVersion = 0,
+                        Version = 0,
                     });
 
 
 
-            });
+            }); 
             modelBuilder.Entity<Restaurant>().Property(e => e.Id).HasIdentityOptions(startValue: 3);
 
             #endregion

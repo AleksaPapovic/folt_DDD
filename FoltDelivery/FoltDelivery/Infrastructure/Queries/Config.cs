@@ -24,7 +24,7 @@ namespace FoltDelivery.Infrastructure.Queries
              ServiceLifetime withLifetime = ServiceLifetime.Transient)
         {
             return services.Scan(scan => scan
-                .FromAssemblies(System.AppDomain.CurrentDomain.GetAssemblies())
+                .FromAssemblies(AppDomain.CurrentDomain.GetAssemblies())
                 .AddClasses(classes =>
                     classes.AssignableTo(typeof(IQueryHandler<,>))
                         .Where(c => !c.IsAbstract && !c.IsGenericTypeDefinition))

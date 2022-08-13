@@ -1,4 +1,3 @@
-using EventStore.Client;
 using EventStore.ClientAPI;
 using FoltDelivery.API.Repository;
 using FoltDelivery.API.Service;
@@ -16,11 +15,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using Polly;
 using System;
-using System.Reflection;
 
 namespace FoltDelivery
 {
@@ -39,6 +35,7 @@ namespace FoltDelivery
 
             services.AddSwaggerGen(c =>
             {
+                c.CustomSchemaIds(type => type.ToString());
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
             });
 
@@ -48,10 +45,10 @@ namespace FoltDelivery
                 connectionString: Configuration.GetValue<string>("EventStore:ConnectionString"),
                 builder: ConnectionSettings.Create().KeepReconnecting(),
                 connectionName: Configuration.GetValue<string>("EventStore:ConnectionName"));
-            
-            services.AddSingleton(
-               new EventStoreClient(EventStoreClientSettings.Create("esdb://localhost:2113?tls=false")));
-            eventStoreConnection.ConnectAsync().GetAwaiter().GetResult();
+
+            //services.AddSingleton(
+            //   new EventStoreClient(EventStoreClientSettings.Create("esdb://localhost:2113?tls=false")));
+            //eventStoreConnection.ConnectAsync().GetAwaiter().GetResult();
 
             services.AddSingleton(eventStoreConnection);
 
@@ -96,6 +93,7 @@ namespace FoltDelivery
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IRestaurantRepository, RestaurantRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddScoped<IProductRepository, ProductRepository>();
             //services.AddTransient<IEventHandler<OrderPlaced>, OrderHandler>();
             //services.AddTransient<IEventHandler<OrderCreated>, OrderHandler>();
             //services = Infrastructure.Queries.Config.AddAllQueryHandlers(services);

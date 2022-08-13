@@ -1,8 +1,8 @@
-C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\bin\Debug\net5.0\testhost.exe
 C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\bin\Debug\net5.0\testhost.dll
+C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\bin\Debug\net5.0\testhost.exe
+C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\bin\Debug\net5.0\Microsoft.TestPlatform.PlatformAbstractions.dll
 C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\bin\Debug\net5.0\appsettings.Development.json
 C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\bin\Debug\net5.0\appsettings.json
-C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\bin\Debug\net5.0\Microsoft.TestPlatform.PlatformAbstractions.dll
 C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\bin\Debug\net5.0\FoltDelivery.exe
 C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\bin\Debug\net5.0\FoltDelivery.deps.json
 C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\bin\Debug\net5.0\FoltDelivery.runtimeconfig.json
@@ -11,7 +11,7 @@ C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\bin\Debug\net5.0\FoltD
 C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\bin\Debug\net5.0\FoltDelivery.pdb
 C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\bin\Debug\net5.0\AutoMapper.dll
 C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\bin\Debug\net5.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
-C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\bin\Debug\net5.0\BCrypt.Net.dll
+C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\bin\Debug\net5.0\BCrypt.Net-Next.dll
 C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\bin\Debug\net5.0\Castle.Core.dll
 C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\bin\Debug\net5.0\EventStore.ClientAPI.dll
 C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\bin\Debug\net5.0\EventStore.Client.dll
@@ -34,6 +34,7 @@ C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\bin\Debug\net5.0\Micro
 C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\bin\Debug\net5.0\Microsoft.EntityFrameworkCore.Proxies.dll
 C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\bin\Debug\net5.0\Microsoft.EntityFrameworkCore.Relational.dll
 C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\bin\Debug\net5.0\Microsoft.EntityFrameworkCore.SqlServer.dll
+C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\bin\Debug\net5.0\Microsoft.Extensions.DependencyModel.dll
 C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\bin\Debug\net5.0\Microsoft.Identity.Client.dll
 C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\bin\Debug\net5.0\Microsoft.IdentityModel.JsonWebTokens.dll
 C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\bin\Debug\net5.0\Microsoft.IdentityModel.Logging.dll
@@ -53,6 +54,7 @@ C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\bin\Debug\net5.0\Npgsq
 C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\bin\Debug\net5.0\NuGet.Frameworks.dll
 C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\bin\Debug\net5.0\Polly.dll
 C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\bin\Debug\net5.0\protobuf-net.dll
+C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\bin\Debug\net5.0\Scrutor.dll
 C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\bin\Debug\net5.0\Swashbuckle.AspNetCore.Swagger.dll
 C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerUI.dll
@@ -158,5 +160,3 @@ C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\obj\Debug\net5.0\refin
 C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\obj\Debug\net5.0\FoltDelivery.pdb
 C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\obj\Debug\net5.0\FoltDelivery.genruntimeconfig.cache
 C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\obj\Debug\net5.0\ref\FoltDelivery.dll
-C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\bin\Debug\net5.0\Microsoft.Extensions.DependencyModel.dll
-C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\bin\Debug\net5.0\Scrutor.dll

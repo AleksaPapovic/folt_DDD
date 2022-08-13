@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using FoltDelivery.Infrastructure.Projections;
 
 
@@ -13,6 +14,6 @@ namespace FoltDelivery.Infrastructure.Aggregate
         T Id { get; }
         int Version { get; }
 
-        object[] DequeueUncommittedEvents();
+        List<DomainEvent> DeleteUncommittedEvents();
     }
 }

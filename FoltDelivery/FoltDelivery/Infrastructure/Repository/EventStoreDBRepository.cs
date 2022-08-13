@@ -18,7 +18,7 @@ namespace FoltDelivery.Infrastructure.Repository
             this.eventStore = eventStore ?? throw new ArgumentNullException(nameof(eventStore));
         }
 
-        public Task<T?> Find(Guid id, CancellationToken cancellationToken) =>
+        public Task<T> Find(Guid id, CancellationToken cancellationToken) =>
             eventStore.AggregateStream<T>(
                 id,
                 cancellationToken
@@ -57,7 +57,7 @@ namespace FoltDelivery.Infrastructure.Repository
 
         private static List<EventData> GetEventsToStore(T aggregate)
         {
-            var events = aggregate.DequeueUncommittedEvents();
+            var events = aggregate.DeleteUncommittedEvents();
 
             return events
                 .Select(@event => @event.ToJsonEventData())

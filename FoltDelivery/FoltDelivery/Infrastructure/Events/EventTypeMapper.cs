@@ -12,7 +12,7 @@
             private static readonly EventTypeMapper Instance = new();
 
             private readonly ConcurrentDictionary<Type, string> typeNameMap = new();
-            private readonly ConcurrentDictionary<string, Type?> typeMap = new();
+            private readonly ConcurrentDictionary<string, Type> typeMap = new();
 
             public static void AddCustomMap<T>(string mappedEventTypeName) => AddCustomMap(typeof(T), mappedEventTypeName);
 
@@ -33,7 +33,7 @@
                 return eventTypeName;
             });
 
-            public static Type? ToType(string eventTypeName) => Instance.typeMap.GetOrAdd(eventTypeName, _ =>
+            public static Type ToType(string eventTypeName) => Instance.typeMap.GetOrAdd(eventTypeName, _ =>
             {
                 var type = TypeProvider.GetFirstMatchingTypeFromCurrentDomainAssembly(eventTypeName.Replace("_", "."));
 

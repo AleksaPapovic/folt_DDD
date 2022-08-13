@@ -36,9 +36,11 @@ namespace FoltDelivery.Infrastructure.Authorization
 
         public Guid? ValidateJwtToken(string token)
         {
+           
             if (token == null)
                 return null;
-
+            token = token.Replace("\\", "");
+            token = token.Replace("\"", "");
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(SecretKey);
             try

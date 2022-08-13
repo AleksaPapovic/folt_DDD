@@ -2,7 +2,7 @@
 {
     public interface IExpectedResourceVersionProvider
     {
-        string? Value { get; }
+        string Value { get; }
         bool TrySet(string value);
     }
 }

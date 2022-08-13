@@ -26,8 +26,7 @@ namespace FoltDelivery.Test
     public void Add()
     {
         //arrange
-        double a = 5;
-        double b = 3;
+     
         double expected = 8;
 
             //act
@@ -38,7 +37,7 @@ namespace FoltDelivery.Test
     }
 
         [Fact]
-        public async Task GettingState_ForSequenceOfEvents_ShouldSucceed()
+        public void GettingState_ForSequenceOfEvents_ShouldSucceed()
         {
 
         //    var client = new HttpClient(); // no HttpServer

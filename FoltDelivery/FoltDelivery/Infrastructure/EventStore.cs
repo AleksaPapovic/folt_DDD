@@ -56,8 +56,8 @@ namespace FoltDelivery.Infrastructure
         public async Task<List<DomainEvent>> GetStream(string streamName, long fromVersion, int toVersion)
         {
             List<DomainEvent> domainEvents = new List<DomainEvent>();
-            Task<StreamEventsSlice> readEventsTask = _esConn.ReadStreamEventsForwardAsync(StreamName(streamName), 0, 10, true);
-            readEventsTask.ContinueWith((_) => { CloseConnection(); });
+            Task<StreamEventsSlice> readEventsTask = _esConn.ReadStreamEventsForwardAsync(StreamName(streamName), 0, 4096, true);
+            if (readEventsTask.GetAwaiter().IsCompleted) { CloseConnection(); }
             foreach (var evt in readEventsTask.Result.Events)
             {
                 domainEvents.Add(RebuildEvent(evt));

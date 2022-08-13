@@ -8,37 +8,35 @@ namespace FoltDelivery.Infrastructure.Aggregate
     public abstract class EventSourcedAggregate :IAggregate
     {
         public Guid Id { get; protected set; }
-        public List<DomainEvent> Changes { get; protected set; }
+        public virtual List<DomainEvent> Changes { get; protected set; }
         public int Version { get; protected set; }
         public int InitialVersion { get; protected set; }
-        public Queue<object> UncommittedEvents { get; protected set; }
+        public virtual List<DomainEvent> UncommittedEvents { get; protected set; }
 
         public EventSourcedAggregate() {
             Changes = new List<DomainEvent>();
-            UncommittedEvents = new Queue<object>();
+            UncommittedEvents = new List<DomainEvent>();
         }
 
         public EventSourcedAggregate(Guid id) 
         {
             Id = id;
             Changes = new List<DomainEvent>();
-            UncommittedEvents = new Queue<object>();
+            UncommittedEvents = new List<DomainEvent>();
         }
 
         public abstract void Apply(DomainEvent changes);
 
-        public object[] DequeueUncommittedEvents()
+        public List<DomainEvent> DeleteUncommittedEvents()
         {
-            var dequeuedEvents = UncommittedEvents.ToArray();
-
+            List<DomainEvent> uncommitedEvents = UncommittedEvents;
             UncommittedEvents.Clear();
-
-            return dequeuedEvents;
+            return uncommitedEvents;
         }
 
-        protected void Enqueue(object @event)
+        protected void AddUncommittedEvent(DomainEvent @event)
         {
-            UncommittedEvents.Enqueue(@event);
+            UncommittedEvents.Add(@event);
         }
 
         public void When(object @event)

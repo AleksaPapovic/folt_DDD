@@ -67,6 +67,9 @@ namespace FoltDelivery.Migrations
                     b.Property<int>("Gender")
                         .HasColumnType("integer");
 
+                    b.Property<int>("InitialVersion")
+                        .HasColumnType("integer");
+
                     b.Property<bool>("LogicalDeleted")
                         .HasColumnType("boolean");
 
@@ -94,6 +97,9 @@ namespace FoltDelivery.Migrations
                     b.Property<string>("Username")
                         .HasColumnType("text");
 
+                    b.Property<int>("Version")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
 
                     b.HasIndex("TypeId");
@@ -112,6 +118,9 @@ namespace FoltDelivery.Migrations
 
                     b.Property<string>("Image")
                         .HasColumnType("text");
+
+                    b.Property<int>("InitialVersion")
+                        .HasColumnType("integer");
 
                     b.Property<bool>("LogicalDeleted")
                         .HasColumnType("boolean");
@@ -134,11 +143,14 @@ namespace FoltDelivery.Migrations
                     b.Property<int>("Type")
                         .HasColumnType("integer");
 
+                    b.Property<int>("Version")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
 
                     b.HasIndex("RestaurantMenuId");
 
-                    b.ToTable("Product");
+                    b.ToTable("Products");
 
                     b.HasData(
                         new
@@ -146,26 +158,30 @@ namespace FoltDelivery.Migrations
                             Id = new Guid("11223344-5566-7788-99aa-bbccddeeff15"),
                             Description = "Pica sa tradicijom",
                             Image = "",
+                            InitialVersion = 0,
                             LogicalDeleted = false,
                             Name = "Vojvodjanska",
                             Price = 1300.0,
                             Quantity = 1,
                             RestaurantId = new Guid("11223344-5566-7788-99aa-bbccddeeff00"),
                             RestaurantMenuId = new Guid("11223344-5566-7788-99aa-bbccddeeff15"),
-                            Type = 1
+                            Type = 1,
+                            Version = 0
                         },
                         new
                         {
                             Id = new Guid("11223344-5566-7788-99aa-bbccddeeff16"),
                             Description = "Pica sa tradicijom",
                             Image = "",
+                            InitialVersion = 0,
                             LogicalDeleted = false,
                             Name = "Vojvodjanska",
                             Price = 1300.0,
                             Quantity = 1,
                             RestaurantId = new Guid("11223344-5566-7788-99aa-bbccddeeff00"),
                             RestaurantMenuId = new Guid("11223344-5566-7788-99aa-bbccddeeff15"),
-                            Type = 1
+                            Type = 1,
+                            Version = 0
                         });
                 });
 
@@ -263,6 +279,9 @@ namespace FoltDelivery.Migrations
                     b.Property<bool>("Deleted")
                         .HasColumnType("boolean");
 
+                    b.Property<int>("InitialVersion")
+                        .HasColumnType("integer");
+
                     b.Property<Guid?>("LocationId")
                         .HasColumnType("uuid");
 
@@ -281,6 +300,9 @@ namespace FoltDelivery.Migrations
                     b.Property<string>("Type")
                         .HasColumnType("text");
 
+                    b.Property<int>("Version")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
 
                     b.HasIndex("LocationId");
@@ -294,23 +316,27 @@ namespace FoltDelivery.Migrations
                         {
                             Id = new Guid("11223344-5566-7788-99aa-bbccddeeff00"),
                             Deleted = false,
+                            InitialVersion = 0,
                             LocationId = new Guid("11223344-5566-7788-99aa-bbccddeeff05"),
                             LogoId = 1,
                             MenuId = new Guid("11223344-5566-7788-99aa-bbccddeeff15"),
                             Name = "Pizzeria Ciao",
                             Status = 1,
-                            Type = "Restaurant"
+                            Type = "Restaurant",
+                            Version = 0
                         },
                         new
                         {
                             Id = new Guid("11223344-5566-7788-99aa-bbccddeeff01"),
                             Deleted = false,
+                            InitialVersion = 0,
                             LocationId = new Guid("11223344-5566-7788-99aa-bbccddeeff09"),
                             LogoId = 2,
                             MenuId = new Guid("11223344-5566-7788-99aa-bbccddeeff16"),
                             Name = "Boom boom pancakes",
                             Status = 1,
-                            Type = "FastFood"
+                            Type = "FastFood",
+                            Version = 0
                         });
                 });
 
@@ -333,6 +359,53 @@ namespace FoltDelivery.Migrations
                         {
                             Id = new Guid("11223344-5566-7788-99aa-bbccddeeff16")
                         });
+                });
+
+            modelBuilder.Entity("FoltDelivery.Infrastructure.DomainEvent", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("EventType")
+                        .HasColumnType("text");
+
+                    b.Property<Guid?>("ProductId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("ProductId1")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("RestaurantId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("RestaurantId1")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("UserId1")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Version")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("ProductId1");
+
+                    b.HasIndex("RestaurantId");
+
+                    b.HasIndex("RestaurantId1");
+
+                    b.HasIndex("UserId");
+
+                    b.HasIndex("UserId1");
+
+                    b.ToTable("DomainEvent");
                 });
 
             modelBuilder.Entity("FoltDelivery.Domain.Aggregates.CustomerAggregate.User", b =>
@@ -365,6 +438,33 @@ namespace FoltDelivery.Migrations
                     b.HasOne("FoltDelivery.Domain.Aggregates.RestaurantAggregate.RestaurantMenu", "Menu")
                         .WithMany()
                         .HasForeignKey("MenuId");
+                });
+
+            modelBuilder.Entity("FoltDelivery.Infrastructure.DomainEvent", b =>
+                {
+                    b.HasOne("FoltDelivery.Domain.Aggregates.ProductAggregate.Product", null)
+                        .WithMany("Changes")
+                        .HasForeignKey("ProductId");
+
+                    b.HasOne("FoltDelivery.Domain.Aggregates.ProductAggregate.Product", null)
+                        .WithMany("UncommittedEvents")
+                        .HasForeignKey("ProductId1");
+
+                    b.HasOne("FoltDelivery.Domain.Aggregates.RestaurantAggregate.Restaurant", null)
+                        .WithMany("Changes")
+                        .HasForeignKey("RestaurantId");
+
+                    b.HasOne("FoltDelivery.Domain.Aggregates.RestaurantAggregate.Restaurant", null)
+                        .WithMany("UncommittedEvents")
+                        .HasForeignKey("RestaurantId1");
+
+                    b.HasOne("FoltDelivery.Domain.Aggregates.CustomerAggregate.User", null)
+                        .WithMany("Changes")
+                        .HasForeignKey("UserId");
+
+                    b.HasOne("FoltDelivery.Domain.Aggregates.CustomerAggregate.User", null)
+                        .WithMany("UncommittedEvents")
+                        .HasForeignKey("UserId1");
                 });
 #pragma warning restore 612, 618
         }

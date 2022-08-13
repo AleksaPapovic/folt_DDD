@@ -6,10 +6,11 @@ using FoltDelivery.Domain.Aggregates.RestaurantAggregate;
 using FoltDelivery.API.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using FoltDelivery.Domain.Aggregates.CustomerAggregate;
 
 namespace FoltDelivery.API.Controllers
 {
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class RestaurantController : ControllerBase
     {

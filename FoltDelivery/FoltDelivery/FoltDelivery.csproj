@@ -7,9 +7,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Domain\Aggregates\Delivery\**" />
+    <Content Remove="Domain\Aggregates\Delivery\**" />
+    <EmbeddedResource Remove="Domain\Aggregates\Delivery\**" />
+    <None Remove="Domain\Aggregates\Delivery\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="10.1.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
-    <PackageReference Include="BCrypt.Net" Version="0.1.0" />
+    <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
     <PackageReference Include="EventStore.Client" Version="21.2.2" />
     <PackageReference Include="EventStore.Client.Grpc" Version="22.0.0" />
     <PackageReference Include="EventStore.Client.Grpc.Streams" Version="22.0.0" />
@@ -36,7 +43,6 @@
 
   <ItemGroup>
     <Folder Include="API\Projections\" />
-    <Folder Include="Domain\Aggregates\Delivery\" />
     <Folder Include="Domain\Events\Error\" />
   </ItemGroup>
 

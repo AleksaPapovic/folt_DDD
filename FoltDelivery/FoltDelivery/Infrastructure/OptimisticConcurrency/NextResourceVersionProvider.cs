@@ -4,15 +4,15 @@ namespace FoltDelivery.Infrastructure.OptimisticConcurrency
 {
     public class NextResourceVersionProvider : IExpectedResourceVersionProvider
     {
-        private readonly Func<string>? customGet;
-        private string? value;
+        private readonly Func<string> customGet;
+        private string value;
 
-        public NextResourceVersionProvider(Func<string?>? customGet = null)
+        public NextResourceVersionProvider(Func<string> customGet = null)
         {
             this.customGet = customGet;
         }
 
-        public string? Value
+        public string Value
         {
             get => customGet != null ? customGet() : value;
             private set => this.value = value;

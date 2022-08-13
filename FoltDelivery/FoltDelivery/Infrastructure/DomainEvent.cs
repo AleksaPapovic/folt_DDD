@@ -5,14 +5,15 @@ using System.Threading.Tasks;
 
 namespace FoltDelivery.Infrastructure
 {
-    public abstract class DomainEvent
+    public class DomainEvent:Entity
     {
-        public Guid Id { get; private set; }
         public string EventType { get; private set; }
-        
-        public DomainEvent(Guid aggregateId,string eventType)
+
+        public int Version { get; protected set; }
+
+        public DomainEvent() : base(Guid.NewGuid()) { }
+        public DomainEvent(Guid aggregateId,string eventType):base(aggregateId)
         {
-            Id = aggregateId;
             EventType = eventType;
         }
 

@@ -35,7 +35,7 @@
         "dependencies": {
           "AutoMapper": "10.1.1",
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "8.1.1",
-          "BCrypt.Net": "0.1.0",
+          "BCrypt.Net-Next": "4.0.3",
           "EventStore.Client": "21.2.2",
           "EventStore.Client.Grpc": "22.0.0",
           "EventStore.Client.Grpc.Streams": "22.0.0",
@@ -377,15 +377,15 @@
           "lib/netstandard2.0/AutoMapper.Extensions.Microsoft.DependencyInjection.dll": {}
         }
       },
-      "BCrypt.Net/0.1.0": {
+      "BCrypt.Net-Next/4.0.3": {
         "runtime": {
-          "lib/net35/BCrypt.Net.dll": {
-            "assemblyVersion": "0.1.4141.31969",
-            "fileVersion": "0.1.0.0"
+          "lib/net5.0/BCrypt.Net-Next.dll": {
+            "assemblyVersion": "4.0.3.0",
+            "fileVersion": "4.0.3.0"
           }
         },
         "compile": {
-          "lib/net35/BCrypt.Net.dll": {}
+          "lib/net5.0/BCrypt.Net-Next.dll": {}
         }
       },
       "Castle.Core/4.4.0": {
@@ -4110,12 +4110,12 @@
       "path": "automapper.extensions.microsoft.dependencyinjection/8.1.1",
       "hashPath": "automapper.extensions.microsoft.dependencyinjection.8.1.1.nupkg.sha512"
     },
-    "BCrypt.Net/0.1.0": {
+    "BCrypt.Net-Next/4.0.3": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-sST2w361Dxt9GGMfpOTiK50wXGV64Ybb1hiX3xjEWnhVYZNF43NuySGwADJa7X1R+bA53NsFR+tuDxcYiJeIOA==",
-      "path": "bcrypt.net/0.1.0",
-      "hashPath": "bcrypt.net.0.1.0.nupkg.sha512"
+      "sha512": "sha512-W+U9WvmZQgi5cX6FS5GDtDoPzUCV4LkBLkywq/kRZhuDwcbavOzcDAr3LXJFqHUi952Yj3LEYoWW0jbEUQChsA==",
+      "path": "bcrypt.net-next/4.0.3",
+      "hashPath": "bcrypt.net-next.4.0.3.nupkg.sha512"
     },
     "Castle.Core/4.4.0": {
       "type": "package",

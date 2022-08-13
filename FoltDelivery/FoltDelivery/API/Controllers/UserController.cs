@@ -11,7 +11,7 @@ using FoltDelivery.Infrastructure.Authorization;
 
 namespace FoltDelivery.API.Controllers
 {
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
     {
@@ -31,15 +31,16 @@ namespace FoltDelivery.API.Controllers
             _iJwtUtils = iJwtUtils;
         }
 
+        [AllowAnonymous]
         [HttpGet]
-        public List<User> Get()
+        public List<User> GetAll()
         {
             //return new string[] { "value1", "value2" };
             return _userService.GetAllUsers();
         }
 
 
-        [Microsoft.AspNetCore.Authorization.AllowAnonymous]
+        [AllowAnonymous]
         [HttpGet]
         [Route("principal")]
         public User GetPrincipal()
@@ -50,6 +51,7 @@ namespace FoltDelivery.API.Controllers
             return null;
         }
 
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public string Get(int id)
         {
@@ -72,18 +74,20 @@ namespace FoltDelivery.API.Controllers
             return _userService.Authenticate(authDTO);
         }
 
-        [Microsoft.AspNetCore.Authorization.AllowAnonymous]
+        [AllowAnonymous]
         [HttpPost("logout")]
         public IActionResult Logout()
         {
             return Ok(null);
         }
 
+        [AllowAnonymous]
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
         }
 
+        [AllowAnonymous]
         [HttpDelete("{id}")]
         public void Delete(int id)
         {

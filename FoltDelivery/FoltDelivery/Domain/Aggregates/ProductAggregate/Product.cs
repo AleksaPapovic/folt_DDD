@@ -1,10 +1,11 @@
 ﻿using System;
 using FoltDelivery.Model.Enums;
 using FoltDelivery.Infrastructure;
+using FoltDelivery.Infrastructure.Aggregate;
 
 namespace FoltDelivery.Domain.Aggregates.ProductAggregate
 {
-    public class Product : Entity
+    public class Product : EventSourcedAggregate
     {
         public String Name { get; set; }
         public Double Price { get; set; }
@@ -17,17 +18,10 @@ namespace FoltDelivery.Domain.Aggregates.ProductAggregate
 
         public Product(Guid id):base(id) { }
 
-        public Product(Guid id, bool logicalDeleted, String name, Double price, ProductType type, Guid restaurantId,
-            int quantity, String description, String image) : base(id)
+
+        public override void Apply(DomainEvent changes)
         {
-            Name = name;
-            Price = price;
-            Type = type;
-            RestaurantId = restaurantId;
-            Quantity = quantity;
-            Description = description;
-            Image = image;
-            LogicalDeleted = logicalDeleted;
+            throw new NotImplementedException();
         }
     }
 }

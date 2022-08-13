@@ -31,7 +31,7 @@ namespace FoltDelivery.API.Repository
 
             var stream = _eventStore.GetStream(streamName, fromEventNumber, toEventNumber).Result;
 
-            OrderAggregate order = null;
+            OrderAggregate order;
             if (snapshot != null)
             {
                 order = new OrderAggregate(snapshot);
@@ -47,10 +47,9 @@ namespace FoltDelivery.API.Repository
                 order.Apply(@event);
             }
 
-             return order;
+            return order;
         }
 
-        public static int i = 0;
         public void Add(OrderAggregate order)
         {
             string streamName = StreamNameFor(order.Id);
@@ -86,13 +85,13 @@ namespace FoltDelivery.API.Repository
             _eventStore.AddSnapshot<OrderSnapshot>(streamName, snapshot);
         }
 
-        //private string StreamNameFor(Guid id)
-        //{
-        //    // Stream per-aggregate: {AggregateType}-{AggregateId}
-        //    return string.Format("{0}-{1}", typeof(OrderAggregate).Name, id);
-        //}
 
+        public List<OrderAggregate> GetOrdersInCart(List<Guid> orderIds) {
+            List<OrderAggregate> orderAggregates = new List<OrderAggregate>();
+            //foreach kroz snapshot-e
+            return null;
 
+        }
 
 
     }

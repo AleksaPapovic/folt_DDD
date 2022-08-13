@@ -6,24 +6,22 @@ namespace FoltDelivery.Domain.Aggregates.ProductAggregate
 {
     public class Money : ValueObject<Money>, IComparable<Money>
     {
-        public decimal Amount { get; private set; }
+        public Double Amount { get; protected set; }
 
         public Money()
-            : this(0m)
+            : this(0)
         {
         }
 
-        public Money(decimal amount)
+        public Money(Double amount)
         {
             ThrowExceptionIfNotValid(amount);
 
             Amount = amount;
         }
 
-        private void ThrowExceptionIfNotValid(decimal amount)
+        private void ThrowExceptionIfNotValid(Double amount)
         {
-            if (amount % 0.01m != 0)
-                throw new ArgumentException("Amount can be 2 decmial places only.");
 
             if (amount < 0)
                 throw new ArgumentException("Money cannot be a negative amount");

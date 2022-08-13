@@ -7,10 +7,10 @@ namespace FoltDelivery.Infrastructure.Events
 {
     public static class EventStoreDBSerializer
     {
-        public static T? Deserialize<T>(this ResolvedEvent resolvedEvent) where T : class =>
+        public static T Deserialize<T>(this ResolvedEvent resolvedEvent) where T : class =>
             Deserialize(resolvedEvent) as T;
 
-        public static object? Deserialize(this ResolvedEvent resolvedEvent)
+        public static object Deserialize(this ResolvedEvent resolvedEvent)
         {
             // get type
             var eventType = EventTypeMapper.ToType(resolvedEvent.Event.EventType);

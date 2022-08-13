@@ -1,4 +1,5 @@
 ﻿using System;
+using FoltDelivery.API.DTO;
 using FoltDelivery.Infrastructure;
 
 namespace FoltDelivery.Domain.Events
@@ -8,10 +9,10 @@ namespace FoltDelivery.Domain.Events
         public Guid CustomerId { get; private set; }
         public Guid ItemId { get; private set; }
 
-        public ItemAdded(Guid orderId, Guid customerId, Guid itemId) : base(orderId, "ItemAdded")
+        public ItemAdded(OrderItemsUpdateDTO newItem) : base(newItem.OrderId, "ItemAdded")
         {
-            ItemId = itemId;
-            CustomerId = customerId;
+            ItemId = newItem.Id;
+            CustomerId = newItem.CustomerId;
         }
     }
 }

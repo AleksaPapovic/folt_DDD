@@ -7,7 +7,7 @@ namespace FoltDelivery.Infrastructure.Repository
 {
     public interface IEventStoreDBRepository<T> where T : class, IAggregate
     {
-        Task<T?> Find(Guid id, CancellationToken cancellationToken);
+        Task<T> Find(Guid id, CancellationToken cancellationToken);
 
         Task<ulong> Add(
             T aggregate,

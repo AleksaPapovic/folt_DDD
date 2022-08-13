@@ -1,12 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "6JqRxCrnBVVKHuCmxIVqcdLXnQIA8fvKajSvLPqQGHR2oYwRpGPnfQPl2LD7zqMsaWQkU9Qp3HahPi33pylopA==",
+  "dgSpecHash": "EMgV8bcktm+ER0zLX2X5S90WN2u4sv4yExMwI7cYn5ihE3YnEST3TESmlE5nWhkQQFPOy7hJZ7+pUkYA4jtrgQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\papov\\Desktop\\folt_DDD\\FoltDelivery\\FoltDelivery\\FoltDelivery.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\papov\\.nuget\\packages\\automapper\\10.1.1\\automapper.10.1.1.nupkg.sha512",
     "C:\\Users\\papov\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\8.1.1\\automapper.extensions.microsoft.dependencyinjection.8.1.1.nupkg.sha512",
-    "C:\\Users\\papov\\.nuget\\packages\\bcrypt.net\\0.1.0\\bcrypt.net.0.1.0.nupkg.sha512",
+    "C:\\Users\\papov\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
     "C:\\Users\\papov\\.nuget\\packages\\castle.core\\4.4.0\\castle.core.4.4.0.nupkg.sha512",
     "C:\\Users\\papov\\.nuget\\packages\\eventstore.client\\21.2.2\\eventstore.client.21.2.2.nupkg.sha512",
     "C:\\Users\\papov\\.nuget\\packages\\eventstore.client.grpc\\22.0.0\\eventstore.client.grpc.22.0.0.nupkg.sha512",
@@ -182,16 +182,5 @@
     "C:\\Users\\papov\\.nuget\\packages\\xunit.extensibility.core\\2.4.1\\xunit.extensibility.core.2.4.1.nupkg.sha512",
     "C:\\Users\\papov\\.nuget\\packages\\xunit.extensibility.execution\\2.4.1\\xunit.extensibility.execution.2.4.1.nupkg.sha512"
   ],
-  "logs": [
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Package 'BCrypt.Net 0.1.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework 'net5.0'. This package may not be fully compatible with your project.",
-      "libraryId": "BCrypt.Net",
-      "targetGraphs": [
-        "net5.0"
-      ]
-    }
-  ]
+  "logs": []
 }

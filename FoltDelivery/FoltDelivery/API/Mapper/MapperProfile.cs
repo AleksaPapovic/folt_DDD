@@ -15,6 +15,7 @@ namespace Agents.API.Mapper
             CreateMap<OrderDTO, OrderAggregate>().ReverseMap();
             CreateMap<ProductDTO, Product>().ReverseMap();
             CreateMap<RestaurantDTO, Restaurant>().ReverseMap();
+            CreateMap<MoneyDTO, Money>().ReverseMap();
         }
     }
 }

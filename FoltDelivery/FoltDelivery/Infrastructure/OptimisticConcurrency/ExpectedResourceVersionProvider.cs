@@ -4,14 +4,14 @@ namespace FoltDelivery.Infrastructure.OptimisticConcurrency
 {
     public class ExpectedResourceVersionProvider : IExpectedResourceVersionProvider
     {
-        private readonly Func<string, bool>? customTrySet;
+        private readonly Func<string, bool> customTrySet;
 
-        public ExpectedResourceVersionProvider(Func<string, bool>? customTrySet = null)
+        public ExpectedResourceVersionProvider(Func<string, bool> customTrySet = null)
         {
             this.customTrySet = customTrySet;
         }
 
-        public string? Value { get; private set; }
+        public string Value { get; private set; }
 
         public bool TrySet(string value)
         {
