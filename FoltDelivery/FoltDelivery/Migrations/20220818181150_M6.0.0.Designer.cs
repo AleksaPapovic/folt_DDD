@@ -11,8 +11,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FoltDelivery.Migrations
 {
     [DbContext(typeof(FoltDeliveryDbContext))]
-    [Migration("20220810183218_M5.1.21")]
-    partial class M5121
+    [Migration("20220818181150_M6.0.0")]
+    partial class M600
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -130,9 +130,6 @@ namespace FoltDelivery.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
-                    b.Property<double>("Price")
-                        .HasColumnType("double precision");
-
                     b.Property<int>("Quantity")
                         .HasColumnType("integer");
 
@@ -163,7 +160,6 @@ namespace FoltDelivery.Migrations
                             InitialVersion = 0,
                             LogicalDeleted = false,
                             Name = "Vojvodjanska",
-                            Price = 1300.0,
                             Quantity = 1,
                             RestaurantId = new Guid("11223344-5566-7788-99aa-bbccddeeff00"),
                             RestaurantMenuId = new Guid("11223344-5566-7788-99aa-bbccddeeff15"),
@@ -178,7 +174,6 @@ namespace FoltDelivery.Migrations
                             InitialVersion = 0,
                             LogicalDeleted = false,
                             Name = "Vojvodjanska",
-                            Price = 1300.0,
                             Quantity = 1,
                             RestaurantId = new Guid("11223344-5566-7788-99aa-bbccddeeff00"),
                             RestaurantMenuId = new Guid("11223344-5566-7788-99aa-bbccddeeff15"),
@@ -422,6 +417,34 @@ namespace FoltDelivery.Migrations
                     b.HasOne("FoltDelivery.Domain.Aggregates.RestaurantAggregate.RestaurantMenu", null)
                         .WithMany("_menuProducts")
                         .HasForeignKey("RestaurantMenuId");
+
+                    b.OwnsOne("FoltDelivery.Domain.Aggregates.ProductAggregate.Money", "Price", b1 =>
+                        {
+                            b1.Property<Guid>("ProductId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<double>("Amount")
+                                .HasColumnType("double precision");
+
+                            b1.HasKey("ProductId");
+
+                            b1.ToTable("Products");
+
+                            b1.WithOwner()
+                                .HasForeignKey("ProductId");
+
+                            b1.HasData(
+                                new
+                                {
+                                    ProductId = new Guid("11223344-5566-7788-99aa-bbccddeeff15"),
+                                    Amount = 1300.0
+                                },
+                                new
+                                {
+                                    ProductId = new Guid("11223344-5566-7788-99aa-bbccddeeff16"),
+                                    Amount = 1300.0
+                                });
+                        });
                 });
 
             modelBuilder.Entity("FoltDelivery.Domain.Aggregates.RestaurantAggregate.Location", b =>

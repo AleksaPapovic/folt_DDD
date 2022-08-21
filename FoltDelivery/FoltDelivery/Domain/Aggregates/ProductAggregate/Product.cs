@@ -8,7 +8,7 @@ namespace FoltDelivery.Domain.Aggregates.ProductAggregate
     public class Product : EventSourcedAggregate
     {
         public String Name { get; set; }
-        public Double Price { get; set; }
+        public virtual Money Price { get; set; }
         public ProductType Type { get; set; }
         public Guid RestaurantId { get; set; }
         public int Quantity { get; set; }

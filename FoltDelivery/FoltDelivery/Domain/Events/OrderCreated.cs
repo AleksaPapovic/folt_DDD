@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using AutoMapper;
-using FoltDelivery.API.DTO;
+﻿using FoltDelivery.API.DTO;
 using FoltDelivery.Domain.Aggregates.OrderAggregate;
-using FoltDelivery.Domain.Aggregates.ProductAggregate;
 using FoltDelivery.Infrastructure;
 using FoltDelivery.Model.Enums;
+using System;
+using System.Collections.Generic;
 
 namespace FoltDelivery.Domain.Events
 {
@@ -20,12 +18,12 @@ namespace FoltDelivery.Domain.Events
         public virtual Address Address { get; set; }
         public Dictionary<Guid, OrderItemDTO> OrderItems { get; set; }
         public OrderCreated() { }
-        public OrderCreated(OrderDTO orderDTO) :base(orderDTO.Id, "OrderCreated")
+        public OrderCreated(OrderDTO orderDTO) : base(orderDTO.Id, "OrderCreated")
         {
             RestaurantId = orderDTO.RestaurantId;
             CustomerId = orderDTO.CustomerId;
             DeliveryId = orderDTO.DeliveryId;
-            Price =  new MoneyDTO(orderDTO.Price.Amount);
+            Price = new MoneyDTO(orderDTO.Price.Amount);
             OrderItems = orderDTO.ConvertToOrderItemDTOMap(orderDTO.OrderItems);
             DateAndTime = orderDTO.DateAndTime;
             Status = OrderStatus.CREATED;

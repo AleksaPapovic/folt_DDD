@@ -16,7 +16,7 @@ namespace FoltDelivery.API.Repository
 
         public Money GetPrice(Guid productId)
         {
-            return new Money(_dbContext.Products.FirstOrDefault(p => p.Id == productId).Price);
+            return _dbContext.Products.FirstOrDefault(p => p.Id == productId).Price;
         }
 
     }

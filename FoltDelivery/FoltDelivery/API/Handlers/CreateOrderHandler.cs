@@ -31,11 +31,11 @@ namespace FoltDelivery.API.Handlers
 
         public Task<Unit> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
         {
-            foreach (var article in request.order.OrderQuantities)
+            foreach (var orderItemMap in request.order.OrderQuantities)
             {
-                MoneyDTO productPrice = _mapper.Map<MoneyDTO>(_productRepository.GetPrice(article.Key));
-                OrderItem orderItem = new OrderItem(article.Key, article.Value, _mapper.Map<Money>(productPrice));
-                request.order.OrderItems.Add(article.Key, orderItem);
+                ProductDTO product = _mapper.Map<ProductDTO>(_productRepository.Get(orderItemMap.Key));
+                OrderItem orderItem = new OrderItem(product, orderItemMap.Value);
+                request.order.OrderItems.Add(product.Id, orderItem);
             }
 
             OrderAggregate order = new OrderAggregate(request.order);
@@ -45,7 +45,7 @@ namespace FoltDelivery.API.Handlers
             currentUser.CustomerOrdersIds.Add(request.order.Id);
             _userRepository.Update(currentUser);
 
-            return null;
+            return Task.FromResult(Unit.Value);
         }
     }
 }

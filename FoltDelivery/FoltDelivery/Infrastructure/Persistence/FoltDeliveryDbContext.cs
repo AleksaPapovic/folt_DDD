@@ -1,9 +1,9 @@
-﻿using System;
+﻿using FoltDelivery.Domain.Aggregates.CustomerAggregate;
+using FoltDelivery.Domain.Aggregates.ProductAggregate;
+using FoltDelivery.Domain.Aggregates.RestaurantAggregate;
 using FoltDelivery.Model.Enums;
 using Microsoft.EntityFrameworkCore;
-using FoltDelivery.Domain.Aggregates.RestaurantAggregate;
-using FoltDelivery.Domain.Aggregates.CustomerAggregate;
-using FoltDelivery.Domain.Aggregates.ProductAggregate;
+using System;
 
 namespace FoltDelivery.Infrastructure.Persistance
 {
@@ -75,6 +75,8 @@ namespace FoltDelivery.Infrastructure.Persistance
 
             #endregion
 
+
+
             #region Products
 
             modelBuilder.Entity<Product>(products =>
@@ -85,7 +87,6 @@ namespace FoltDelivery.Infrastructure.Persistance
                         Id = new Guid("11223344-5566-7788-99AA-BBCCDDEEFF15"),
                         Name = "Vojvodjanska",
                         RestaurantMenuId = new Guid("11223344-5566-7788-99AA-BBCCDDEEFF15"),
-                        Price = 1300.00,
                         Type = ProductType.DRINK,
                         RestaurantId = new Guid("11223344-5566-7788-99AA-BBCCDDEEFF00"),
                         Quantity = 1,
@@ -102,7 +103,6 @@ namespace FoltDelivery.Infrastructure.Persistance
                     {
                         Id = new Guid("11223344-5566-7788-99AA-BBCCDDEEFF16"),
                         Name = "Vojvodjanska",
-                        Price = 1300.0,
                         Type = ProductType.DRINK,
                         RestaurantMenuId = new Guid("11223344-5566-7788-99AA-BBCCDDEEFF15"),
                         RestaurantId = new Guid("11223344-5566-7788-99AA-BBCCDDEEFF00"),
@@ -112,6 +112,20 @@ namespace FoltDelivery.Infrastructure.Persistance
                         LogicalDeleted = false,
                         InitialVersion = 0,
                         Version = 0,
+                    }
+                );
+
+
+                products.OwnsOne(pr => pr.Price).HasData(
+                    new
+                    {
+                        ProductId = new Guid("11223344-5566-7788-99AA-BBCCDDEEFF15"),
+                        Amount = 1300.00
+                    },
+                    new
+                    {
+                        ProductId = new Guid("11223344-5566-7788-99AA-BBCCDDEEFF16"),
+                        Amount = 1300.00
                     }
                 );
             });
@@ -174,7 +188,7 @@ namespace FoltDelivery.Infrastructure.Persistance
 
 
 
-            }); 
+            });
             modelBuilder.Entity<Restaurant>().Property(e => e.Id).HasIdentityOptions(startValue: 3);
 
             #endregion

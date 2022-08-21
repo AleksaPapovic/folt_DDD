@@ -22,12 +22,12 @@ namespace FoltDelivery.API.Repository
             S snapshot = _eventStore.GetLatestSnapshot<S>(streamName);
             if (snapshot != null)
             {
-                fromEventNumber = snapshot.Version + 1; // load only events after snapshot
+                fromEventNumber = snapshot.Version + 1; 
             }
 
             var stream = _eventStore.GetStream(streamName, fromEventNumber, toEventNumber).Result;
 
-            T aggregate = null;
+            T aggregate;
             if (snapshot != null)
             {
                 aggregate = (T)Activator.CreateInstance(typeof(T), new object[] { snapshot });
@@ -61,15 +61,7 @@ namespace FoltDelivery.API.Repository
 
         private int? GetExpectedVersion(int expectedVersion)
         {
-            if (expectedVersion == 0)
-            {
-                // first time the aggregate is stored there is no expected version
-                return null;
-            }
-            else
-            {
-                return expectedVersion;
-            }
+           return expectedVersion == 0 ? null : expectedVersion;
         }
 
         public void SaveSnapshot(S snapshot, T aggregate)
@@ -78,10 +70,9 @@ namespace FoltDelivery.API.Repository
             _eventStore.AddSnapshot<S>(streamName, snapshot);
         }
 
-        public string StreamNameFor(Guid id)
+        public string StreamNameFor(Guid aggregateId)
         {
-            // Stream per-aggregate: {AggregateType}-{AggregateId}
-            return string.Format("{0}-{1}", typeof(T).Name, id);
+            return string.Format("{0}-{1}", typeof(T).Name, aggregateId);
         }
     }
 }

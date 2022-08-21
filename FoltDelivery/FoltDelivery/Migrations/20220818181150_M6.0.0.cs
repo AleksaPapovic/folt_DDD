@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FoltDelivery.Migrations
 {
-    public partial class M5121 : Migration
+    public partial class M600 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -112,7 +112,7 @@ namespace FoltDelivery.Migrations
                     Version = table.Column<int>(nullable: false),
                     InitialVersion = table.Column<int>(nullable: false),
                     Name = table.Column<string>(nullable: true),
-                    Price = table.Column<double>(nullable: false),
+                    Price_Amount = table.Column<double>(nullable: true),
                     Type = table.Column<int>(nullable: false),
                     RestaurantId = table.Column<Guid>(nullable: false),
                     Quantity = table.Column<int>(nullable: false),
@@ -248,11 +248,11 @@ namespace FoltDelivery.Migrations
 
             migrationBuilder.InsertData(
                 table: "Products",
-                columns: new[] { "Id", "Description", "Image", "InitialVersion", "LogicalDeleted", "Name", "Price", "Quantity", "RestaurantId", "RestaurantMenuId", "Type", "Version" },
+                columns: new[] { "Id", "Description", "Image", "InitialVersion", "LogicalDeleted", "Name", "Quantity", "RestaurantId", "RestaurantMenuId", "Type", "Version", "Price_Amount" },
                 values: new object[,]
                 {
-                    { new Guid("11223344-5566-7788-99aa-bbccddeeff15"), "Pica sa tradicijom", "", 0, false, "Vojvodjanska", 1300.0, 1, new Guid("11223344-5566-7788-99aa-bbccddeeff00"), new Guid("11223344-5566-7788-99aa-bbccddeeff15"), 1, 0 },
-                    { new Guid("11223344-5566-7788-99aa-bbccddeeff16"), "Pica sa tradicijom", "", 0, false, "Vojvodjanska", 1300.0, 1, new Guid("11223344-5566-7788-99aa-bbccddeeff00"), new Guid("11223344-5566-7788-99aa-bbccddeeff15"), 1, 0 }
+                    { new Guid("11223344-5566-7788-99aa-bbccddeeff15"), "Pica sa tradicijom", "", 0, false, "Vojvodjanska", 1, new Guid("11223344-5566-7788-99aa-bbccddeeff00"), new Guid("11223344-5566-7788-99aa-bbccddeeff15"), 1, 0, 1300.0 },
+                    { new Guid("11223344-5566-7788-99aa-bbccddeeff16"), "Pica sa tradicijom", "", 0, false, "Vojvodjanska", 1, new Guid("11223344-5566-7788-99aa-bbccddeeff00"), new Guid("11223344-5566-7788-99aa-bbccddeeff15"), 1, 0, 1300.0 }
                 });
 
             migrationBuilder.InsertData(

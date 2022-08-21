@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace FoltDelivery.API.DTO
 {
-    public class OrderDTO:Entity
+    public class OrderDTO : Entity
     {
         public Guid RestaurantId { get; set; }
         public Guid CustomerId { get; set; }
@@ -22,10 +22,12 @@ namespace FoltDelivery.API.DTO
         public int Version { get; protected set; }
         public int InitialVersion { get; protected set; }
 
-        public OrderDTO() : base(Guid.NewGuid()) {
+        public OrderDTO() : base(Guid.NewGuid())
+        {
             OrderItems = new Dictionary<Guid, OrderItem>();
         }
-        public OrderDTO(Guid id) : base(id) {
+        public OrderDTO(Guid id) : base(id)
+        {
             OrderItems = new Dictionary<Guid, OrderItem>();
         }
 
