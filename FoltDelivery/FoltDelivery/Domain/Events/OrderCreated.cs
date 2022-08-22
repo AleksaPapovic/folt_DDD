@@ -1,4 +1,5 @@
-﻿using FoltDelivery.API.DTO;
+﻿using FoltDelivery.API.Mapper;
+using FoltDelivery.API.DTO;
 using FoltDelivery.Domain.Aggregates.OrderAggregate;
 using FoltDelivery.Infrastructure;
 using FoltDelivery.Model.Enums;
@@ -24,21 +25,11 @@ namespace FoltDelivery.Domain.Events
             CustomerId = orderDTO.CustomerId;
             DeliveryId = orderDTO.DeliveryId;
             Price = new MoneyDTO(orderDTO.Price.Amount);
-            OrderItems = orderDTO.ConvertToOrderItemDTOMap(orderDTO.OrderItems);
+            OrderItems = MapperProfile.ConvertToOrderItemDTOMap(orderDTO.OrderItems);
             DateAndTime = orderDTO.DateAndTime;
             Status = OrderStatus.CREATED;
-            Version = 0;
+            Version = orderDTO.Version;
             Address = orderDTO.Address;
-        }
-
-        public Dictionary<Guid, OrderItem> ConvertToOrderItemMap(Dictionary<Guid, OrderItemDTO> orderItemsDTO)
-        {
-            Dictionary<Guid, OrderItem> orderItems = new Dictionary<Guid, OrderItem>();
-            foreach (var orderItemDTO in orderItemsDTO)
-            {
-                orderItems.Add(orderItemDTO.Key, new OrderItem(orderItemDTO.Value));
-            }
-            return orderItems;
         }
 
     }

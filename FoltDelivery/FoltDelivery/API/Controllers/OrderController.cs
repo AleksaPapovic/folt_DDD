@@ -73,7 +73,7 @@ namespace FoltDelivery.API.Controllers
 
         [HttpPost]
         [Route("add")]
-        public void AddOrderItem([FromBody] OrderItemsUpdateDTO newItem)
+        public void AddOrderItem([FromBody] OrderUpdateDTO newItem)
         {
             Guid? userId = GetPrincipalId();
             if (userId != null)
@@ -88,7 +88,7 @@ namespace FoltDelivery.API.Controllers
 
         [HttpPost]
         [Route("remove")]
-        public void RemoveOrderItem([FromBody] OrderItemsUpdateDTO removedItem)
+        public void RemoveOrderItem([FromBody] OrderUpdateDTO removedItem)
         {
             Guid? userId = GetPrincipalId();
             if (userId != null)

@@ -11,8 +11,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FoltDelivery.Migrations
 {
     [DbContext(typeof(FoltDeliveryDbContext))]
-    [Migration("20220818181150_M6.0.0")]
-    partial class M600
+    [Migration("20220822112754_M7.0")]
+    partial class M70
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

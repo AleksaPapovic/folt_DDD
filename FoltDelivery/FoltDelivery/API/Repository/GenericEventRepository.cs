@@ -1,4 +1,5 @@
-﻿using FoltDelivery.Infrastructure;
+﻿using EventStore.ClientAPI;
+using FoltDelivery.Infrastructure;
 using FoltDelivery.Infrastructure.Aggregate;
 using System;
 
@@ -39,7 +40,7 @@ namespace FoltDelivery.API.Repository
 
             foreach (var @event in stream)
             {
-                aggregate.Apply(@event);
+                aggregate.When(@event);
             }
 
             return aggregate;
@@ -55,13 +56,8 @@ namespace FoltDelivery.API.Repository
         public void Save(T aggregate)
         {
             var streamName = StreamNameFor(aggregate.Id);
-            var expectedVersion = GetExpectedVersion(aggregate.InitialVersion);
-            _eventStore.AppendEventsToStream(streamName, aggregate.Changes, expectedVersion);
-        }
-
-        private int? GetExpectedVersion(int expectedVersion)
-        {
-           return expectedVersion == 0 ? null : expectedVersion;
+            var expectedVersion = aggregate.InitialVersion;
+            _eventStore.AppendEventsToStream(streamName, aggregate.Changes,expectedVersion);
         }
 
         public void SaveSnapshot(S snapshot, T aggregate)

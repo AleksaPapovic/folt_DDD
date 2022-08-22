@@ -2,6 +2,6 @@
 {
     public interface IProjection
     {
-        void When(object @event);
+        void When(DomainEvent @event);
     }
 }

@@ -19,7 +19,7 @@ namespace FoltDelivery.Domain.Aggregates.ProductAggregate
         public Product(Guid id):base(id) { }
 
 
-        public override void Apply(DomainEvent changes)
+        public override void When(DomainEvent changes)
         {
             throw new NotImplementedException();
         }

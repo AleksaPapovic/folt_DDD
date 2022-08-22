@@ -69,7 +69,7 @@ namespace FoltDelivery.Domain.Aggregates.CustomerAggregate
             Blocked = user.Blocked;
         }
 
-        public override void Apply(DomainEvent changes)
+        public override void When(DomainEvent changes)
         {
             throw new NotImplementedException();
         }

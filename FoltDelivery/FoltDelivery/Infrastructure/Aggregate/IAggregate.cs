@@ -9,7 +9,7 @@ namespace FoltDelivery.Infrastructure.Aggregate
     {
     }
 
-    public interface IAggregate<out T> : IProjection
+    public interface IAggregate<out T>: IProjection
     {
         T Id { get; }
         int Version { get; }

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FoltDelivery.Migrations
 {
-    public partial class M600 : Migration
+    public partial class M70 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

@@ -7,7 +7,7 @@ namespace FoltDelivery.Infrastructure
 {
     public class DomainEvent:Entity
     {
-        public string EventType { get; private set; }
+        public string EventType { get; protected set; }
 
         public int Version { get; protected set; }
 

@@ -1,4 +1,5 @@
-﻿using FoltDelivery.API.DTO;
+﻿using FoltDelivery.API.Mapper;
+using FoltDelivery.API.DTO;
 using FoltDelivery.Domain.Aggregates.ProductAggregate;
 using FoltDelivery.Domain.Events;
 using FoltDelivery.Infrastructure;
@@ -63,44 +64,100 @@ namespace FoltDelivery.Domain.Aggregates.OrderAggregate
         private void Causes(DomainEvent @event)
         {
             Changes.Add(@event);
-            Apply(@event);
+            When(@event);
         }
 
-        public override void Apply(DomainEvent @event)
+        public override void When(DomainEvent @event)
         {
-            When((dynamic)@event);
-            Version = Version++;
+            Version += 1;
+            InitialVersion = Version - 1;
+            switch (@event)
+            {
+                case OrderCreated orderCreated:
+                    Apply(orderCreated);
+                    break;
+                case OrderCancelled orderCancelled:
+                    Apply(orderCancelled);
+                    break;
+                case ItemAdded orderItemAdded:
+                    Apply(orderItemAdded);
+                    break;
+                case ItemRemoved orderItemRemoved:
+                    Apply(orderItemRemoved);
+                    break;
+            }
+
         }
 
-        private void When(OrderCreated orderCreated)
+        private void Apply(OrderCreated orderCreated)
         {
             Id = orderCreated.Id;
             CustomerId = orderCreated.CustomerId;
             RestaurantId = orderCreated.RestaurantId;
-            Version = orderCreated.Version;
-            InitialVersion = orderCreated.Version;
             DeliveryId = orderCreated.DeliveryId;
             Price = new Money(orderCreated.Price.Amount);
             Address = orderCreated.Address;
-            OrderItems = orderCreated.ConvertToOrderItemMap(orderCreated.OrderItems);
+            OrderItems = MapperProfile.ConvertToOrderItemMap(orderCreated.OrderItems);
             DateAndTime = orderCreated.DateAndTime;
             Status = orderCreated.Status;
+            Version = 0;
+            InitialVersion = 0;
         }
-        private void When(OrderCancelled orderCancelled)
+        private void Apply(OrderCancelled orderCancelled)
         {
             Id = orderCancelled.Id;
             CustomerId = orderCancelled.CustomerId;
         }
-        private void AddItem(OrderItemsUpdateDTO newItem)
+
+        private void Apply(ItemAdded orderItemAdded)
         {
+            Id = orderItemAdded.Id;
+            CustomerId = orderItemAdded.CustomerId;
+            Price = new Money(orderItemAdded.Price.Amount);
+            OrderItems = MapperProfile.ConvertToOrderItemMap(orderItemAdded.OrderItems);
+        }
+
+        private void Apply(ItemRemoved orderItemRemoved)
+        {
+            Id = orderItemRemoved.Id;
+            CustomerId = orderItemRemoved.CustomerId;
+            Price = new Money(orderItemRemoved.Price.Amount);
+            OrderItems = MapperProfile.ConvertToOrderItemMap(orderItemRemoved.OrderItems);
+        }
+        internal void AddItem(OrderUpdateDTO newItem)
+        {
+            Price = Price.Add(newItem.Price);
+            OrderItems = newItem.OrderItems;
+            newItem.Price = new Money(Price.Amount);
             Causes(new ItemAdded(newItem));
         }
 
-        private void RemoveItem(OrderItemsUpdateDTO removedItem)
+        internal void RemoveItem(OrderUpdateDTO removedItem)
         {
+            Price = Price.Subtract(removedItem.Price);
+            OrderItems = removedItem.OrderItems;
+            removedItem.Price = new Money(Price.Amount);
             Causes(new ItemRemoved(removedItem));
         }
 
+        internal void UpdateOrderItems(Guid itemId, bool isAdd)
+        {
+            if (isAdd == true)
+            {
+                OrderItems[itemId].Quantity += 1;
+            }
+            else
+            {
+                if (OrderItems[itemId].Quantity == 1)
+                {
+                    //remove
+                }
+                else
+                {
+                    OrderItems[itemId].Quantity -= 1;
+                }
+            }
+        }
         private Money CalculateOrderPrice()
         {
             Money cost = new Money();

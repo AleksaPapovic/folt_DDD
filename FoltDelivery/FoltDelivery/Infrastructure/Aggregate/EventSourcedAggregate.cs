@@ -25,7 +25,7 @@ namespace FoltDelivery.Infrastructure.Aggregate
             UncommittedEvents = new List<DomainEvent>();
         }
 
-        public abstract void Apply(DomainEvent changes);
+        public abstract void When(DomainEvent @event);
 
         public List<DomainEvent> DeleteUncommittedEvents()
         {
@@ -37,11 +37,6 @@ namespace FoltDelivery.Infrastructure.Aggregate
         protected void AddUncommittedEvent(DomainEvent @event)
         {
             UncommittedEvents.Add(@event);
-        }
-
-        public void When(object @event)
-        {
-            throw new NotImplementedException();
         }
     }
 }

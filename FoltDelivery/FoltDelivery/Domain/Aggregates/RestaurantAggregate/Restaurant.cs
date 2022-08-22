@@ -43,7 +43,7 @@ namespace FoltDelivery.Domain.Aggregates.RestaurantAggregate
             Deleted = restaurant.Deleted;
         }
 
-        public override void Apply(DomainEvent changes)
+        public override void When(DomainEvent changes)
         {
             throw new NotImplementedException();
         }

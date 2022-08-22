@@ -34,7 +34,7 @@ namespace FoltDelivery.Infrastructure.Aggregate
             {
                 var eventData = @event.Deserialize();
 
-                aggregate.When(eventData!);
+                aggregate.When((DomainEvent)eventData!);
             }
 
             return aggregate;

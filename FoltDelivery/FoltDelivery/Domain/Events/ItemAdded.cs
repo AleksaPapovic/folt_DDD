@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using FoltDelivery.API.Mapper;
 using FoltDelivery.API.DTO;
+using FoltDelivery.Domain.Aggregates.OrderAggregate;
 using FoltDelivery.Infrastructure;
 
 namespace FoltDelivery.Domain.Events
@@ -8,11 +11,16 @@ namespace FoltDelivery.Domain.Events
     {
         public Guid CustomerId { get; private set; }
         public Guid ItemId { get; private set; }
-
-        public ItemAdded(OrderItemsUpdateDTO newItem) : base(newItem.OrderId, "ItemAdded")
+        public MoneyDTO Price { get; set; }
+        public Dictionary<Guid, OrderItemDTO> OrderItems { get; set; }
+        public ItemAdded() { }
+        public ItemAdded(OrderUpdateDTO orderUpdate) : base(orderUpdate.Id, "ItemAdded")
         {
-            ItemId = newItem.Id;
-            CustomerId = newItem.CustomerId;
+            CustomerId = orderUpdate.CustomerId;
+            ItemId = orderUpdate.OrderItemId;
+            Price = new MoneyDTO(orderUpdate.Price.Amount);
+            OrderItems = MapperProfile.ConvertToOrderItemDTOMap(orderUpdate.OrderItems);
         }
+
     }
 }

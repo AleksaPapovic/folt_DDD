@@ -34,7 +34,7 @@ namespace FoltDelivery.Infrastructure
         {
             var commitId = Guid.NewGuid();
             var eventsInStorageFormat = domainEvents.Select(e => MapToEventStoreStorageFormat(e, commitId, e.Id));
-            _esConn.AppendToStreamAsync(StreamName(streamName), expectedVersion ?? ExpectedVersion.Any, eventsInStorageFormat).ContinueWith((_) => { CloseConnection(); });
+            _esConn.AppendToStreamAsync(streamName, expectedVersion ?? ExpectedVersion.Any, eventsInStorageFormat).ContinueWith((_) => { CloseConnection(); });
         }
 
         private EventData MapToEventStoreStorageFormat(object evnt, Guid commitId, Guid eventId)
@@ -56,7 +56,7 @@ namespace FoltDelivery.Infrastructure
         public async Task<List<DomainEvent>> GetStream(string streamName, long fromVersion, int toVersion)
         {
             List<DomainEvent> domainEvents = new List<DomainEvent>();
-            Task<StreamEventsSlice> readEventsTask = _esConn.ReadStreamEventsForwardAsync(StreamName(streamName), 0, 4096, true);
+            Task<StreamEventsSlice> readEventsTask = _esConn.ReadStreamEventsForwardAsync(streamName, 0, 4096, true);
             if (readEventsTask.GetAwaiter().IsCompleted) { CloseConnection(); }
             foreach (var evt in readEventsTask.Result.Events)
             {
@@ -102,15 +102,10 @@ namespace FoltDelivery.Infrastructure
 
         private string SnapshotStreamNameFor(string streamName)
         {
-            return StreamName(streamName) + "-snapshots";
+            return streamName + "-snapshots";
         }
 
-        private string StreamName(string streamName)
-        {
-            // see: https://groups.google.com/forum/#!msg/event-store/D477bKLcdI8/62iFGhHdMMIJ
-            var sp = streamName.Split(new[] { '-' }, 2);
-            return sp[0] + "-" + sp[1].Replace("-", "");
-        }
+      
 
         private async Task GetConnection()
         {

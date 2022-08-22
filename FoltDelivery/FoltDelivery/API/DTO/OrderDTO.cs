@@ -31,15 +31,6 @@ namespace FoltDelivery.API.DTO
             OrderItems = new Dictionary<Guid, OrderItem>();
         }
 
-        internal Dictionary<Guid, OrderItemDTO> ConvertToOrderItemDTOMap(Dictionary<Guid, OrderItem> orderItems)
-        {
-            Dictionary<Guid, OrderItemDTO> orderItemsDTO = new Dictionary<Guid, OrderItemDTO>();
-            foreach (var orderItem in orderItems)
-            {
-                orderItemsDTO.Add(orderItem.Key, new OrderItemDTO(orderItem.Value));
-            }
-            return orderItemsDTO;
-        }
 
     }
 }
