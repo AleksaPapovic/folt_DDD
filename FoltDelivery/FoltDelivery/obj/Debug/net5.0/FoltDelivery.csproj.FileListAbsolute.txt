@@ -160,3 +160,4 @@ C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\obj\Debug\net5.0\refin
 C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\obj\Debug\net5.0\FoltDelivery.pdb
 C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\obj\Debug\net5.0\FoltDelivery.genruntimeconfig.cache
 C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\obj\Debug\net5.0\ref\FoltDelivery.dll
+C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\bin\Debug\net5.0\EventStore.Client.ProjectionManagement.dll

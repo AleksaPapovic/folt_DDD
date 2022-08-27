@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "EMgV8bcktm+ER0zLX2X5S90WN2u4sv4yExMwI7cYn5ihE3YnEST3TESmlE5nWhkQQFPOy7hJZ7+pUkYA4jtrgQ==",
+  "dgSpecHash": "UScVu9fYzuTKzxOWsKbpbqI7+FjLD1DCkd/aGurdoAKTxn8b2DVUeDQLsbTP55L+eTBNzdRvsBdj4h/Ox3Ldow==",
   "success": true,
   "projectFilePath": "C:\\Users\\papov\\Desktop\\folt_DDD\\FoltDelivery\\FoltDelivery\\FoltDelivery.csproj",
   "expectedPackageFiles": [
@@ -10,6 +10,7 @@
     "C:\\Users\\papov\\.nuget\\packages\\castle.core\\4.4.0\\castle.core.4.4.0.nupkg.sha512",
     "C:\\Users\\papov\\.nuget\\packages\\eventstore.client\\21.2.2\\eventstore.client.21.2.2.nupkg.sha512",
     "C:\\Users\\papov\\.nuget\\packages\\eventstore.client.grpc\\22.0.0\\eventstore.client.grpc.22.0.0.nupkg.sha512",
+    "C:\\Users\\papov\\.nuget\\packages\\eventstore.client.grpc.projectionmanagement\\22.0.0\\eventstore.client.grpc.projectionmanagement.22.0.0.nupkg.sha512",
     "C:\\Users\\papov\\.nuget\\packages\\eventstore.client.grpc.streams\\22.0.0\\eventstore.client.grpc.streams.22.0.0.nupkg.sha512",
     "C:\\Users\\papov\\.nuget\\packages\\fluentassertions\\6.7.0\\fluentassertions.6.7.0.nupkg.sha512",
     "C:\\Users\\papov\\.nuget\\packages\\google.protobuf\\3.15.0\\google.protobuf.3.15.0.nupkg.sha512",

@@ -1,9 +1,12 @@
 ﻿using EventStore.ClientAPI;
+using EventStore.ClientAPI.Common.Log;
+using EventStore.ClientAPI.Projections;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using EventData = EventStore.ClientAPI.EventData;
@@ -19,10 +22,19 @@ namespace FoltDelivery.Infrastructure
 
         private const string EventClrTypeHeader = "EventClrTypeName";
 
+        private ProjectionsManager _projectionsManager;
+
         public EventStore(IEventStoreConnection esConn)
         {
             _esConn = ConnectionFactory.Create();
             GetConnection();
+            _projectionsManager = new ProjectionsManager(
+            log: new ConsoleLogger(),
+            httpEndPoint: new IPEndPoint(IPAddress.Loopback, 2113),
+            operationTimeout: TimeSpan.FromMilliseconds(5000),
+            null,
+            "http"
+            );
         }
 
         public void CreateNewStream(string streamName, IEnumerable<DomainEvent> domainEvents)
@@ -100,12 +112,21 @@ namespace FoltDelivery.Infrastructure
             return ev.Result.Events.Any() ? (T)RebuildSnapshot(ev.Result.Events.Single()) : null;
         }
 
+        public async void CreateProjectionStream(string streamName,string query)
+        {
+
+            await _projectionsManager.CreateContinuousAsync(streamName, query);
+        }
+
+        public async Task<string> RunProjection(string streamName)
+        {
+            return await _projectionsManager.GetResultAsync(streamName);
+        }
+
         private string SnapshotStreamNameFor(string streamName)
         {
             return streamName + "-snapshots";
         }
-
-      
 
         private async Task GetConnection()
         {

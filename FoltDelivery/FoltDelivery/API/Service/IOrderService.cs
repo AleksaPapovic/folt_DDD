@@ -9,5 +9,7 @@ namespace FoltDelivery.API.Service
     {
         public OrderAggregate GetOrder(Guid orderId);
         public OrderDTO CreateOrder(OrderDTO newOrder);
+
+        public void GetSuggestedFromAll(string productId);
     }
 }

@@ -36,5 +36,10 @@ namespace FoltDelivery.API.Service
            _orderRepository.Add(order);
             return newOrder;
         }
+
+        public void GetSuggestedFromAll(string productId) {
+            _orderRepository.GetSuggestedFromAll(productId);
+        }
+
     }
 }

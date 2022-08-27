@@ -88,6 +88,18 @@
           "lib/net5.0/EventStore.Client.dll": {}
         }
       },
+      "EventStore.Client.Grpc.ProjectionManagement/22.0.0": {
+        "type": "package",
+        "dependencies": {
+          "EventStore.Client.Grpc": "22.0.0"
+        },
+        "compile": {
+          "lib/net5.0/EventStore.Client.ProjectionManagement.dll": {}
+        },
+        "runtime": {
+          "lib/net5.0/EventStore.Client.ProjectionManagement.dll": {}
+        }
+      },
       "EventStore.Client.Grpc.Streams/22.0.0": {
         "type": "package",
         "dependencies": {
@@ -2957,6 +2969,23 @@
         "lib/net5.0/EventStore.Client.xml",
         "lib/netcoreapp3.1/EventStore.Client.dll",
         "lib/netcoreapp3.1/EventStore.Client.xml",
+        "ouro.png"
+      ]
+    },
+    "EventStore.Client.Grpc.ProjectionManagement/22.0.0": {
+      "sha512": "OBpleal5sd8UgqMJaXjDwAm2P+0/W+xJOxDFhnGiYa/1M0MzmRQumwoMMofv24D4VzsSZHRsNGYOp1cMVhe8cg==",
+      "type": "package",
+      "path": "eventstore.client.grpc.projectionmanagement/22.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.md",
+        "eventstore.client.grpc.projectionmanagement.22.0.0.nupkg.sha512",
+        "eventstore.client.grpc.projectionmanagement.nuspec",
+        "lib/net5.0/EventStore.Client.ProjectionManagement.dll",
+        "lib/net5.0/EventStore.Client.ProjectionManagement.xml",
+        "lib/netcoreapp3.1/EventStore.Client.ProjectionManagement.dll",
+        "lib/netcoreapp3.1/EventStore.Client.ProjectionManagement.xml",
         "ouro.png"
       ]
     },
@@ -9423,6 +9452,7 @@
       "BCrypt.Net-Next >= 4.0.3",
       "EventStore.Client >= 21.2.2",
       "EventStore.Client.Grpc >= 22.0.0",
+      "EventStore.Client.Grpc.ProjectionManagement >= 22.0.0",
       "EventStore.Client.Grpc.Streams >= 22.0.0",
       "FluentAssertions >= 6.7.0",
       "MediatR >= 10.0.1",
@@ -9498,6 +9528,10 @@
             "version": "[21.2.2, )"
           },
           "EventStore.Client.Grpc": {
+            "target": "Package",
+            "version": "[22.0.0, )"
+          },
+          "EventStore.Client.Grpc.ProjectionManagement": {
             "target": "Package",
             "version": "[22.0.0, )"
           },

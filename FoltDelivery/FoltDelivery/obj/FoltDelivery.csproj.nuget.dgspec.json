@@ -60,6 +60,10 @@
               "target": "Package",
               "version": "[22.0.0, )"
             },
+            "EventStore.Client.Grpc.ProjectionManagement": {
+              "target": "Package",
+              "version": "[22.0.0, )"
+            },
             "EventStore.Client.Grpc.Streams": {
               "target": "Package",
               "version": "[22.0.0, )"

@@ -30,12 +30,14 @@ namespace FoltDelivery.API.Controllers
 
         private readonly IMapper _mapper;
 
-        public OrderController(ICommandBus commandBus, IQueryBus queryBus, IJwtUtils iJwtUtils, IMapper mapper)
+        private readonly IOrderService _orderService;
+        public OrderController(ICommandBus commandBus, IQueryBus queryBus, IJwtUtils iJwtUtils, IMapper mapper, IOrderService orderService)
         {
             _commandBus = commandBus;
             _queryBus = queryBus;
             _iJwtUtils = iJwtUtils;
             _mapper = mapper;
+            _orderService = orderService;
         }
 
         [HttpGet]
@@ -98,6 +100,13 @@ namespace FoltDelivery.API.Controllers
             }
             //error
             return;
+        }
+
+        [HttpGet]
+        [Route("projection")]
+        public void GetProjections()
+        {
+            _orderService.GetSuggestedFromAll("test");
         }
 
         private Guid? GetPrincipalId()

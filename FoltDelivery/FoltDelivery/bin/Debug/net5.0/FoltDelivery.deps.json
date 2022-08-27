@@ -38,6 +38,7 @@
           "BCrypt.Net-Next": "4.0.3",
           "EventStore.Client": "21.2.2",
           "EventStore.Client.Grpc": "22.0.0",
+          "EventStore.Client.Grpc.ProjectionManagement": "22.0.0",
           "EventStore.Client.Grpc.Streams": "22.0.0",
           "FluentAssertions": "6.7.0",
           "MediatR": "10.0.1",
@@ -442,6 +443,20 @@
         },
         "compile": {
           "lib/net5.0/EventStore.Client.dll": {}
+        }
+      },
+      "EventStore.Client.Grpc.ProjectionManagement/22.0.0": {
+        "dependencies": {
+          "EventStore.Client.Grpc": "22.0.0"
+        },
+        "runtime": {
+          "lib/net5.0/EventStore.Client.ProjectionManagement.dll": {
+            "assemblyVersion": "22.0.0.0",
+            "fileVersion": "22.0.0.0"
+          }
+        },
+        "compile": {
+          "lib/net5.0/EventStore.Client.ProjectionManagement.dll": {}
         }
       },
       "EventStore.Client.Grpc.Streams/22.0.0": {
@@ -4137,6 +4152,13 @@
       "sha512": "sha512-DwPcpRkKRDX1c7wjCqbeGFXF2vsqWu+O1f3Y/iNCf+07nzP8N04/L/5LUheuKeyQogoh3t+I4koAOUitUdsSQw==",
       "path": "eventstore.client.grpc/22.0.0",
       "hashPath": "eventstore.client.grpc.22.0.0.nupkg.sha512"
+    },
+    "EventStore.Client.Grpc.ProjectionManagement/22.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-OBpleal5sd8UgqMJaXjDwAm2P+0/W+xJOxDFhnGiYa/1M0MzmRQumwoMMofv24D4VzsSZHRsNGYOp1cMVhe8cg==",
+      "path": "eventstore.client.grpc.projectionmanagement/22.0.0",
+      "hashPath": "eventstore.client.grpc.projectionmanagement.22.0.0.nupkg.sha512"
     },
     "EventStore.Client.Grpc.Streams/22.0.0": {
       "type": "package",
