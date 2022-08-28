@@ -1,15 +1,14 @@
-﻿using System;
-using AutoMapper;
+﻿using AutoMapper;
 using FoltDelivery.API.Commands;
 using FoltDelivery.API.DTO;
 using FoltDelivery.API.Queries;
 using FoltDelivery.API.Service;
-using FoltDelivery.Domain.Aggregates.CustomerAggregate;
 using FoltDelivery.Domain.Aggregates.OrderAggregate;
 using FoltDelivery.Infrastructure.Authorization;
 using FoltDelivery.Infrastructure.Commands;
 using FoltDelivery.Infrastructure.Queries;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -70,7 +69,7 @@ namespace FoltDelivery.API.Controllers
                 _commandBus.Send(CreateOrderCommand.Create(newOrder));
             }
             //error
-            return ;
+            return;
         }
 
         [HttpPost]

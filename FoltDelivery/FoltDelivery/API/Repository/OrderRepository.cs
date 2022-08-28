@@ -15,14 +15,6 @@ namespace FoltDelivery.API.Repository
         _eventStore = eventStore;
         }
 
-        public List<OrderAggregate> GetOrdersInCart(List<Guid> orderIds)
-        {
-            List<OrderAggregate> orderAggregates = new List<OrderAggregate>();
-            //foreach kroz snapshot-e
-            return null;
-
-        }
-
         public async void GetSuggestedFromAll(string productId)
         {
            string query = @"fromAll()

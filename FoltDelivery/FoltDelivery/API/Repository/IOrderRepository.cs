@@ -6,7 +6,6 @@ namespace FoltDelivery.API.Repository
 {
     public interface IOrderRepository : IGenericEventRepository<OrderAggregate, OrderSnapshot>
     {
-        public List<OrderAggregate> GetOrdersInCart(List<Guid> orderIds);
         public void GetSuggestedFromAll(string productId);
     }
 }
