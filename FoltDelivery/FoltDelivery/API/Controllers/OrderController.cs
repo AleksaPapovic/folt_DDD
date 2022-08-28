@@ -106,7 +106,7 @@ namespace FoltDelivery.API.Controllers
         [Route("projection")]
         public void GetProjections()
         {
-            _orderService.GetSuggestedFromAll("test");
+            _orderService.GetSuggestedFromAll("11223344-5566-7788-99aa-bbccddeeff15");
         }
 
         private Guid? GetPrincipalId()

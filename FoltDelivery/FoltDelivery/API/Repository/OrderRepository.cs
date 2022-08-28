@@ -33,7 +33,7 @@ namespace FoltDelivery.API.Repository
                             };
                         },
                         $any: function(s, e) {
-                            if(e.data.OrderItems['11223344-5566-7788-99aa-bbccddeeff15'] && e.data.EventType ==='OrderCreated'){
+                            if(e.data.OrderItems['"+ productId + @"'] && e.data.EventType ==='OrderCreated'){
                                 for (const [key, value] of  Object.entries(e.data.OrderItems)) {
                                     if (s.suggested[key] === undefined) { s.suggested[key] = 1; }
                                     else { s.suggested[key] = s.suggested[key] + 1; }
