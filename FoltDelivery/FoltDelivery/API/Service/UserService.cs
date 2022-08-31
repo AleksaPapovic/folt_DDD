@@ -32,11 +32,6 @@ namespace FoltDelivery.API.Service
             return _userRepository.Get(id);
         }
 
-        public User GetUsingCredentials(string username, string password)
-        {
-            return _userRepository.GetUsingCredentials(username, password);
-        }
-
         public AuthenticateResponseDTO Authenticate(AuthenticateRequestDTO model)
         {
             var user = _userRepository.GetByUsername(model.Username);

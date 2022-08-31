@@ -18,6 +18,7 @@ namespace FoltDelivery.API.Mapper
             CreateMap<ProductDTO, Product>().ReverseMap();
             CreateMap<RestaurantDTO, Restaurant>().ReverseMap();
             CreateMap<MoneyDTO, Money>().ReverseMap();
+            CreateMap<List<Product>, List<ProductDTO>>();
         }
 
         public static Dictionary<Guid, OrderItem> ConvertToOrderItemMap(Dictionary<Guid, OrderItemDTO> orderItemsDTO)

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FoltDelivery.Migrations
 {
-    public partial class M70 : Migration
+    public partial class M1000 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -234,7 +234,8 @@ namespace FoltDelivery.Migrations
                 values: new object[]
                 {
                     new Guid("11223344-5566-7788-99aa-bbccddeeff15"),
-                    new Guid("11223344-5566-7788-99aa-bbccddeeff16")
+                    new Guid("11223344-5566-7788-99aa-bbccddeeff16"),
+                    new Guid("21223344-5566-7788-99aa-bbccddeeff10")
                 });
 
             migrationBuilder.InsertData(
@@ -252,7 +253,11 @@ namespace FoltDelivery.Migrations
                 values: new object[,]
                 {
                     { new Guid("11223344-5566-7788-99aa-bbccddeeff15"), "Pica sa tradicijom", "", 0, false, "Vojvodjanska", 1, new Guid("11223344-5566-7788-99aa-bbccddeeff00"), new Guid("11223344-5566-7788-99aa-bbccddeeff15"), 1, 0, 1300.0 },
-                    { new Guid("11223344-5566-7788-99aa-bbccddeeff16"), "Pica sa tradicijom", "", 0, false, "Vojvodjanska", 1, new Guid("11223344-5566-7788-99aa-bbccddeeff00"), new Guid("11223344-5566-7788-99aa-bbccddeeff15"), 1, 0, 1300.0 }
+                    { new Guid("11223344-5566-7788-99aa-bbccddeeff16"), "Pica sa tradicijom", "", 0, false, "TRIKOLORE", 1, new Guid("11223344-5566-7788-99aa-bbccddeeff00"), new Guid("11223344-5566-7788-99aa-bbccddeeff15"), 1, 0, 1650.0 },
+                    { new Guid("11223344-5566-7788-99aa-bbccddeeff17"), "Pica sa tradicijom", "", 0, false, "KAPRIĆOZA", 1, new Guid("11223344-5566-7788-99aa-bbccddeeff00"), new Guid("11223344-5566-7788-99aa-bbccddeeff15"), 1, 0, 1350.0 },
+                    { new Guid("22223344-5566-7788-99aa-bbccddeeff10"), "Pica sa tradicijom", "", 0, false, "Palacinka Rafaelo", 1, new Guid("11223344-5566-7788-99aa-bbccddeeff01"), new Guid("11223344-5566-7788-99aa-bbccddeeff16"), 1, 0, 280.0 },
+                    { new Guid("22223344-5566-7788-99aa-bbccddeeff11"), "Pica sa tradicijom", "", 0, false, "Palacinka Oreo", 1, new Guid("11223344-5566-7788-99aa-bbccddeeff01"), new Guid("11223344-5566-7788-99aa-bbccddeeff16"), 1, 0, 360.0 },
+                    { new Guid("22223344-5566-7788-99aa-bbccddeeff12"), "Pica sa tradicijom", "", 0, false, "Palacinka Nutela", 1, new Guid("11223344-5566-7788-99aa-bbccddeeff01"), new Guid("11223344-5566-7788-99aa-bbccddeeff16"), 1, 0, 240.0 }
                 });
 
             migrationBuilder.InsertData(

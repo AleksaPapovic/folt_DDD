@@ -29,14 +29,12 @@ namespace FoltDelivery.API.Controllers
 
         private readonly IMapper _mapper;
 
-        private readonly IOrderService _orderService;
-        public OrderController(ICommandBus commandBus, IQueryBus queryBus, IJwtUtils iJwtUtils, IMapper mapper, IOrderService orderService)
+        public OrderController(ICommandBus commandBus, IQueryBus queryBus, IJwtUtils iJwtUtils, IMapper mapper)
         {
             _commandBus = commandBus;
             _queryBus = queryBus;
             _iJwtUtils = iJwtUtils;
             _mapper = mapper;
-            _orderService = orderService;
         }
 
         [HttpGet]
@@ -60,6 +58,34 @@ namespace FoltDelivery.API.Controllers
         }
 
         [HttpPost]
+        [Route("projection")]
+        public async Task<SuggestionDTO> GetProjections([FromBody]OrderInCartDTO orderInCart)
+        {
+            Guid? userId = GetPrincipalId();
+            if (userId != null)
+            {
+                orderInCart.OwnerId = userId.Value;
+                return await _queryBus.Send<GetAllSuggestionQuery, SuggestionDTO>(GetAllSuggestionQuery.Create(orderInCart));
+            }
+            //error
+            return null;
+        }
+
+        [HttpPost]
+        [Route("mySuggestions/")]
+        public async Task<SuggestionDTO> GetPersonalSuggestions([FromBody] OrderInCartDTO orderInCart)
+        {
+            Guid? userId = GetPrincipalId();
+            if (userId != null)
+            {
+                orderInCart.OwnerId = userId.Value;
+                return await _queryBus.Send<GetPersonalSuggestionQuery, SuggestionDTO>(GetPersonalSuggestionQuery.Create(orderInCart));
+            }
+            //error
+            return null;
+        }
+
+        [HttpPost]
         public void CreateOrder([FromBody] OrderDTO newOrder)
         {
             Guid? userId = GetPrincipalId();
@@ -69,7 +95,6 @@ namespace FoltDelivery.API.Controllers
                 _commandBus.Send(CreateOrderCommand.Create(newOrder));
             }
             //error
-            return;
         }
 
         [HttpPost]
@@ -83,7 +108,6 @@ namespace FoltDelivery.API.Controllers
                 _commandBus.Send(AddOrderItemCommand.Create(newItem));
             }
             //error
-            return;
         }
 
 
@@ -98,14 +122,6 @@ namespace FoltDelivery.API.Controllers
                 _commandBus.Send(RemoveOrderItemCommand.Create(removedItem));
             }
             //error
-            return;
-        }
-
-        [HttpGet]
-        [Route("projection")]
-        public void GetProjections()
-        {
-            _orderService.GetSuggestedFromAll("11223344-5566-7788-99aa-bbccddeeff15");
         }
 
         private Guid? GetPrincipalId()

@@ -102,7 +102,7 @@ namespace FoltDelivery.Infrastructure.Persistance
                     new
                     {
                         Id = new Guid("11223344-5566-7788-99AA-BBCCDDEEFF16"),
-                        Name = "Vojvodjanska",
+                        Name = "TRIKOLORE",
                         Type = ProductType.DRINK,
                         RestaurantMenuId = new Guid("11223344-5566-7788-99AA-BBCCDDEEFF15"),
                         RestaurantId = new Guid("11223344-5566-7788-99AA-BBCCDDEEFF00"),
@@ -115,6 +115,73 @@ namespace FoltDelivery.Infrastructure.Persistance
                     }
                 );
 
+                products.HasData(
+                    new
+                    {
+                        Id = new Guid("11223344-5566-7788-99AA-BBCCDDEEFF17"),
+                        Name = "KAPRIĆOZA",
+                        Type = ProductType.DRINK,
+                        RestaurantMenuId = new Guid("11223344-5566-7788-99AA-BBCCDDEEFF15"),
+                        RestaurantId = new Guid("11223344-5566-7788-99AA-BBCCDDEEFF00"),
+                        Quantity = 1,
+                        Description = "Pica sa tradicijom",
+                        Image = "",
+                        LogicalDeleted = false,
+                        InitialVersion = 0,
+                        Version = 0,
+                    }
+                );
+
+                products.HasData(
+                    new
+                    {
+                        Id = new Guid("22223344-5566-7788-99AA-BBCCDDEEFF10"),
+                        Name = "Palacinka Rafaelo",
+                        Type = ProductType.DRINK,
+                        RestaurantMenuId = new Guid("11223344-5566-7788-99AA-BBCCDDEEFF16"),
+                        RestaurantId = new Guid("11223344-5566-7788-99AA-BBCCDDEEFF01"),
+                        Quantity = 1,
+                        Description = "Pica sa tradicijom",
+                        Image = "",
+                        LogicalDeleted = false,
+                        InitialVersion = 0,
+                        Version = 0,
+                    }
+                );
+
+                products.HasData(
+                    new
+                    {
+                        Id = new Guid("22223344-5566-7788-99AA-BBCCDDEEFF11"),
+                        Name = "Palacinka Oreo",
+                        Type = ProductType.DRINK,
+                        RestaurantMenuId = new Guid("11223344-5566-7788-99AA-BBCCDDEEFF16"),
+                        RestaurantId = new Guid("11223344-5566-7788-99AA-BBCCDDEEFF01"),
+                        Quantity = 1,
+                        Description = "Pica sa tradicijom",
+                        Image = "",
+                        LogicalDeleted = false,
+                        InitialVersion = 0,
+                        Version = 0,
+                    }
+                );
+
+                products.HasData(
+                    new
+                    {
+                        Id = new Guid("22223344-5566-7788-99AA-BBCCDDEEFF12"),
+                        Name = "Palacinka Nutela",
+                        Type = ProductType.DRINK,
+                        RestaurantMenuId = new Guid("11223344-5566-7788-99AA-BBCCDDEEFF16"),
+                        RestaurantId = new Guid("11223344-5566-7788-99AA-BBCCDDEEFF01"),
+                        Quantity = 1,
+                        Description = "Pica sa tradicijom",
+                        Image = "",
+                        LogicalDeleted = false,
+                        InitialVersion = 0,
+                        Version = 0,
+                    }
+                );
 
                 products.OwnsOne(pr => pr.Price).HasData(
                     new
@@ -125,7 +192,27 @@ namespace FoltDelivery.Infrastructure.Persistance
                     new
                     {
                         ProductId = new Guid("11223344-5566-7788-99AA-BBCCDDEEFF16"),
-                        Amount = 1300.00
+                        Amount = 1650.00
+                    },
+                    new
+                    {
+                        ProductId = new Guid("11223344-5566-7788-99AA-BBCCDDEEFF17"),
+                        Amount = 1350.00
+                    },
+                    new
+                    {
+                        ProductId = new Guid("22223344-5566-7788-99AA-BBCCDDEEFF10"),
+                        Amount = 280.00
+                    },
+                    new
+                    {
+                        ProductId = new Guid("22223344-5566-7788-99AA-BBCCDDEEFF11"),
+                        Amount = 360.00
+                    },
+                    new
+                    {
+                        ProductId = new Guid("22223344-5566-7788-99AA-BBCCDDEEFF12"),
+                        Amount = 240.00
                     }
                 );
             });
@@ -149,6 +236,13 @@ namespace FoltDelivery.Infrastructure.Persistance
                         Id = new Guid("11223344-5566-7788-99AA-BBCCDDEEFF16"),
                     }
                 );
+
+                restaurantMenus.HasData(
+                 new
+                 {
+                     Id = new Guid("21223344-5566-7788-99AA-BBCCDDEEFF10"),
+                 }
+             );
             });
 
             #endregion

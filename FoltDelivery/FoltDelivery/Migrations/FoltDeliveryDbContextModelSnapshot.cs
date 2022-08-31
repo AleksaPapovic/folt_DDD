@@ -171,10 +171,66 @@ namespace FoltDelivery.Migrations
                             Image = "",
                             InitialVersion = 0,
                             LogicalDeleted = false,
-                            Name = "Vojvodjanska",
+                            Name = "TRIKOLORE",
                             Quantity = 1,
                             RestaurantId = new Guid("11223344-5566-7788-99aa-bbccddeeff00"),
                             RestaurantMenuId = new Guid("11223344-5566-7788-99aa-bbccddeeff15"),
+                            Type = 1,
+                            Version = 0
+                        },
+                        new
+                        {
+                            Id = new Guid("11223344-5566-7788-99aa-bbccddeeff17"),
+                            Description = "Pica sa tradicijom",
+                            Image = "",
+                            InitialVersion = 0,
+                            LogicalDeleted = false,
+                            Name = "KAPRIĆOZA",
+                            Quantity = 1,
+                            RestaurantId = new Guid("11223344-5566-7788-99aa-bbccddeeff00"),
+                            RestaurantMenuId = new Guid("11223344-5566-7788-99aa-bbccddeeff15"),
+                            Type = 1,
+                            Version = 0
+                        },
+                        new
+                        {
+                            Id = new Guid("22223344-5566-7788-99aa-bbccddeeff10"),
+                            Description = "Pica sa tradicijom",
+                            Image = "",
+                            InitialVersion = 0,
+                            LogicalDeleted = false,
+                            Name = "Palacinka Rafaelo",
+                            Quantity = 1,
+                            RestaurantId = new Guid("11223344-5566-7788-99aa-bbccddeeff01"),
+                            RestaurantMenuId = new Guid("11223344-5566-7788-99aa-bbccddeeff16"),
+                            Type = 1,
+                            Version = 0
+                        },
+                        new
+                        {
+                            Id = new Guid("22223344-5566-7788-99aa-bbccddeeff11"),
+                            Description = "Pica sa tradicijom",
+                            Image = "",
+                            InitialVersion = 0,
+                            LogicalDeleted = false,
+                            Name = "Palacinka Oreo",
+                            Quantity = 1,
+                            RestaurantId = new Guid("11223344-5566-7788-99aa-bbccddeeff01"),
+                            RestaurantMenuId = new Guid("11223344-5566-7788-99aa-bbccddeeff16"),
+                            Type = 1,
+                            Version = 0
+                        },
+                        new
+                        {
+                            Id = new Guid("22223344-5566-7788-99aa-bbccddeeff12"),
+                            Description = "Pica sa tradicijom",
+                            Image = "",
+                            InitialVersion = 0,
+                            LogicalDeleted = false,
+                            Name = "Palacinka Nutela",
+                            Quantity = 1,
+                            RestaurantId = new Guid("11223344-5566-7788-99aa-bbccddeeff01"),
+                            RestaurantMenuId = new Guid("11223344-5566-7788-99aa-bbccddeeff16"),
                             Type = 1,
                             Version = 0
                         });
@@ -353,6 +409,10 @@ namespace FoltDelivery.Migrations
                         new
                         {
                             Id = new Guid("11223344-5566-7788-99aa-bbccddeeff16")
+                        },
+                        new
+                        {
+                            Id = new Guid("21223344-5566-7788-99aa-bbccddeeff10")
                         });
                 });
 
@@ -440,7 +500,27 @@ namespace FoltDelivery.Migrations
                                 new
                                 {
                                     ProductId = new Guid("11223344-5566-7788-99aa-bbccddeeff16"),
-                                    Amount = 1300.0
+                                    Amount = 1650.0
+                                },
+                                new
+                                {
+                                    ProductId = new Guid("11223344-5566-7788-99aa-bbccddeeff17"),
+                                    Amount = 1350.0
+                                },
+                                new
+                                {
+                                    ProductId = new Guid("22223344-5566-7788-99aa-bbccddeeff10"),
+                                    Amount = 280.0
+                                },
+                                new
+                                {
+                                    ProductId = new Guid("22223344-5566-7788-99aa-bbccddeeff11"),
+                                    Amount = 360.0
+                                },
+                                new
+                                {
+                                    ProductId = new Guid("22223344-5566-7788-99aa-bbccddeeff12"),
+                                    Amount = 240.0
                                 });
                         });
                 });

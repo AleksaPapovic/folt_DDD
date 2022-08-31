@@ -17,14 +17,12 @@ namespace FoltDelivery.API.Handlers
 
         private readonly IProductRepository _productRepository;
 
-        private readonly IUserRepository _userRepository;
-
         private readonly IMapper _mapper;
-        public AddOrderItemHandler(IOrderRepository orderRepository, IProductRepository productRepository, IUserRepository userRepository, IMapper mapper)
+
+        public AddOrderItemHandler(IOrderRepository orderRepository, IProductRepository productRepository, IMapper mapper)
         {
             _orderRepository = orderRepository;
             _productRepository = productRepository;
-            _userRepository = userRepository;
             _mapper = mapper;
         }
 
@@ -33,14 +31,12 @@ namespace FoltDelivery.API.Handlers
             ProductDTO product = _mapper.Map<ProductDTO>(_productRepository.Get(request.OrderUpdated.OrderItemId));
             request.OrderUpdated.Price = new Money(product.Price.Amount);
             OrderAggregate order = _orderRepository.FindBy(request.OrderUpdated.Id);
-            order.UpdateOrderItems(request.OrderUpdated.OrderItemId,true);
+            order.UpdateOrderItems(request.OrderUpdated.OrderItemId, true);
             request.OrderUpdated.OrderItems = order.OrderItems;
             order.AddItem(request.OrderUpdated);
             _orderRepository.Save(order);
 
             return Task.FromResult(Unit.Value);
         }
-
-
     }
 }

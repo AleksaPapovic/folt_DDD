@@ -12,14 +12,14 @@ namespace FoltDelivery.Test
     public class EventStoreTest
     {
 
-        private OrderService _unitTesting = null;
+      //  private OrderService _unitTesting = null;
 
         public EventStoreTest()
         {
-            if (_unitTesting == null)
-            {
-                _unitTesting = new OrderService();
-            }
+         //   if (_unitTesting == null)
+          //  {
+               // _unitTesting = new OrderService();
+          //  }
         }
 
         [Fact]
