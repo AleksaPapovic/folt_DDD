@@ -26,13 +26,20 @@ namespace FoltDelivery.API.Handlers
             _mapper = mapper;
         }
 
-        Task<SuggestionDTO> IRequestHandler<GetAllSuggestionQuery, SuggestionDTO>.Handle(GetAllSuggestionQuery request, CancellationToken cancellationToken)
+        async Task<SuggestionDTO> IRequestHandler<GetAllSuggestionQuery, SuggestionDTO>.Handle(GetAllSuggestionQuery request, CancellationToken cancellationToken)
         {
-          SuggestionDTO suggestion = new SuggestionDTO();
-          List<Guid> suggestedIds = _orderRepository.GetSuggestedFromAllOrders(request.Order).Result;
-          suggestion.SuggestedProducts = _mapper.Map<List<ProductDTO>>(_productRepository.GetAll().Where(p => suggestedIds.All(p2 => 
-          p2 == p.Id)));
-          return Task.FromResult(suggestion);
+            SuggestionDTO suggestion = new SuggestionDTO();
+            List<Guid> suggestedIds = null;
+            suggestedIds = await _orderRepository.GetSuggestedFromAllOrders(request.Order);
+            if (suggestedIds != null && suggestedIds.Count != 0)
+            {
+                foreach (Guid suggestedProductId in suggestedIds)
+                {
+                    suggestion.SuggestedProducts.Add(_mapper.Map<ProductDTO>(_productRepository.Get(suggestedProductId)));
+                }
+            }
+            return suggestion;
         }
     }
 }
+

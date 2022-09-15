@@ -1,3 +1,4 @@
+C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\bin\Debug\net5.0\FoltDelivery.dll
 C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\bin\Debug\net5.0\testhost.dll
 C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\bin\Debug\net5.0\testhost.exe
 C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\bin\Debug\net5.0\Microsoft.TestPlatform.PlatformAbstractions.dll
@@ -7,7 +8,6 @@ C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\bin\Debug\net5.0\FoltD
 C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\bin\Debug\net5.0\FoltDelivery.deps.json
 C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\bin\Debug\net5.0\FoltDelivery.runtimeconfig.json
 C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\bin\Debug\net5.0\FoltDelivery.runtimeconfig.dev.json
-C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\bin\Debug\net5.0\FoltDelivery.dll
 C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\bin\Debug\net5.0\FoltDelivery.pdb
 C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\bin\Debug\net5.0\AutoMapper.dll
 C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\bin\Debug\net5.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
@@ -15,6 +15,7 @@ C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\bin\Debug\net5.0\BCryp
 C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\bin\Debug\net5.0\Castle.Core.dll
 C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\bin\Debug\net5.0\EventStore.ClientAPI.dll
 C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\bin\Debug\net5.0\EventStore.Client.dll
+C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\bin\Debug\net5.0\EventStore.Client.ProjectionManagement.dll
 C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\bin\Debug\net5.0\EventStore.Client.Streams.dll
 C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\bin\Debug\net5.0\FluentAssertions.dll
 C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\bin\Debug\net5.0\Google.Protobuf.dll
@@ -160,4 +161,3 @@ C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\obj\Debug\net5.0\refin
 C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\obj\Debug\net5.0\FoltDelivery.pdb
 C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\obj\Debug\net5.0\FoltDelivery.genruntimeconfig.cache
 C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\obj\Debug\net5.0\ref\FoltDelivery.dll
-C:\Users\papov\Desktop\folt_DDD\FoltDelivery\FoltDelivery\bin\Debug\net5.0\EventStore.Client.ProjectionManagement.dll

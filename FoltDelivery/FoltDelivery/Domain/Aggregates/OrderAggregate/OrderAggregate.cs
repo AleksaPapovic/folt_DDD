@@ -8,6 +8,7 @@ using FoltDelivery.Model.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Diagnostics;
 
 namespace FoltDelivery.Domain.Aggregates.OrderAggregate
 {
@@ -158,6 +159,15 @@ namespace FoltDelivery.Domain.Aggregates.OrderAggregate
                 }
             }
         }
+
+        internal void UpdateIfSuggestedItem(ProductDTO newItem)
+        {
+            if (!OrderItems.TryGetValue(newItem.Id, out _))
+            {
+                OrderItems[newItem.Id] = new OrderItem(newItem, 0);
+            }
+        }
+
         private Money CalculateOrderPrice()
         {
             Money cost = new Money();

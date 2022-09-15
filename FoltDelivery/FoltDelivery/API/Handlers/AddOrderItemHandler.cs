@@ -31,12 +31,14 @@ namespace FoltDelivery.API.Handlers
             ProductDTO product = _mapper.Map<ProductDTO>(_productRepository.Get(request.OrderUpdated.OrderItemId));
             request.OrderUpdated.Price = new Money(product.Price.Amount);
             OrderAggregate order = _orderRepository.FindBy(request.OrderUpdated.Id);
-            order.UpdateOrderItems(request.OrderUpdated.OrderItemId, true);
             request.OrderUpdated.OrderItems = order.OrderItems;
+            order.UpdateIfSuggestedItem(product);
+            order.UpdateOrderItems(request.OrderUpdated.OrderItemId ,true);
             order.AddItem(request.OrderUpdated);
             _orderRepository.Save(order);
 
             return Task.FromResult(Unit.Value);
         }
+
     }
 }

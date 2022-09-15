@@ -13,6 +13,7 @@ namespace FoltDelivery.Domain.Aggregates.OrderAggregate
         public string Name  { get; set; }
         public string Description { get; set; }
         public ProductType ProductType { get; set; }
+
         public OrderItem(OrderItemDTO orderItemDTO) : base(orderItemDTO.Id)
         {
             Quantity = orderItemDTO.Quantity;

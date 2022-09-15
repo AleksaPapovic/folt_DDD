@@ -44,6 +44,7 @@ namespace FoltDelivery.API.Repository
                 allSuggestedProductsIds = UpdateSuggestedIds(allSuggestedProductsIds, result);
 
             }
+            if (allSuggestedProductsIds.Count == 0) { return null; }
             return GetTop2SuggestedIds(order.OrderItemsIds, allSuggestedProductsIds);
         }
 
@@ -75,6 +76,7 @@ namespace FoltDelivery.API.Repository
                 allSuggestedProductsIds = UpdateSuggestedIds(allSuggestedProductsIds, result);
 
             }
+            if (allSuggestedProductsIds.Count == 0) { return null; }
             return GetTop2SuggestedIds(order.OrderItemsIds, allSuggestedProductsIds);
         }
     
@@ -82,7 +84,7 @@ namespace FoltDelivery.API.Repository
         {
             string streamName = "$streams_all_suggestion_by_product_id-" + Guid.NewGuid();
 
-            _eventStore.CreateProjectionStream(streamName, query); await Task.Delay(200);
+            _eventStore.CreateProjectionStream(streamName, query); await Task.Delay(100);
             string result = await _eventStore.RunProjection(streamName);
             return result;
         }
@@ -104,7 +106,8 @@ namespace FoltDelivery.API.Repository
             myList.Sort((pair1, pair2) => pair1.Value.CompareTo(pair2.Value));
             List<Guid> allKeys = (from kvp in myList select kvp.Key).Distinct().ToList();
             Debug.WriteLine(myList[0].ToString());
-            return allKeys.Where(p => productIds.All(p2 => p2 != p)).Take(4).ToList();
+            List<Guid> resList = allKeys.Where(p => productIds.All(p2 => p2 != p)).Take(4).ToList();
+            return resList;
         }
 
 

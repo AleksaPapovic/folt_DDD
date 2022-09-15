@@ -5,7 +5,6 @@ using FoltDelivery.API.Repository;
 using FoltDelivery.Infrastructure.Queries;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -25,13 +24,18 @@ namespace FoltDelivery.API.Handlers
             _mapper = mapper;
         }
 
-        public Task<SuggestionDTO> Handle(GetPersonalSuggestionQuery request, CancellationToken cancellationToken)
+        public async Task<SuggestionDTO> Handle(GetPersonalSuggestionQuery request, CancellationToken cancellationToken)
         {
             SuggestionDTO suggestion = new SuggestionDTO();
-            List<Guid> suggestedIds = _orderRepository.GetSuggestedFromAllOrders(request.Order).Result;
-            suggestion.SuggestedProducts = _mapper.Map<List<ProductDTO>>(_productRepository.GetAll().Where(p => suggestedIds.All(p2 =>
-            p2 == p.Id)));
-            return Task.FromResult(suggestion);
+            List<Guid> suggestedIds = await _orderRepository.GetSuggestedFromPersonalOrders(request.Order);
+            if (suggestedIds != null && suggestedIds.Count != 0)
+            {
+                foreach (Guid suggestedProductId in suggestedIds)
+                {
+                    suggestion.SuggestedProducts.Add(_mapper.Map<ProductDTO>(_productRepository.Get(suggestedProductId)));
+                }
+            }
+            return suggestion;
         }
     }
 }

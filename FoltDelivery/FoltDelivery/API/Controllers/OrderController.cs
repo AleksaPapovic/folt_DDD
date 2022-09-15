@@ -2,7 +2,6 @@
 using FoltDelivery.API.Commands;
 using FoltDelivery.API.DTO;
 using FoltDelivery.API.Queries;
-using FoltDelivery.API.Service;
 using FoltDelivery.Domain.Aggregates.OrderAggregate;
 using FoltDelivery.Infrastructure.Authorization;
 using FoltDelivery.Infrastructure.Commands;
@@ -58,8 +57,8 @@ namespace FoltDelivery.API.Controllers
         }
 
         [HttpPost]
-        [Route("projection")]
-        public async Task<SuggestionDTO> GetProjections([FromBody]OrderInCartDTO orderInCart)
+        [Route("suggestion/all")]
+        public async Task<SuggestionDTO> GetProjections([FromBody] OrderInCartDTO orderInCart)
         {
             Guid? userId = GetPrincipalId();
             if (userId != null)
@@ -72,7 +71,7 @@ namespace FoltDelivery.API.Controllers
         }
 
         [HttpPost]
-        [Route("mySuggestions/")]
+        [Route("suggestion/personal")]
         public async Task<SuggestionDTO> GetPersonalSuggestions([FromBody] OrderInCartDTO orderInCart)
         {
             Guid? userId = GetPrincipalId();
