@@ -1,6 +1,6 @@
-﻿using System;
-using FoltDelivery.Infrastructure.Enums;
-using FoltDelivery.Infrastructure;
+﻿using FoltDelivery.Core.Domain;
+using FoltDelivery.Core.Enums;
+using System;
 
 namespace FoltDelivery.Domain.Aggregates.OrderAggregate
 {
@@ -9,12 +9,12 @@ namespace FoltDelivery.Domain.Aggregates.OrderAggregate
         public Guid OrderId { get; set; }
         public Guid CustomerId { get; set; }
         public CartStatus Status { get; set; }
-        public int LogicalDeleted { get; set; }
+        public bool LogicalDeleted { get; set; }
 
         public Cart(Guid id) : base(id) { }
 
         public Cart(Guid id, Guid orderId, Guid customerId, float price, CartStatus cartStatus,
-            int logicalDeleted): base(id)
+            bool logicalDeleted) : base(id)
         {
             Status = cartStatus;
             OrderId = orderId;
@@ -22,7 +22,7 @@ namespace FoltDelivery.Domain.Aggregates.OrderAggregate
             LogicalDeleted = logicalDeleted;
         }
 
-        public Cart(Cart cart):base(cart.Id)
+        public Cart(Cart cart) : base(cart.Id)
         {
             Id = cart.Id;
             OrderId = cart.OrderId;

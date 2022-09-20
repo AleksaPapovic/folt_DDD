@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using FoltDelivery.API.DTO;
-using FoltDelivery.Infrastructure.Queries;
+﻿using FoltDelivery.API.DTO;
+using FoltDelivery.Core.Queries;
+using System;
 
 namespace FoltDelivery.API.Queries
 {

@@ -14,7 +14,7 @@ namespace FoltDelivery.API.Mapper
         public MapperProfile()
         {
             CreateMap<UserDTO, User>().ReverseMap();
-            CreateMap<OrderDTO, OrderAggregate>().ReverseMap();
+            CreateMap<OrderDTO, Order>().ReverseMap();
             CreateMap<ProductDTO, Product>().ReverseMap();
             CreateMap<RestaurantDTO, Restaurant>().ReverseMap();
             CreateMap<MoneyDTO, Money>().ReverseMap();

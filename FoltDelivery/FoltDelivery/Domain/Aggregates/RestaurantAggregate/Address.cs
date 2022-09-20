@@ -1,5 +1,5 @@
 ﻿using System;
-using FoltDelivery.Infrastructure;
+using FoltDelivery.Core.Domain;
 
 namespace FoltDelivery.Domain.Aggregates.RestaurantAggregate
 {

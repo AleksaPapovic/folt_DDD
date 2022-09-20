@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using FoltDelivery.Core.Commands;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace FoltDelivery.Infrastructure.Commands

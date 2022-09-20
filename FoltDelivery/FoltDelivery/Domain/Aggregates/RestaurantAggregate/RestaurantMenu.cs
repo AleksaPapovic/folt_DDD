@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
-using FoltDelivery.Infrastructure;
 using FoltDelivery.Domain.Aggregates.ProductAggregate;
+using FoltDelivery.Core.Domain;
 
 namespace FoltDelivery.Domain.Aggregates.RestaurantAggregate
 {

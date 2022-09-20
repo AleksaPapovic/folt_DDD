@@ -1,7 +1,7 @@
 ﻿using System;
-using FoltDelivery.Model.Enums;
-using FoltDelivery.Infrastructure;
-using FoltDelivery.Infrastructure.Aggregate;
+using FoltDelivery.Core.Enums;
+using FoltDelivery.Core.Domain.Aggregate;
+using FoltDelivery.Core.Domain;
 
 namespace FoltDelivery.Domain.Aggregates.ProductAggregate
 {

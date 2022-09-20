@@ -2,7 +2,7 @@
 using FoltDelivery.API.DTO;
 using FoltDelivery.API.Queries;
 using FoltDelivery.API.Repository;
-using FoltDelivery.Infrastructure.Queries;
+using FoltDelivery.Core.Queries;
 using System;
 using System.Collections.Generic;
 using System.Threading;

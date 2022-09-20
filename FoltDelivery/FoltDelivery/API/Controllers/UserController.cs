@@ -6,7 +6,7 @@ using Microsoft.Extensions.Configuration;
 using FoltDelivery.API.Service;
 using FoltDelivery.Domain.Aggregates.CustomerAggregate;
 using FoltDelivery.API.DTO;
-using FoltDelivery.Infrastructure.Authorization;
+using FoltDelivery.Core.Authorization;
 
 
 namespace FoltDelivery.API.Controllers

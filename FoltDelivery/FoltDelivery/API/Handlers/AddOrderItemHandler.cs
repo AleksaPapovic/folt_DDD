@@ -4,7 +4,7 @@ using FoltDelivery.API.DTO;
 using FoltDelivery.API.Repository;
 using FoltDelivery.Domain.Aggregates.OrderAggregate;
 using FoltDelivery.Domain.Aggregates.ProductAggregate;
-using FoltDelivery.Infrastructure.Commands;
+using FoltDelivery.Core.Commands;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
@@ -30,7 +30,7 @@ namespace FoltDelivery.API.Handlers
         {
             ProductDTO product = _mapper.Map<ProductDTO>(_productRepository.Get(request.OrderUpdated.OrderItemId));
             request.OrderUpdated.Price = new Money(product.Price.Amount);
-            OrderAggregate order = _orderRepository.FindBy(request.OrderUpdated.Id);
+            Order order = _orderRepository.FindBy(request.OrderUpdated.Id);
             request.OrderUpdated.OrderItems = order.OrderItems;
             order.UpdateIfSuggestedItem(product);
             order.UpdateOrderItems(request.OrderUpdated.OrderItemId ,true);

@@ -3,9 +3,9 @@ using FoltDelivery.API.Commands;
 using FoltDelivery.API.DTO;
 using FoltDelivery.API.Queries;
 using FoltDelivery.Domain.Aggregates.OrderAggregate;
-using FoltDelivery.Infrastructure.Authorization;
-using FoltDelivery.Infrastructure.Commands;
-using FoltDelivery.Infrastructure.Queries;
+using FoltDelivery.Core.Authorization;
+using FoltDelivery.Core.Commands;
+using FoltDelivery.Core.Queries;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -37,9 +37,9 @@ namespace FoltDelivery.API.Controllers
         }
 
         [HttpGet]
-        public async Task<OrderAggregate> GetOrder(GetOrderDTO order)
+        public async Task<Order> GetOrder(GetOrderDTO order)
         {
-            return await _queryBus.Send<GetOrderQuery, OrderAggregate>(GetOrderQuery.Create(order.Id));
+            return await _queryBus.Send<GetOrderQuery, Order>(GetOrderQuery.Create(order.Id));
         }
 
         [HttpGet]
@@ -49,7 +49,7 @@ namespace FoltDelivery.API.Controllers
             Guid? userId = GetPrincipalId();
             if (userId != null)
             {
-                return _mapper.Map<List<OrderDTO>>(await _queryBus.Send<GetOrdersInCartQuery, List<OrderAggregate>>(GetOrdersInCartQuery.Create(userId.Value)));
+                return _mapper.Map<List<OrderDTO>>(await _queryBus.Send<GetOrdersInCartQuery, List<Order>>(GetOrdersInCartQuery.Create(userId.Value)));
             }
             //error
             return null;

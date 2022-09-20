@@ -5,7 +5,7 @@ using FoltDelivery.API.Repository;
 using FoltDelivery.Domain.Aggregates.CustomerAggregate;
 using FoltDelivery.Domain.Aggregates.OrderAggregate;
 using FoltDelivery.Domain.Aggregates.ProductAggregate;
-using FoltDelivery.Infrastructure.Commands;
+using FoltDelivery.Core.Commands;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
@@ -38,7 +38,7 @@ namespace FoltDelivery.API.Handlers
                 request.order.OrderItems.Add(product.Id, orderItem);
             }
 
-            OrderAggregate order = new OrderAggregate(request.order);
+            Order order = new Order(request.order);
             _orderRepository.Add(order);
 
             User currentUser = _userRepository.Get(request.order.CustomerId);

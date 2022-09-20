@@ -1,6 +1,7 @@
 ﻿using FoltDelivery.API.DTO;
+using FoltDelivery.Core.EventStore;
 using FoltDelivery.Domain.Aggregates.OrderAggregate;
-using FoltDelivery.Infrastructure;
+using FoltDelivery.Infrastructure.EventStore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -10,10 +11,11 @@ using System.Threading.Tasks;
 
 namespace FoltDelivery.API.Repository
 {
-    public class OrderRepository : GenericEventRepository<OrderAggregate, OrderSnapshot>, IOrderRepository
+    public class OrderRepository : GenericEventRepository<Order, OrderSnapshot>, IOrderRepository
     {
         IEventStore _eventStore;
-        public OrderRepository(IEventStore eventStore) : base(eventStore) {
+        public OrderRepository(IEventStore eventStore) : base(eventStore)
+        {
             _eventStore = eventStore;
         }
 
@@ -62,7 +64,7 @@ namespace FoltDelivery.API.Repository
                             };
                         },
                         $any: function(s, e) {
-                            if(e.data.OrderItems['" + productId + @"'] && e.data.CustomerId != '" + order.OwnerId + @"'  && e.data.EventType ==='OrderCreated'){
+                            if(e.data.OrderItems['" + productId + @"'] && e.data.CustomerId == '" + order.OwnerId + @"'  && e.data.EventType ==='OrderCreated'){
                                 for (const [key, value] of  Object.entries(e.data.OrderItems)) {
                                     if (s.suggested[key] === undefined) { s.suggested[key] = 1; }
                                     else { s.suggested[key] = s.suggested[key] + 1; }
@@ -79,7 +81,7 @@ namespace FoltDelivery.API.Repository
             if (allSuggestedProductsIds.Count == 0) { return null; }
             return GetTop2SuggestedIds(order.OrderItemsIds, allSuggestedProductsIds);
         }
-    
+
         private async Task<string> RunProjection(string query)
         {
             string streamName = "$streams_all_suggestion_by_product_id-" + Guid.NewGuid();
@@ -109,7 +111,5 @@ namespace FoltDelivery.API.Repository
             List<Guid> resList = allKeys.Where(p => productIds.All(p2 => p2 != p)).Take(4).ToList();
             return resList;
         }
-
-
     }
 }

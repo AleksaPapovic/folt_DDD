@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using FoltDelivery.Core.Queries;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Scrutor;
 using System;

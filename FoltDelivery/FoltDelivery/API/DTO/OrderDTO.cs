@@ -1,9 +1,9 @@
 ﻿using FoltDelivery.Domain.Aggregates.OrderAggregate;
 using FoltDelivery.Domain.Aggregates.ProductAggregate;
-using FoltDelivery.Infrastructure;
-using FoltDelivery.Model.Enums;
+using FoltDelivery.Core.Enums;
 using System;
 using System.Collections.Generic;
+using FoltDelivery.Core.Domain;
 
 namespace FoltDelivery.API.DTO
 {
@@ -11,7 +11,7 @@ namespace FoltDelivery.API.DTO
     {
         public Guid RestaurantId { get; set; }
         public Guid CustomerId { get; set; }
-        public string DeliveryId { get; set; }
+        public Guid DeliveryId { get; set; }
         public OrderStatus Status { get; set; }
         public DateTime DateAndTime { get; set; }
         public Money Price { get; set; }

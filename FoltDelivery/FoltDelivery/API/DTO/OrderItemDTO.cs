@@ -1,7 +1,7 @@
 ﻿using FoltDelivery.Domain.Aggregates.OrderAggregate;
-using FoltDelivery.Infrastructure;
-using FoltDelivery.Model.Enums;
+using FoltDelivery.Core.Enums;
 using System;
+using FoltDelivery.Core.Domain;
 
 namespace FoltDelivery.API.DTO
 {

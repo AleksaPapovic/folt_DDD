@@ -5,9 +5,7 @@ namespace FoltDelivery.API.Exception
 {
     public class AppException : System.Exception
     {
-        public AppException()
-        {
-        }
+        public AppException(){ }
 
         public AppException(string message) : base(message) { }
 

@@ -1,6 +1,6 @@
 ﻿using System;
 using FoltDelivery.Domain.Aggregates.CustomerAggregate;
-using FoltDelivery.Model.Enums;
+using FoltDelivery.Core.Enums;
 
 namespace FoltDelivery.API.DTO
 {

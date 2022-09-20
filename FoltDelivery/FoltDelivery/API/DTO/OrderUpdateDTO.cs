@@ -1,8 +1,8 @@
 ﻿using FoltDelivery.Domain.Aggregates.OrderAggregate;
 using FoltDelivery.Domain.Aggregates.ProductAggregate;
-using FoltDelivery.Infrastructure;
 using System;
 using System.Collections.Generic;
+using FoltDelivery.Core.Domain;
 
 namespace FoltDelivery.API.DTO
 {

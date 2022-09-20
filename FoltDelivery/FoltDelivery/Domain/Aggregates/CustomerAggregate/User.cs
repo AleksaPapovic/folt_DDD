@@ -1,6 +1,6 @@
-﻿using FoltDelivery.Infrastructure;
-using FoltDelivery.Infrastructure.Aggregate;
-using FoltDelivery.Model.Enums;
+﻿using FoltDelivery.Core.Domain.Aggregate;
+using FoltDelivery.Core.Domain;
+using FoltDelivery.Core.Enums;
 using System;
 using System.Collections.Generic;
 

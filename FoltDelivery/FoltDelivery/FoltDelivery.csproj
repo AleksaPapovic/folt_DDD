@@ -8,9 +8,13 @@
 
   <ItemGroup>
     <Compile Remove="Domain\Aggregates\Delivery\**" />
+    <Compile Remove="Domain\Aggregates\OrderAggregate\Events\Error\**" />
     <Content Remove="Domain\Aggregates\Delivery\**" />
+    <Content Remove="Domain\Aggregates\OrderAggregate\Events\Error\**" />
     <EmbeddedResource Remove="Domain\Aggregates\Delivery\**" />
+    <EmbeddedResource Remove="Domain\Aggregates\OrderAggregate\Events\Error\**" />
     <None Remove="Domain\Aggregates\Delivery\**" />
+    <None Remove="Domain\Aggregates\OrderAggregate\Events\Error\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -40,11 +44,6 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.extensibility.core" Version="2.4.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="API\Projections\" />
-    <Folder Include="Domain\Events\Error\" />
   </ItemGroup>
 
 </Project>

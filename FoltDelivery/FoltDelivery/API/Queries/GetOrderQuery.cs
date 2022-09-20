@@ -1,10 +1,10 @@
 ﻿using FoltDelivery.Domain.Aggregates.OrderAggregate;
-using FoltDelivery.Infrastructure.Queries;
+using FoltDelivery.Core.Queries;
 using System;
 
 namespace FoltDelivery.API.Queries
 {
-    public record GetOrderQuery(Guid OrderId) : IQuery<OrderAggregate>
+    public record GetOrderQuery(Guid OrderId) : IQuery<Order>
     {
         public static GetOrderQuery Create(Guid orderId)
         {

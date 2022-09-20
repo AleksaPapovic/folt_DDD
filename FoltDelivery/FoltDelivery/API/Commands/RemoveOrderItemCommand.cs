@@ -1,5 +1,5 @@
 ﻿using FoltDelivery.API.DTO;
-using FoltDelivery.Infrastructure.Commands;
+using FoltDelivery.Core.Commands;
 
 namespace FoltDelivery.API.Commands
 {
@@ -7,9 +7,6 @@ namespace FoltDelivery.API.Commands
     {
         public static RemoveOrderItemCommand Create(OrderUpdateDTO OrderUpdated)
         {
-            //if (orderId == null)
-            //    throw new ArgumentOutOfRangeException(nameof(orderId));
-
             return new RemoveOrderItemCommand(OrderUpdated);
         }
     }

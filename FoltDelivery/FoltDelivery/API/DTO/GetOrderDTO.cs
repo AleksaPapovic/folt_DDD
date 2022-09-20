@@ -1,4 +1,4 @@
-﻿using FoltDelivery.Infrastructure;
+﻿using FoltDelivery.Core.Domain;
 using System;
 
 namespace FoltDelivery.API.DTO

@@ -1,4 +1,4 @@
-﻿using FoltDelivery.Model.Enums;
+﻿using FoltDelivery.Core.Enums;
 using System;
 
 namespace FoltDelivery.API.DTO

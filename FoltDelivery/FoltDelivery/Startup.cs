@@ -1,13 +1,12 @@
 using EventStore.ClientAPI;
 using FoltDelivery.API.Repository;
 using FoltDelivery.API.Service;
-using FoltDelivery.Infrastructure;
-using FoltDelivery.Infrastructure.Authorization;
-using FoltDelivery.Infrastructure.Commands;
-using FoltDelivery.Infrastructure.DataAccess;
-using FoltDelivery.Infrastructure.Events;
-using FoltDelivery.Infrastructure.Persistance;
-using FoltDelivery.Infrastructure.Queries;
+using FoltDelivery.Core.Authorization;
+using FoltDelivery.Core.Commands;
+using FoltDelivery.Core.Events;
+using FoltDelivery.Core.EventStore;
+using FoltDelivery.Core.Persistance;
+using FoltDelivery.Core.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -22,13 +21,12 @@ namespace FoltDelivery
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; }
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
-
-        public IConfiguration Configuration { get; }
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -46,26 +44,15 @@ namespace FoltDelivery
                 builder: ConnectionSettings.Create().KeepReconnecting(),
                 connectionName: Configuration.GetValue<string>("EventStore:ConnectionName"));
 
-            //services.AddSingleton(
-            //   new EventStoreClient(EventStoreClientSettings.Create("esdb://localhost:2113?tls=false")));
-            //eventStoreConnection.ConnectAsync().GetAwaiter().GetResult();
-
             services.AddSingleton(eventStoreConnection);
+            EventBusExtensions.AddEventBus(services);
 
-            services.AddScoped<IDataAccess, DataAccess>();
+            services.AddMediatR(typeof(Startup))
+                    .AddScoped<ICommandBus, CommandBus>()
+                    .AddScoped<IQueryBus, QueryBus>();
 
-            services.AddSingleton(sp => new EventBus(
-           sp
-           ));
-            services
-                .TryAddSingleton<IEventBus>(sp => sp.GetRequiredService<EventBus>());
-            services.AddMediatR(typeof(DataAccess).Assembly)
-                .AddScoped<ICommandBus, CommandBus>()
-                .AddScoped<IQueryBus, QueryBus>();
-            //.AddEventBus();
-            services
-                .AddScoped<IMediator, Mediator>()
-                .AddTransient<ServiceFactory>(sp => sp.GetRequiredService!);
+            services.AddScoped<IMediator, Mediator>()
+                    .AddTransient<ServiceFactory>(sp => sp.GetRequiredService!);
 
             services.AddAuthorization();
 
@@ -88,20 +75,15 @@ namespace FoltDelivery
             services.AddScoped<IJwtUtils, JwtUtils>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IRestaurantService, RestaurantService>();
-            services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IRestaurantRepository, RestaurantRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
-            //services.AddTransient<IEventHandler<OrderPlaced>, OrderHandler>();
-            //services.AddTransient<IEventHandler<OrderCreated>, OrderHandler>();
+            services.AddScoped<IEventStore, Core.EventStore.EventStore>();
             //services = Infrastructure.Queries.Config.AddAllQueryHandlers(services);
-            services.AddScoped<IEventStore, Infrastructure.EventStore>();
-
 
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseSwagger();

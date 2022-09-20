@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using AutoMapper;
-using FoltDelivery.Infrastructure.Authorization;
+using FoltDelivery.Core.Authorization;
 using FoltDelivery.API.DTO;
 using FoltDelivery.API.Repository;
 using FoltDelivery.API.Exception;
-using FoltDelivery.Model.Enums;
+using FoltDelivery.Core.Enums;
 using FoltDelivery.Domain.Aggregates.CustomerAggregate;
 
 namespace FoltDelivery.API.Service

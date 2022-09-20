@@ -1,8 +1,8 @@
 ﻿using FoltDelivery.API.DTO;
 using FoltDelivery.Domain.Aggregates.ProductAggregate;
-using FoltDelivery.Infrastructure;
-using FoltDelivery.Model.Enums;
+using FoltDelivery.Core.Enums;
 using System;
+using FoltDelivery.Core.Domain;
 
 namespace FoltDelivery.Domain.Aggregates.OrderAggregate
 {

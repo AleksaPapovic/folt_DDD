@@ -1,5 +1,5 @@
 ﻿using FoltDelivery.API.DTO;
-using FoltDelivery.Infrastructure.Queries;
+using FoltDelivery.Core.Queries;
 using System;
 
 namespace FoltDelivery.API.Queries
