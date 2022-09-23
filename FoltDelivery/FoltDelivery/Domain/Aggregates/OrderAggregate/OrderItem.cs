@@ -12,6 +12,7 @@ namespace FoltDelivery.Domain.Aggregates.OrderAggregate
         public Money Cost { get; set; }
         public string Name  { get; set; }
         public string Description { get; set; }
+        public string Image { get; set; }
         public ProductType ProductType { get; set; }
 
         public OrderItem(OrderItemDTO orderItemDTO) : base(orderItemDTO.Id)
@@ -20,6 +21,7 @@ namespace FoltDelivery.Domain.Aggregates.OrderAggregate
             Cost = new Money(orderItemDTO.Cost.Amount);
             Name = orderItemDTO.Name;
             Description = orderItemDTO.Description;
+            Image = orderItemDTO.Image;
             ProductType = orderItemDTO.ProductType;
         }
 
@@ -30,6 +32,7 @@ namespace FoltDelivery.Domain.Aggregates.OrderAggregate
             Cost = new Money(product.Price.Amount);
             Name = product.Name;
             Description = product.Description;
+            Image= product.Image;
             ProductType = product.Type;
         }
 

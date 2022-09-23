@@ -11,15 +11,10 @@ namespace FoltDelivery.API.DTO
         public MoneyDTO Cost { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+        public string Image { get; set; }
         public ProductType ProductType { get; set; }
 
         public OrderItemDTO():base(Guid.NewGuid()) { }
-
-        //public OrderItemDTO(Guid orderItemId, int quantity, MoneyDTO cost) : base(orderItemId)
-        //{
-        //    Quantity = quantity;
-        //    Cost = cost;
-        //}
 
         public OrderItemDTO(OrderItem orderItem) : base(orderItem.Id)
         {
@@ -27,6 +22,7 @@ namespace FoltDelivery.API.DTO
             Cost = new MoneyDTO(orderItem.Cost.Amount);
             Name = orderItem.Name;
             Description = orderItem.Description;
+            Image = orderItem.Image;
             ProductType = orderItem.ProductType;
         }
     }

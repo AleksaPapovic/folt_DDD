@@ -13,7 +13,7 @@ namespace FoltDelivery.Domain.Aggregates.RestaurantAggregate
         public virtual RestaurantMenu Menu { get; set; }
         public RestaurantStatus Status { get; set; }
         public virtual Location Location { get; set; }
-        public int LogoId { get; set; }
+        public virtual Logo Logo { get; set; }
         public Boolean Deleted { get; set; }
 
         public Restaurant() : base(Guid.NewGuid()) { }
@@ -22,13 +22,13 @@ namespace FoltDelivery.Domain.Aggregates.RestaurantAggregate
         }
 
         public Restaurant(Guid id, String name, String type, List<int> articlesIds, RestaurantStatus status,
-            Location location, int logoId, Boolean deleted) : base(id)
+            Location location, Logo logo, Boolean deleted) : base(id)
         {
             Name = name;
             Type = type;
             Status = status;
             Location = location;
-            LogoId = logoId;
+            Logo = logo;
             Deleted = deleted;
         }
 
@@ -39,7 +39,7 @@ namespace FoltDelivery.Domain.Aggregates.RestaurantAggregate
             Type = restaurant.Type;
             Status = restaurant.Status;
             Location = restaurant.Location;
-            LogoId = restaurant.LogoId;
+            Logo = restaurant.Logo;
             Deleted = restaurant.Deleted;
         }
 

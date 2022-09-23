@@ -3,13 +3,13 @@ using FoltDelivery.Core.Domain;
 
 namespace FoltDelivery.Domain.Aggregates.RestaurantAggregate
 {
-    public class Logo : Entity
+    public class Logo
     {
         public String Image { get; set; }
 
-        public Logo(Guid id):base(id) { }
+        public Logo(){ }
 
-        public Logo(Guid id, String image) : base(id)
+        public Logo(String image)
         {
             Image = image;
         }
