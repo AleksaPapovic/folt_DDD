@@ -5,7 +5,6 @@ using FoltDelivery.Infrastructure.EventStore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -86,7 +85,7 @@ namespace FoltDelivery.API.Repository
         {
             string streamName = "$streams_all_suggestion_by_product_id-" + Guid.NewGuid();
 
-            _eventStore.CreateProjectionStream(streamName, query); await Task.Delay(100);
+            _eventStore.CreateProjectionStream(streamName, query); await Task.Delay(300);
             string result = await _eventStore.RunProjection(streamName);
             return result;
         }
@@ -104,10 +103,8 @@ namespace FoltDelivery.API.Repository
         private static List<Guid> GetTop2SuggestedIds(List<Guid> productIds, Dictionary<Guid, int> allSuggestedProductsIds)
         {
             List<KeyValuePair<Guid, int>> myList = allSuggestedProductsIds.ToList();
-            Debug.WriteLine(myList[0].ToString());
             myList.Sort((pair1, pair2) => pair1.Value.CompareTo(pair2.Value));
             List<Guid> allKeys = (from kvp in myList select kvp.Key).Distinct().ToList();
-            Debug.WriteLine(myList[0].ToString());
             List<Guid> resList = allKeys.Where(p => productIds.All(p2 => p2 != p)).Take(4).ToList();
             return resList;
         }

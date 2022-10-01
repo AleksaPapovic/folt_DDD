@@ -51,7 +51,6 @@ namespace FoltDelivery.API.Controllers
             {
                 return _mapper.Map<List<OrderDTO>>(await _queryBus.Send<GetOrdersInCartQuery, List<Order>>(GetOrdersInCartQuery.Create(userId.Value)));
             }
-            //error
             return null;
 
         }
@@ -66,7 +65,6 @@ namespace FoltDelivery.API.Controllers
                 orderInCart.OwnerId = userId.Value;
                 return await _queryBus.Send<GetAllSuggestionQuery, SuggestionDTO>(GetAllSuggestionQuery.Create(orderInCart));
             }
-            //error
             return null;
         }
 
@@ -80,7 +78,6 @@ namespace FoltDelivery.API.Controllers
                 orderInCart.OwnerId = userId.Value;
                 return await _queryBus.Send<GetPersonalSuggestionQuery, SuggestionDTO>(GetPersonalSuggestionQuery.Create(orderInCart));
             }
-            //error
             return null;
         }
 
@@ -93,7 +90,6 @@ namespace FoltDelivery.API.Controllers
                 newOrder.CustomerId = userId.Value;
                 _commandBus.Send(CreateOrderCommand.Create(newOrder));
             }
-            //error
         }
 
         [HttpPost]
@@ -106,7 +102,6 @@ namespace FoltDelivery.API.Controllers
                 newItem.CustomerId = userId.Value;
                 _commandBus.Send(AddOrderItemCommand.Create(newItem));
             }
-            //error
         }
 
 
@@ -120,7 +115,6 @@ namespace FoltDelivery.API.Controllers
                 removedItem.CustomerId = userId.Value;
                 _commandBus.Send(RemoveOrderItemCommand.Create(removedItem));
             }
-            //error
         }
 
         private Guid? GetPrincipalId()

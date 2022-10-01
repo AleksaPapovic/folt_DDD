@@ -35,7 +35,6 @@ namespace FoltDelivery.API.Controllers
         [HttpGet]
         public List<User> GetAll()
         {
-            //return new string[] { "value1", "value2" };
             return _userService.GetAllUsers();
         }
 

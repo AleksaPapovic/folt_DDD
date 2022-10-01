@@ -15,12 +15,6 @@ namespace FoltDelivery.API.Repository
             _dbContext = dbContext;
         }
 
-        public User GetUsingCredentials(string username, string password)
-        {
-            return null;
-            //return _dbContext.Users.Where(p => p.Username == username && p.Password == password && !p.Blocked).FirstOrDefault();
-        }
-
         public User GetByUsername(string username)
         {
             return _dbContext.Users.SingleOrDefault(x => x.Username.Equals(username));
